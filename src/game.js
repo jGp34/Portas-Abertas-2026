@@ -261,8 +261,14 @@ const spendUpgrade = (key) => {
     return;
   }
 
+  const upgradeValueByKey = {
+    maxHealth: 5,
+    damage: 1,
+    speed: 0.15,
+  };
+
   state.gold -= CONFIG.progression.upgradeCost;
-  permanentUpgrades[key] += key === 'speed' ? 0.15 : key === 'damage' ? 1 : 5;
+  permanentUpgrades[key] += upgradeValueByKey[key];
   syncUpgradeButtons();
   updateHud();
 };
