@@ -22,8 +22,27 @@ if (!_is_acting) {
     else {
         if (_hinput != 0 || _vinput != 0) {
             var _dir = point_direction(0, 0, _hinput, _vinput);
-            x += lengthdir_x(_move_speed, _dir);
-            y += lengthdir_y(_move_speed, _dir);
+            var _hspd = lengthdir_x(_move_speed, _dir);
+            var _vspd = lengthdir_y(_move_speed, _dir);
+
+            // Colisão Horizontal contra QUALQUER objeto sólido
+            if (place_meeting(x + _hspd, y, obj_colision)) {
+                while (!place_meeting(x + sign(_hspd), y, obj_colision)) {
+                    x += sign(_hspd);
+                }
+                _hspd = 0;
+            }
+            x += _hspd;
+
+            // Colisão Vertical contra QUALQUER objeto sólido
+            if (place_meeting(x, y + _vspd, obj_colision)) {
+                while (!place_meeting(x, y + sign(_vspd), obj_colision)) {
+                    y += sign(_vspd);
+					//show_debug_message("aaaaaaaaaaaaaaaaaaa");
+                }
+                _vspd = 0;
+            }
+            y += _vspd;
             
             sprite_index = spr_walk; 
         } else {
