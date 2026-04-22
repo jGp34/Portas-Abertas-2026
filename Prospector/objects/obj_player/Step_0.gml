@@ -7,14 +7,8 @@ var _vinput = keyboard_check(ord("S")) - keyboard_check(ord("W"));
 var _move_speed = 4;
 
 if (!_is_acting) {
-    // 3. CHECK FOR NEW ACTIONS (Only if we aren't doing something else)
-    if (keyboard_check_pressed(ord("Z"))) {
-        sprite_index = spr_pickaxe;
-        image_index = 0; 
-    } else if (keyboard_check_pressed(ord("X"))) {
-        sprite_index = spr_axe;
-        image_index = 0;
-    } else if (keyboard_check_pressed(ord("C"))) {
+    // 3. AÇÃO INDEPENDENTE: Apenas a espada ("C")
+    if (keyboard_check_pressed(ord("C"))) {
         sprite_index = spr_sword;
         image_index = 0;
     } 
@@ -25,7 +19,7 @@ if (!_is_acting) {
             var _hspd = lengthdir_x(_move_speed, _dir);
             var _vspd = lengthdir_y(_move_speed, _dir);
 
-            // Colisão Horizontal contra QUALQUER objeto sólido
+            // Colisão Horizontal
             if (place_meeting(x + _hspd, y, obj_colision)) {
                 while (!place_meeting(x + sign(_hspd), y, obj_colision)) {
                     x += sign(_hspd);
@@ -34,11 +28,10 @@ if (!_is_acting) {
             }
             x += _hspd;
 
-            // Colisão Vertical contra QUALQUER objeto sólido
+            // Colisão Vertical
             if (place_meeting(x, y + _vspd, obj_colision)) {
                 while (!place_meeting(x, y + sign(_vspd), obj_colision)) {
                     y += sign(_vspd);
-					//show_debug_message("aaaaaaaaaaaaaaaaaaa");
                 }
                 _vspd = 0;
             }
@@ -52,12 +45,11 @@ if (!_is_acting) {
 } else {
     // 5. WAIT FOR ACTION TO FINISH
     if (image_index >= image_number - 1) {
-        sprite_index = spr_still; // Animation done, go back to idle
+        sprite_index = spr_still; // Volta para idle quando acaba o golpe
     }
 }
 
-// 6. FLIPPING (Fixed to respect Room Editor scaling)
+// 6. FLIPPING
 if (_hinput != 0) {
-    // abs() gets the positive size (0.125), sign() gets the direction (1 or -1)
     image_xscale = abs(image_xscale) * sign(_hinput); 
 }

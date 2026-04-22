@@ -1,19 +1,21 @@
-// 1. Verifica se o player existe e está perto
 if (instance_exists(obj_player)) {
     var _dist = point_distance(x, y, obj_player.x, obj_player.y);
     
-    // 2. Se estiver perto e segurando a tecla "E"
     if (_dist <= distancia_minima && keyboard_check(ord("E"))) {
-        timer_atual += 1; // Incrementa o progresso
+        timer_atual += 1; 
         
-        // 3. Quando completar a mineração
+        // --- FAZ O JOGADOR USAR O MACHADO ---
+        if (obj_player.sprite_index != spr_axe) {
+            obj_player.sprite_index = spr_axe;
+            obj_player.image_index = 0;
+        }
+        
         if (timer_atual >= tempo_mineracao_max) {
-            timer_atual = 0; // Reseta o timer para minerar de novo
-            global.wood += 1; // Função ou código para adicionar ao inventário
-            show_debug_message("Madeira coletada: " + string(global.wood));
+            timer_atual = 0; 
+            global.wood += 1; 
+            show_debug_message("Madeira coletada!");
         }
     } else {
-        // Se soltar a tecla ou afastar, o progresso reseta
         timer_atual = 0; 
     }
 }
