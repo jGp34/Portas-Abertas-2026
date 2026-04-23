@@ -15,7 +15,7 @@ if (instance_exists(obj_player)) {
         // 3. Quando completar a mineração
         if (timer_atual >= tempo_mineracao_max) {
             timer_atual = 0; 
-            global.coal += 1; // (Altere de acordo com o minério)
+            global.carvao += 1; // (Altere de acordo com o minério)
             show_debug_message("Minério coletado!");
         }
     } else {
