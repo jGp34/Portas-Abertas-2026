@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_player_colision",
-    "path":"sprites/spr_player_colision/spr_player_colision.yy",
+    "name":"spr_mine_iron",
+    "path":"sprites/spr_mine_iron/spr_mine_iron.yy",
   },
   "spriteMaskId":null,
   "visible":true,
