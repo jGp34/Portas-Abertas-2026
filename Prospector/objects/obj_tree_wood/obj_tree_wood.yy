@@ -34,10 +34,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_tree_wood",
-    "path":"sprites/spr_tree_wood/spr_tree_wood.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }
