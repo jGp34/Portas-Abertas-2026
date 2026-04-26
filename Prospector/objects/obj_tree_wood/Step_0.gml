@@ -86,7 +86,7 @@ switch (state) {
                 state = "growing";
                 sprite_index = sprite_base;
                 image_index = 0;
-                image_speed = 1;
+				image_speed = random_range(0.8, 1.2);
                 image_xscale = 1; // Reseta o lado que a árvore aponta
             }
         }

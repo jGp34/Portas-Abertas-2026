@@ -2,6 +2,8 @@
 timer_atual = 0;
 distancia_minima = 40; // Quão perto o player precisa estar
 image_index = irandom(image_number - 1);
+image_speed = random_range(0.8, 1.2);
+
 // --- TEMPO DE MINERAÇÃO DINÂMICO ---
 var _ciclos_desejados = 2;
 
@@ -26,4 +28,4 @@ if (object_index == obj_oak_tree) {
     sprite_fall = spr_birch_fall;
 } else {
     sprite_fall = sprite_index; // Fallback de segurança
-}
+}	
