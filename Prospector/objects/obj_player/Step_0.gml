@@ -43,13 +43,60 @@ if (!_is_acting) {
         }
     }
 } else {
-    // 5. WAIT FOR ACTION TO FINISH
+    // 5. LÓGICA DE DANO
+    if (sprite_index == spr_sword) {
+        
+        // Frames 11 ao 16 (índices 10 a 15)
+        if (image_index >= 10 && image_index <= 15) { 
+            
+            var _dist = 80; 
+            var _raio = 60;
+            var _hx = x + lengthdir_x(_dist, (image_xscale > 0 ? 0 : 180));
+            var _hy = y;
+
+            var _hit_instances = ds_list_create();
+            // Procuramos o PAI de todos os inimigos
+            var _num = collision_circle_list(_hx, _hy, _raio, obj_enemy_parent, false, true, _hit_instances, false);
+
+            for (var i = 0; i < _num; i++) {
+                var _inst = _hit_instances[| i];
+                
+                // CHECAGEM CRÍTICA: O inimigo está na lista?
+                if (ds_list_find_index(hit_list, _inst) == -1) {
+                    _inst.hp -= player_damage;
+                    ds_list_add(hit_list, _inst);
+                    
+                    // MENSAGEM NO TERMINAL
+                    show_debug_message("HIT! Alvo: " + object_get_name(_inst.object_index) + " | HP: " + string(_inst.hp));
+                }
+            }
+            ds_list_destroy(_hit_instances);
+        }
+    }
+
+    // FINALIZAR AÇÃO (E resetar o estado)
     if (image_index >= image_number - 1) {
-        sprite_index = spr_still; // Volta para idle quando acaba o golpe
+        sprite_index = spr_still;
+        ds_list_clear(hit_list); // LIMPEZA EXTRA POR SEGURANÇA
+        show_debug_message("Animação acabou. Lista limpa para o próximo golpe.");
     }
 }
+
 
 // 6. FLIPPING
 if (_hinput != 0) {
     image_xscale = abs(image_xscale) * sign(_hinput); 
+}
+
+
+
+// Verifica se a variável de vida é menor ou igual a zero
+if (global.player_hp <= 0) {
+    // Opcional: mudar para uma animação de morte
+    // sprite_index = spr_player_dead; 
+
+    // Ativa um Alarm para reiniciar após 1 segundo (60 frames)
+    if (alarm[1] <= 0) {
+        alarm[1] = 60;
+    }
 }
