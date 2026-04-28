@@ -6,8 +6,8 @@
   "name":"obj_birch_tree",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Tree",
+    "path":"folders/Objects/Resources/Tree.yy",
   },
   "parentObjectId":{
     "name":"obj_tree_wood",

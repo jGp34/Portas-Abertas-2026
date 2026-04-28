@@ -8,8 +8,8 @@
   "name":"obj_spawner_hard",
   "overriddenProperties":[],
   "parent":{
-    "name":"spawner",
-    "path":"folders/Objects/spawner.yy",
+    "name":"Spawner",
+    "path":"folders/Objects/Spawner.yy",
   },
   "parentObjectId":{
     "name":"obj_spawner_parent",

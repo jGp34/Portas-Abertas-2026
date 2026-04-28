@@ -1,7 +1,7 @@
 draw_self(); // Desenha o player
 
 // DESENHO DE DEBUG (Remova depois)
-if (sprite_index == spr_sword && image_index >= 10 && image_index <= 15) {
+if (sprite_index == spr_player_sword && image_index >= 10 && image_index <= 15) {
     var _dist = 60; // Mesma distância do seu código de dano
     var _dir = (image_xscale > 0) ? 0 : 180;
     var _hx = x + lengthdir_x(_dist, _dir);

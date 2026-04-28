@@ -22,8 +22,8 @@ switch (state) {
                 timer_atual += 1; 
                 
                 // Faz o jogador usar o machado
-                if (obj_player.sprite_index != spr_axe) {
-                    obj_player.sprite_index = spr_axe;
+                if (obj_player.sprite_index != spr_player_axe) {
+                    obj_player.sprite_index = spr_player_axe;
                     obj_player.image_index = 0;
                 }
                 
@@ -32,7 +32,7 @@ switch (state) {
 				    global.wood += 1; 
 				    show_debug_message("Madeira coletada!");
                     if (instance_exists(obj_player)) {
-                        obj_player.sprite_index = spr_still;
+                        obj_player.sprite_index = spr_player_still;
                         obj_player.image_index = 0;
                     }
 				    // Inicia a animação de queda

@@ -1,5 +1,5 @@
 // 1. CHECK IF WE ARE CURRENTLY ACTING
-var _is_acting = (sprite_index == spr_pickaxe || sprite_index == spr_axe || sprite_index == spr_sword);
+var _is_acting = (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe || sprite_index == spr_player_sword);
 
 // 2. GET MOVEMENT INPUTS
 var _hinput = keyboard_check(ord("D")) - keyboard_check(ord("A"));
@@ -7,9 +7,9 @@ var _vinput = keyboard_check(ord("S")) - keyboard_check(ord("W"));
 var _move_speed = 4;
 
 if (!_is_acting) {
-    // 3. AÇÃO INDEPENDENTE: Apenas a espada ("C")
-    if (keyboard_check_pressed(ord("C"))) {
-        sprite_index = spr_sword;
+    // 3. AÇÃO INDEPENDENTE: Apenas a espada ("Z")
+    if (keyboard_check_pressed(ord("Z"))) {
+        sprite_index = spr_player_sword;
         image_index = 0;
     } 
     // 4. MOVEMENT & WALKING ANIMATION
@@ -37,14 +37,14 @@ if (!_is_acting) {
             }
             y += _vspd;
             
-            sprite_index = spr_walk; 
+            sprite_index = spr_player_walk; 
         } else {
-            sprite_index = spr_still; 
+            sprite_index = spr_player_still; 
         }
     }
 } else {
     // 5. LÓGICA DE DANO
-    if (sprite_index == spr_sword) {
+    if (sprite_index == spr_player_sword) {
         
         // Frames 11 ao 16 (índices 10 a 15)
         if (image_index >= 10 && image_index <= 15) { 
@@ -76,7 +76,7 @@ if (!_is_acting) {
 
     // FINALIZAR AÇÃO (E resetar o estado)
     if (image_index >= image_number - 1) {
-        sprite_index = spr_still;
+        sprite_index = spr_player_still;
         ds_list_clear(hit_list); // LIMPEZA EXTRA POR SEGURANÇA
         show_debug_message("Animação acabou. Lista limpa para o próximo golpe.");
     }

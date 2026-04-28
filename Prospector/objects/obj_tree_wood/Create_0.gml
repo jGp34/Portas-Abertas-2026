@@ -8,8 +8,8 @@ image_speed = random_range(0.8, 1.2);
 var _ciclos_desejados = 2;
 
 // Lê automaticamente as configurações da sua sprite (16 frames, 15 fps)
-var _frames_da_animacao = sprite_get_number(spr_axe); 
-var _fps_da_animacao = sprite_get_speed(spr_axe); 
+var _frames_da_animacao = sprite_get_number(spr_player_axe); 
+var _fps_da_animacao = sprite_get_speed(spr_player_axe); 
 
 // Calcula os segundos exatos e converte para os frames do jogo
 var _segundos_necessarios = (_frames_da_animacao / _fps_da_animacao) * _ciclos_desejados;
