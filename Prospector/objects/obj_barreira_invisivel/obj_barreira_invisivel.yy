@@ -1,19 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"obj_enemy_medium",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_barreira_invisivel",
+  "eventList":[],
   "managed":true,
-  "name":"obj_enemy_medium",
+  "name":"obj_barreira_invisivel",
   "overriddenProperties":[],
   "parent":{
-    "name":"enemy",
-    "path":"folders/Objects/enemy.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":{
-    "name":"obj_enemy_parent",
-    "path":"objects/obj_enemy_parent/obj_enemy_parent.yy",
+    "name":"obj_colision",
+    "path":"objects/obj_colision/obj_colision.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -33,9 +31,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Sprite18",
-    "path":"sprites/Sprite18/Sprite18.yy",
+    "name":"spr_barreira_invisivel",
+    "path":"sprites/spr_barreira_invisivel/spr_barreira_invisivel.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

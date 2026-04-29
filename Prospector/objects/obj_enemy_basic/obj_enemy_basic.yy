@@ -1,11 +1,11 @@
 {
   "$GMObject":"",
-  "%Name":"obj_enemy_medium",
+  "%Name":"obj_enemy_basic",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_enemy_medium",
+  "name":"obj_enemy_basic",
   "overriddenProperties":[],
   "parent":{
     "name":"enemy",
@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Sprite18",
-    "path":"sprites/Sprite18/Sprite18.yy",
+    "name":"Sprite16",
+    "path":"sprites/Sprite16/Sprite16.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -10,8 +10,8 @@
   "name":"obj_tree_wood",
   "overriddenProperties":[],
   "parent":{
-    "name":"Tree",
-    "path":"folders/Objects/Resources/Tree.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":{
     "name":"obj_colision",

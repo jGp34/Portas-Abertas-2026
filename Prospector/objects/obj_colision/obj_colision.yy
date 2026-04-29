@@ -6,8 +6,8 @@
   "name":"obj_colision",
   "overriddenProperties":[],
   "parent":{
-    "name":"Resources",
-    "path":"folders/Objects/Resources.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,
