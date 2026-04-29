@@ -28,6 +28,7 @@
   },
   "name":"Prospector",
   "resources":[
+    {"id":{"name":"obj_barreira_invisivel","path":"objects/obj_barreira_invisivel/obj_barreira_invisivel.yy",},},
     {"id":{"name":"obj_birch_tree","path":"objects/obj_birch_tree/obj_birch_tree.yy",},},
     {"id":{"name":"obj_colision","path":"objects/obj_colision/obj_colision.yy",},},
     {"id":{"name":"obj_enemy_basic","path":"objects/obj_enemy_basic/obj_enemy_basic.yy",},},
@@ -47,6 +48,7 @@
     {"id":{"name":"obj_tree_wood","path":"objects/obj_tree_wood/obj_tree_wood.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"spr_axe","path":"sprites/spr_axe/spr_axe.yy",},},
+    {"id":{"name":"spr_barreira_invisivel","path":"sprites/spr_barreira_invisivel/spr_barreira_invisivel.yy",},},
     {"id":{"name":"spr_birch_fall","path":"sprites/spr_birch_fall/spr_birch_fall.yy",},},
     {"id":{"name":"spr_birch_tree","path":"sprites/spr_birch_tree/spr_birch_tree.yy",},},
     {"id":{"name":"spr_chao","path":"sprites/spr_chao/spr_chao.yy",},},
