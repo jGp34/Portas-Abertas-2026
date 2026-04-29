@@ -13,8 +13,8 @@
   "name":"obj_player",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Player",
+    "path":"folders/Objects/Player.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_still",
-    "path":"sprites/spr_still/spr_still.yy",
+    "name":"spr_player_still",
+    "path":"sprites/spr_player_still/spr_player_still.yy",
   },
   "spriteMaskId":null,
   "visible":true,

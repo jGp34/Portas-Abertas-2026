@@ -11,8 +11,8 @@ ini_close();
 global.player_hp = 10;
 
 // prefect the texturas pesadas dos personagens 256x256
-sprite_prefetch(spr_walk);
-sprite_prefetch(spr_pickaxe);
-sprite_prefetch(spr_axe);
-sprite_prefetch(spr_sword);
+sprite_prefetch(spr_player_walk);
+sprite_prefetch(spr_player_pickaxe);
+sprite_prefetch(spr_player_axe);
+sprite_prefetch(spr_player_sword);
 // fazer isso para os sprites dos inimigos também se eles forem pesados
