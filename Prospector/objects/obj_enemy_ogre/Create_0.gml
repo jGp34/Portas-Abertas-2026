@@ -4,7 +4,7 @@ event_inherited();
 // Sobrescrever Stats
 hp = 20;
 damage = 6;
-move_spd = 1.5;
+move_spd = 2.5;
 attack_dist = 40;
 
 // Atribuir as animações específicas do Goblin

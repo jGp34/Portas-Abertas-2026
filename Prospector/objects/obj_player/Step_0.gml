@@ -1,4 +1,39 @@
+// =======================================================
+// 0. LÓGICA DE MORTE (Sempre checar primeiro)
+// =======================================================
+if (global.player_hp <= 0) {
+    // Se a animação de morte ainda não foi definida, mude para ela
+    if (sprite_index != spr_player_death) {
+        sprite_index = spr_player_death;
+        image_index = 0; // Começa do primeiro frame
+    }
+
+    // Verifica se a animação chegou no último frame
+    if (image_index >= image_number - 1) {
+        // Pausa no último frame (opcional, evita loop antes do reset)
+        image_speed = 0; 
+        
+        // O JOÃO DESATIVOU O ALARME E COLOCOU O SAVE:
+        ini_open("meu_save.ini");
+        
+        ini_write_real("Recursos", "carvao", global.carvao);
+        ini_write_real("Recursos", "gold", global.gold);
+        ini_write_real("Recursos", "iron", global.iron);
+        ini_write_real("Recursos", "wood", global.wood);
+        
+        ini_close();
+        
+        room_restart();
+    }
+    
+    // O comando 'exit' impede que o código abaixo (movimento/ataque) rode se o player estiver morto
+    exit; 
+}
+
+
+// =======================================================
 // 1. CHECK IF WE ARE CURRENTLY ACTING
+// =======================================================
 var _is_acting = (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe || sprite_index == spr_player_sword);
 
 // 2. GET MOVEMENT INPUTS
@@ -82,28 +117,7 @@ if (!_is_acting) {
     }
 }
 
-
 // 6. FLIPPING
 if (_hinput != 0) {
     image_xscale = abs(image_xscale) * sign(_hinput); 
-}
-
-
-
-// Verifica se a variável de vida é menor ou igual a zero
-if (global.player_hp <= 0) {
-    // Opcional: mudar para uma animação de morte
-    // sprite_index = spr_player_dead; 
-
-    // O JOÃO DESATIVOU O ALARME E COLOCOU O SAVE:
-    ini_open("meu_save.ini");
-    
-    ini_write_real("Recursos", "carvao", global.carvao);
-    ini_write_real("Recursos", "gold", global.gold);
-    ini_write_real("Recursos", "iron", global.iron);
-    ini_write_real("Recursos", "wood", global.wood);
-    
-    ini_close();
-    
-    room_restart();
 }

@@ -88,6 +88,7 @@
     {"id":{"name":"spr_orc_walk","path":"sprites/spr_orc_walk/spr_orc_walk.yy",},},
     {"id":{"name":"spr_player_axe","path":"sprites/spr_player_axe/spr_player_axe.yy",},},
     {"id":{"name":"spr_player_colision","path":"sprites/spr_player_colision/spr_player_colision.yy",},},
+    {"id":{"name":"spr_player_death","path":"sprites/spr_player_death/spr_player_death.yy",},},
     {"id":{"name":"spr_player_default","path":"sprites/spr_player_default/spr_player_default.yy",},},
     {"id":{"name":"spr_player_pickaxe","path":"sprites/spr_player_pickaxe/spr_player_pickaxe.yy",},},
     {"id":{"name":"spr_player_still","path":"sprites/spr_player_still/spr_player_still.yy",},},
