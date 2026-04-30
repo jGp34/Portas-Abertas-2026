@@ -20,7 +20,7 @@ if (hp <= 0) {
 if (state == "attack") {
     
     // O MOMENTO DO IMPACTO: Quando a animação chega a 60% (0.6)
-    if (image_index >= image_number * 0.6) && (!attack_hit) {
+    if (image_index >= image_number * 0.5) && (!attack_hit) {
         
         // Marca que o momento do golpe passou, para não checar de novo nesse ataque
         attack_hit = true; 
