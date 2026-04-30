@@ -16,45 +16,67 @@ if (hp <= 0) {
     exit; // O "exit" impede que o inimigo continue andando/atacando depois de morto
 }
 
-// --- 2. VERIFICAR FIM DO ATAQUE ---
+// --- 2. LÓGICA DURANTE O ATAQUE ---
 if (state == "attack") {
-    // Se a animação de ataque terminou, volta para idle para reavaliar
+    
+    // O MOMENTO DO IMPACTO: Quando a animação chega a 60% (0.6)
+    if (image_index >= image_number * 0.6) && (!attack_hit) {
+        
+        // Marca que o momento do golpe passou, para não checar de novo nesse ataque
+        attack_hit = true; 
+        
+        // RECALCULA A DISTÂNCIA: O jogador ainda está aqui?
+        var _meu_chao = bbox_bottom;
+        var _player_chao = obj_player.bbox_bottom;
+        var _dist_impacto = point_distance(x, _meu_chao, obj_player.x, _player_chao);
+        
+        // Se o jogador ainda estiver dentro do alcance (com uma margem de +5 pixels para o "fio da lâmina")
+        if (_dist_impacto <= attack_dist + 5) {
+            global.player_hp -= damage;
+            show_debug_message("Golpe acertou! Dano: " + string(damage));
+        } else {
+            // Se o jogador saiu do alcance enquanto o inimigo levantava a arma
+            show_debug_message("Jogador desviou do ataque!");
+        }
+    }
+
+    // Se a animação de ataque terminou, volta para idle
     if (image_index >= image_number - 1) {
         state = "idle";
     } else {
-        exit; // O "exit" impede que o inimigo ande enquanto está no meio da animação de ataque
+        exit; // Impede que o inimigo ande enquanto está atacando
     }
 }
 
 // --- 3. LÓGICA DE MOVIMENTO E ATAQUE ---
-var _dist = point_distance(x, y, obj_player.x, obj_player.y);
+var _meu_chao = bbox_bottom;
+var _player_chao = obj_player.bbox_bottom;
+
+var _dist = point_distance(x, _meu_chao, obj_player.x, _player_chao);
 
 // DENTRO DO ALCANCE DE ATAQUE (Para de andar)
 if (_dist <= attack_dist) {
     
-    // Tem ataque disponível?
+    // Inicia o ataque se estiver disponível
     if (can_attack) {
         state = "attack";
         sprite_index = spr_attack;
-        image_index = 0; // Começa a animação de ataque do zero
+        image_index = 0; 
         
-        // Aplicar dano ao jogador
-        global.player_hp -= damage;
+        // PREPARA O GOLPE: Reseta a variável de acerto
+        attack_hit = false; 
         
         // Iniciar Cooldown
         can_attack = false;
         alarm[0] = attack_cooldown; 
         
-        show_debug_message("Inimigo atacou! Dano: " + string(damage));
+        show_debug_message("Inimigo começou a atacar!");
     } 
-    // Não pode atacar (em Cooldown)? Fica parado esperando.
     else {
         state = "idle";
         sprite_index = spr_idle;
     }
     
-    // Mantém o inimigo olhando para o jogador, mas evita girar feito louco
-    // se estiverem no mesmo exato pixel (usando uma margem de 1 pixel)
     if (abs(obj_player.x - x) > 1) {
         image_xscale = sign(obj_player.x - x) * base_scale;
     }
@@ -65,13 +87,11 @@ else if (_dist < detect_radius) {
     state = "walk";
     sprite_index = spr_walk; 
     
-    var _dir = point_direction(x, y, obj_player.x, obj_player.y);
+    var _dir = point_direction(x, _meu_chao, obj_player.x, _player_chao);
     
-    // Movimentação simples
     x += lengthdir_x(move_spd, _dir);
     y += lengthdir_y(move_spd, _dir);
     
-    // Girar o sprite (com a mesma margem de segurança de 1 pixel)
     if (abs(obj_player.x - x) > 1) {
         image_xscale = sign(obj_player.x - x) * base_scale;
     }

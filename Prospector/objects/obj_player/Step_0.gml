@@ -95,8 +95,15 @@ if (global.player_hp <= 0) {
     // Opcional: mudar para uma animação de morte
     // sprite_index = spr_player_dead; 
 
-    // Ativa um Alarm para reiniciar após 1 segundo (60 frames)
-    if (alarm[1] <= 0) {
-        alarm[1] = 60;
-    }
+    // O JOÃO DESATIVOU O ALARME E COLOCOU O SAVE:
+    ini_open("meu_save.ini");
+    
+    ini_write_real("Recursos", "carvao", global.carvao);
+    ini_write_real("Recursos", "gold", global.gold);
+    ini_write_real("Recursos", "iron", global.iron);
+    ini_write_real("Recursos", "wood", global.wood);
+    
+    ini_close();
+    
+    room_restart();
 }

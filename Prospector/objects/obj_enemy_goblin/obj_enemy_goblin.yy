@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_globlin_default",
-    "path":"sprites/spr_globlin_default/spr_globlin_default.yy",
+    "name":"spr_goblin_default",
+    "path":"sprites/spr_goblin_default/spr_goblin_default.yy",
   },
   "spriteMaskId":null,
   "visible":true,

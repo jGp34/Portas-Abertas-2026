@@ -5,7 +5,7 @@ event_inherited();
 hp = 10;
 damage = 1;
 move_spd = 2.0;
-
+attack_dist = 25;
 // Atribuir as animações específicas do Goblin
 spr_idle = spr_goblin_still;
 spr_walk = spr_goblin_walk;
