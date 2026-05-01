@@ -19,3 +19,9 @@ base_scale = 1;
 
 // Controle de Estado
 state = "idle";
+
+// --- NOVAS VARIÁVEIS DE ÁUDIO ---
+snd_hit = -1;    // Som quando o ataque acerta (ex: sfx_goblin_attack)
+snd_miss = -1;   // Som quando o ataque erra (ex: swing de espada, tiro de flecha)
+snd_death = -1;  // Som de morte
+snd_pitch = 1.0; // Pitch para o sfx_attack_swing (muda por inimigo)

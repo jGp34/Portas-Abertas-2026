@@ -2,8 +2,11 @@
 if (instance_exists(obj_player)) {
     var _dist = point_distance(x, y, obj_player.x, obj_player.y);
     
-    // 2. Se estiver perto e segurando a tecla "E"
-    if (_dist <= distancia_minima && keyboard_check(ord("E"))) {
+    // NOVIDADE: Verifica se o jogador está pressionando alguma tecla de movimento
+    var _movendo = keyboard_check(ord("W")) || keyboard_check(ord("A")) || keyboard_check(ord("S")) || keyboard_check(ord("D"));
+    
+    // 2. Se estiver perto, segurando "E" E NÃO estiver tentando se mover
+    if (_dist <= distancia_minima && keyboard_check(ord("E")) && !_movendo) {
         timer_atual += 1; // Incrementa o progresso
         
         // --- FAZ O JOGADOR USAR A PICARETA ---
@@ -32,7 +35,7 @@ if (instance_exists(obj_player)) {
             show_debug_message("Minério coletado: " + tipo_minerio);
         }
     } else {
-        // Se soltar a tecla ou afastar, o progresso reseta
+        // Se soltar a tecla, afastar, OU tentar andar, o progresso reseta imediatamente!
         timer_atual = 0; 
     }
 }

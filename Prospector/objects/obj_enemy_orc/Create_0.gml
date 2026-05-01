@@ -17,3 +17,8 @@ spr_death = spr_orc_death;
 base_scale = 0.9; 
 image_xscale = base_scale; // <- Aplica a largura imediatamente ao spawnar
 image_yscale = base_scale; // <- Aplica a altura imediatamente ao spawnar
+
+snd_hit = sfx_orc_attack;
+snd_miss = sfx_attack_swing;
+snd_death = sfx_orc_death;
+snd_pitch = 1.0;

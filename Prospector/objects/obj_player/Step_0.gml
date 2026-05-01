@@ -1,36 +1,63 @@
 // =======================================================
+// CHEATS / DEBUG (Teclas secretas)
+// =======================================================
+// F8 para colocar tudo no 999
+if (keyboard_check_pressed(vk_f8)) {
+    global.carvao = 999;
+    global.gold = 999;
+    global.iron = 999;
+    global.wood = 999;
+    show_debug_message("DEBUG: Todos os recursos foram para 999!");
+}
+
+// F9 para zerar tudo
+if (keyboard_check_pressed(vk_f9)) {
+    global.carvao = 0;
+    global.gold = 0;
+    global.iron = 0;
+    global.wood = 0;
+    show_debug_message("DEBUG: Todos os recursos zerados!");
+}
+
+// F10 para HARD RESET
+if (keyboard_check_pressed(vk_f10)) {
+    if (file_exists("meu_save.ini")) {
+        file_delete("meu_save.ini");
+        show_debug_message("DEBUG: Arquivo meu_save.ini deletado com sucesso!");
+    } else {
+        show_debug_message("DEBUG: Nenhum save encontrado para deletar.");
+    }
+    show_debug_message("DEBUG: HARD RESET! Reiniciando o jogo...");
+    game_restart();
+}
+
+// =======================================================
 // 0. LÓGICA DE MORTE (Sempre checar primeiro)
 // =======================================================
 if (global.player_hp <= 0) {
-    // Se a animação de morte ainda não foi definida, mude para ela
     if (sprite_index != spr_player_death) {
         sprite_index = spr_player_death;
-        image_index = 0; // Começa do primeiro frame
+        image_index = 0;
+        
+        // NOVIDADE: Toca o som de morte UMA vez quando a animação começa!
+        audio_play_sound(sfx_player_death, 1, false);
     }
 
-    // Verifica se a animação chegou no último frame
     if (image_index >= image_number - 1) {
-        // Pausa no último frame (opcional, evita loop antes do reset)
         image_speed = 0; 
         
-        // O JOÃO DESATIVOU O ALARME E COLOCOU O SAVE:
         ini_open("meu_save.ini");
-		
-        
         ini_write_real("Recursos", "carvao", global.carvao);
         ini_write_real("Recursos", "gold", global.gold);
         ini_write_real("Recursos", "iron", global.iron);
         ini_write_real("Recursos", "wood", global.wood);
-        
         ini_close();
         
         room_goto(rm_upgrades);
     }
     
-    // O comando 'exit' impede que o código abaixo (movimento/ataque) rode se o player estiver morto
-    exit; 
+    exit; // Impede tudo abaixo de rodar se o player estiver morto
 }
-
 
 // =======================================================
 // 1. CHECK IF WE ARE CURRENTLY ACTING
@@ -41,6 +68,16 @@ var _is_acting = (sprite_index == spr_player_pickaxe || sprite_index == spr_play
 var _hinput = keyboard_check(ord("D")) - keyboard_check(ord("A"));
 var _vinput = keyboard_check(ord("S")) - keyboard_check(ord("W"));
 var _move_speed = 4;
+
+// -> CANCELAMENTO DA ANIMAÇÃO DE FERRAMENTAS PELO MOVIMENTO <-
+if (_is_acting && (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe)) {
+    if (_hinput != 0 || _vinput != 0) {
+        _is_acting = false;           // Libera para andar na mesma hora
+        action_sound_played = false;  // Reseta o som
+        // Não precisamos mudar a sprite aqui porque o bloco logo abaixo já
+        // vai detectar que o jogador tentou andar e vai mudar para spr_player_walk!
+    }
+}
 
 if (!_is_acting) {
     // 3. AÇÃO INDEPENDENTE: Apenas a espada ("Z")
@@ -79,30 +116,57 @@ if (!_is_acting) {
         }
     }
 } else {
-    // 5. LÓGICA DE DANO
+    // =======================================================
+    // 5. LÓGICA DE AÇÕES (Espada, Picareta, Machado)
+    // =======================================================
+    
+    // ---> A. SONS DE FERRAMENTAS (70% da animação) <---
+    if (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe) {
+        
+        if (image_index >= image_number * 0.7 && !action_sound_played) {
+            action_sound_played = true; // Trava para não repetir o som no mesmo golpe
+            
+            if (sprite_index == spr_player_axe) {
+                audio_play_sound(sfx_player_chopping, 1, false);
+            } 
+            else if (sprite_index == spr_player_pickaxe) {
+                var _snd = audio_play_sound(sfx_player_mining, 1, false);
+                var _pitch = 1.0; 
+                
+                // Exemplo de pitch (pode ser ajustado com a sua variável depois)
+                // _pitch = random_range(0.9, 1.1); 
+                audio_sound_pitch(_snd, _pitch);
+            }
+        }
+    }
+
+	// ---> B. DANO DA ESPADA <---
     if (sprite_index == spr_player_sword) {
         
-        // Frames 11 ao 16 (índices 10 a 15)
+        // Frames 11 ao 16 (índices 10 a 15) - É aqui que o círculo de dano existe
         if (image_index >= 10 && image_index <= 15) { 
             
+            // NOVIDADE: Toca o som do corte assim que o círculo aparece!
+            if (!action_sound_played) {
+                audio_play_sound(sfx_player_attack, 1, false);
+                action_sound_played = true; // Usa a mesma trava para não repetir o som
+            }
+
             var _dist = 80; 
             var _raio = 60;
             var _hx = x + lengthdir_x(_dist, (image_xscale > 0 ? 0 : 180));
             var _hy = y;
 
             var _hit_instances = ds_list_create();
-            // Procuramos o PAI de todos os inimigos
             var _num = collision_circle_list(_hx, _hy, _raio, obj_enemy_parent, false, true, _hit_instances, false);
 
             for (var i = 0; i < _num; i++) {
                 var _inst = _hit_instances[| i];
                 
-                // CHECAGEM CRÍTICA: O inimigo está na lista?
                 if (ds_list_find_index(hit_list, _inst) == -1) {
-                    _inst.hp -= player_damage;
+                    _inst.hp -= global.player_damage; 
                     ds_list_add(hit_list, _inst);
                     
-                    // MENSAGEM NO TERMINAL
                     show_debug_message("HIT! Alvo: " + object_get_name(_inst.object_index) + " | HP: " + string(_inst.hp));
                 }
             }
@@ -110,15 +174,22 @@ if (!_is_acting) {
         }
     }
 
-    // FINALIZAR AÇÃO (E resetar o estado)
+    // ---> C. FINALIZAR AÇÃO E RESETAR ESTADOS <---
     if (image_index >= image_number - 1) {
-        sprite_index = spr_player_still;
-        ds_list_clear(hit_list); // LIMPEZA EXTRA POR SEGURANÇA
-        show_debug_message("Animação acabou. Lista limpa para o próximo golpe.");
+        ds_list_clear(hit_list); 
+        action_sound_played = false; // Libera o som para o próximo golpe
+        
+        // Só interrompe a animação se for a espada, 
+        // OU se for ferramenta e o jogador NÃO estiver segurando o "E".
+        if (sprite_index == spr_player_sword || !keyboard_check(ord("E"))) {
+            sprite_index = spr_player_still;
+        }
     }
 }
 
+// =======================================================
 // 6. FLIPPING
-if (_hinput != 0) {
+// =======================================================
+if (_hinput != 0 && !_is_acting) {
     image_xscale = abs(image_xscale) * sign(_hinput); 
 }

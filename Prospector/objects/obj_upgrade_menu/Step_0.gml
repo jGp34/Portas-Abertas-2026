@@ -27,6 +27,7 @@ if (keyboard_check_pressed(ord("4")) && global.gold >= custo_yield) {
 }
 
 // 5. RESSUSCITAR
+// 5. RESSUSCITAR
 if (keyboard_check_pressed(vk_space)) {
     // Grava tudo o que foi gasto e comprado
     ini_open("meu_save.ini");
@@ -36,6 +37,12 @@ if (keyboard_check_pressed(vk_space)) {
     ini_write_real("Upgrades", "dano", global.player_damage);
     ini_write_real("Upgrades", "mine_speed", global.mine_speed);
     ini_write_real("Upgrades", "mine_yield", global.mine_yield);
+    
+    // -> SALVA OS CUSTOS ATUAIS <-
+    ini_write_real("Custos", "custo_vida", custo_vida);
+    ini_write_real("Custos", "custo_dano", custo_dano);
+    ini_write_real("Custos", "custo_vel", custo_vel);
+    ini_write_real("Custos", "custo_yield", custo_yield);
     
     // Salva o "troco" (minérios que sobraram)
     ini_write_real("Recursos", "wood", global.wood);

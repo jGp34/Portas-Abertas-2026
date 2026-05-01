@@ -6,6 +6,11 @@ if (hp <= 0) {
         state = "death";
         sprite_index = spr_death;
         image_index = 0; // Garante que a animação comece do início
+        
+        // Toca o som de morte (se o filho tiver um configurado)
+        if (snd_death != -1) {
+            audio_play_sound(snd_death, 1, false);
+        }
     }
     
     // Se a animação de morte chegou ao último frame
@@ -34,11 +39,23 @@ if (state == "attack") {
         if (_dist_impacto <= attack_dist + 5) {
             global.player_hp -= damage;
             show_debug_message("Golpe acertou! Dano: " + string(damage));
+            
+            // TOCA SOM DE ACERTO
+            if (snd_hit != -1) {
+                audio_play_sound(snd_hit, 1, false);
+            }
+            
         } else {
             // Se o jogador saiu do alcance enquanto o inimigo levantava a arma
             show_debug_message("Jogador desviou do ataque!");
+            
+            // TOCA SOM DE ERRO/SWING USANDO A VARIÁVEL
+            if (snd_miss != -1) {
+                var _miss_snd = audio_play_sound(snd_miss, 1, false);
+                audio_sound_pitch(_miss_snd, snd_pitch); 
+            }
         }
-    }
+    } // <--- ESTA CHAVE ESTAVA FALTANDO NO SEU CÓDIGO!
 
     // Se a animação de ataque terminou, volta para idle
     if (image_index >= image_number - 1) {

@@ -16,3 +16,8 @@ spr_death = spr_goblin_death;
 base_scale = 0.7; 
 image_xscale = base_scale; // <- Aplica a largura imediatamente ao spawnar
 image_yscale = base_scale; // <- Aplica a altura imediatamente ao spawnar
+
+snd_hit = sfx_goblin_attack;
+snd_miss = sfx_attack_swing;
+snd_death = sfx_goblin_death;
+snd_pitch = 1.3;
