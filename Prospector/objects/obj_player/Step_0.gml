@@ -15,6 +15,7 @@ if (global.player_hp <= 0) {
         
         // O JOÃO DESATIVOU O ALARME E COLOCOU O SAVE:
         ini_open("meu_save.ini");
+		
         
         ini_write_real("Recursos", "carvao", global.carvao);
         ini_write_real("Recursos", "gold", global.gold);
@@ -23,7 +24,7 @@ if (global.player_hp <= 0) {
         
         ini_close();
         
-        room_restart();
+        room_goto(rm_upgrades);
     }
     
     // O comando 'exit' impede que o código abaixo (movimento/ataque) rode se o player estiver morto

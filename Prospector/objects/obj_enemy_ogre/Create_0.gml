@@ -2,8 +2,8 @@
 event_inherited();
 
 // Sobrescrever Stats
-hp = 20;
-damage = 6;
+hp = 60;
+damage = 20;
 move_spd = 2.5;
 attack_dist = 40;
 
