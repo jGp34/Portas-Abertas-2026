@@ -5,7 +5,7 @@
 //draw_text(20, 80, "Ouro: " + string(global.gold));
 
 
-
+draw_set_font(fnt_text);
 // Define a cor e o alinhamento padrão para evitar bugs visuais
 draw_set_color(c_white);
 draw_set_halign(fa_left);

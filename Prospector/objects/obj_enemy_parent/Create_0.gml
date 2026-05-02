@@ -25,3 +25,9 @@ snd_hit = -1;    // Som quando o ataque acerta (ex: sfx_goblin_attack)
 snd_miss = -1;   // Som quando o ataque erra (ex: swing de espada, tiro de flecha)
 snd_death = -1;  // Som de morte
 snd_pitch = 1.0; // Pitch para o sfx_attack_swing (muda por inimigo)
+
+// --- VARIÁVEIS DE PATRULHA / WANDER ---
+can_wander = false;      // Desligado por padrão para os Goblins/Orcs
+wander_timer = 0;        // Cronômetro da ação
+wander_state = "idle";   // Controla se está no tempo de andar ou parar
+wander_dir = 0;          // Direção do movimento

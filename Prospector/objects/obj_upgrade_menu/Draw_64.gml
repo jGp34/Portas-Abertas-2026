@@ -1,3 +1,4 @@
+draw_set_font(fnt_text);
 draw_set_color(c_white);
 
 draw_text(50, 30, "=== O FIM É APENAS O COMEÇO ===");

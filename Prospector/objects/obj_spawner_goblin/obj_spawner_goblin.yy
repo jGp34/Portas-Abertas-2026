@@ -32,7 +32,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_goblin_icon",
+    "path":"sprites/spr_goblin_icon/spr_goblin_icon.yy",
+  },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

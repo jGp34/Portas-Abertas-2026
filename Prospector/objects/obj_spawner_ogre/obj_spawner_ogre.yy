@@ -32,7 +32,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_ogre_icon",
+    "path":"sprites/spr_ogre_icon/spr_ogre_icon.yy",
+  },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

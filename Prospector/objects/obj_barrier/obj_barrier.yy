@@ -1,13 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"obj_barreira_invisivel",
+  "%Name":"obj_barrier",
   "eventList":[],
   "managed":true,
-  "name":"obj_barreira_invisivel",
+  "name":"obj_barrier",
   "overriddenProperties":[],
   "parent":{
-    "name":"Other",
-    "path":"folders/Objects/Other.yy",
+    "name":"Control",
+    "path":"folders/Objects/Control.yy",
   },
   "parentObjectId":{
     "name":"obj_colision",
@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_barreira_invisivel",
-    "path":"sprites/spr_barreira_invisivel/spr_barreira_invisivel.yy",
+    "name":"spr_barrier",
+    "path":"sprites/spr_barrier/spr_barrier.yy",
   },
   "spriteMaskId":null,
   "visible":false,
