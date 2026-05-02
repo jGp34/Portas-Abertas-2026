@@ -22,3 +22,7 @@ snd_hit = sfx_ogre_attack;
 snd_miss = sfx_attack_swing;
 snd_death = sfx_ogre_death;
 snd_pitch = 0.7;
+
+// Souls
+souls_para_dropar = 3;
+souls_scale_mult = 1.6;

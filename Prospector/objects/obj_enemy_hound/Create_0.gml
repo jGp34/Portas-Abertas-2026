@@ -24,3 +24,7 @@ snd_pitch = 2.0;
 
 // --- HABILIDADES ÚNICAS ---
 can_wander = true; // Permite que o Hound patrulhe quando não estiver vendo o jogador      // Direção do movimento
+
+// Souls
+souls_para_dropar = 1;
+souls_scale_mult = 1;

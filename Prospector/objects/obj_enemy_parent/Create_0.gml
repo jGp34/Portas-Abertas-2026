@@ -26,6 +26,10 @@ snd_miss = -1;   // Som quando o ataque erra (ex: swing de espada, tiro de flech
 snd_death = -1;  // Som de morte
 snd_pitch = 1.0; // Pitch para o sfx_attack_swing (muda por inimigo)
 
+// --- NOVAS VARIÁVEIS DE DROP (SOULS) ---
+souls_para_dropar = 1;  // Valor padrão
+souls_scale_mult = 1;   // Multiplicador de tamanho do drop
+
 // --- VARIÁVEIS DE PATRULHA / WANDER ---
 can_wander = false;      // Desligado por padrão para os Goblins/Orcs
 wander_timer = 0;        // Cronômetro da ação

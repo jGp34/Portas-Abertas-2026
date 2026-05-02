@@ -21,3 +21,7 @@ snd_hit = sfx_goblin_attack;
 snd_miss = sfx_attack_swing;
 snd_death = sfx_goblin_death;
 snd_pitch = 1.3;
+
+// Souls
+souls_para_dropar = 1;
+souls_scale_mult = 1;

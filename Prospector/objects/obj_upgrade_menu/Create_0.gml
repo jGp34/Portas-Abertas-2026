@@ -11,5 +11,6 @@ custo_yield = ini_read_real("Custos", "custo_yield", 2);
 custo_atk_speed = ini_read_real("Custos", "custo_atk_speed", 5);  // Custará Ouro
 custo_move_speed = ini_read_real("Custos", "custo_move_speed", 5); // Custará Carvão
 custo_atk_area = ini_read_real("Custos", "custo_atk_area", 4);    // Custará Ferro
+custo_critico = ini_read_real("Custos", "custo_critico", 10);
 
 ini_close();

@@ -47,11 +47,18 @@ if (keyboard_check_pressed(ord("7")) && global.iron >= custo_atk_area) {
     custo_atk_area += 15;
 }
 
-// 8. RESSUSCITAR (Salvar)
+// ---> 8. COMPRAR CHANCE CRÍTICO (+5%) - Custa SOULS
+if (keyboard_check_pressed(ord("8")) && global.souls >= custo_critico) {
+    global.souls -= custo_critico;
+    global.crit_chance += 5; // Aumenta 5% a chance
+    custo_critico += 15; // Aumenta o custo em Souls
+}
+
+// 9. RESSUSCITAR (Salvar)
 if (keyboard_check_pressed(vk_space)) {
     ini_open("meu_save.ini");
     
-    // Salva os upgrades antigos e os NOVOS
+    // --- SALVA TODOS OS UPGRADES ---
     ini_write_real("Upgrades", "max_hp", global.max_hp);
     ini_write_real("Upgrades", "dano", global.player_damage);
     ini_write_real("Upgrades", "mine_speed", global.mine_speed);
@@ -59,8 +66,9 @@ if (keyboard_check_pressed(vk_space)) {
     ini_write_real("Upgrades", "atk_speed", global.atk_speed);
     ini_write_real("Upgrades", "move_speed", global.player_move_speed);
     ini_write_real("Upgrades", "atk_area", global.atk_area);
+    ini_write_real("Upgrades", "crit_chance", global.crit_chance); 
     
-    // Salva os custos atuais (incluindo os novos)
+    // --- SALVA TODOS OS CUSTOS ---
     ini_write_real("Custos", "custo_vida", custo_vida);
     ini_write_real("Custos", "custo_dano", custo_dano);
     ini_write_real("Custos", "custo_vel", custo_vel);
@@ -68,15 +76,18 @@ if (keyboard_check_pressed(vk_space)) {
     ini_write_real("Custos", "custo_atk_speed", custo_atk_speed);
     ini_write_real("Custos", "custo_move_speed", custo_move_speed);
     ini_write_real("Custos", "custo_atk_area", custo_atk_area);
+    ini_write_real("Custos", "custo_critico", custo_critico); 
     
-    // Salva os recursos
+    // --- SALVA TODOS OS RECURSOS ---
     ini_write_real("Recursos", "wood", global.wood);
     ini_write_real("Recursos", "iron", global.iron);
     ini_write_real("Recursos", "carvao", global.carvao);
     ini_write_real("Recursos", "gold", global.gold);
+    ini_write_real("Recursos", "souls", global.souls); 
     
     ini_close();
     
+    // Restaura a vida para o novo limite e volta pro jogo
     global.player_hp = global.max_hp;
     room_goto(Room1); 
 }

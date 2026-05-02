@@ -1,9 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_birch_tree",
+  "%Name":"obj_tree_oak",
   "eventList":[],
   "managed":true,
-  "name":"obj_birch_tree",
+  "name":"obj_tree_oak",
   "overriddenProperties":[],
   "parent":{
     "name":"Tree",
@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_birch_tree",
-    "path":"sprites/spr_birch_tree/spr_birch_tree.yy",
+    "name":"spr_oak_tree",
+    "path":"sprites/spr_oak_tree/spr_oak_tree.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -29,10 +29,14 @@ draw_text(_xx, _yy + _espacamento * 3, "Minérios por hit: " + string(global.min
 
 // 3. RECURSOS NO BOLSO (Opcional, mas muito útil para um Roguelite!)
 var _yy_recursos = _yy + _espacamento * 5; // Pula um espaço extra
+
 draw_set_color(c_yellow);
 draw_text(_xx, _yy_recursos, "Inventário:");
+
 draw_set_color(c_white);
 draw_text(_xx, _yy_recursos + _espacamento * 1, "Madeira: " + string(global.wood));
 draw_text(_xx, _yy_recursos + _espacamento * 2, "Ferro: " + string(global.iron));
 draw_text(_xx, _yy_recursos + _espacamento * 3, "Carvão: " + string(global.carvao));
 draw_text(_xx, _yy_recursos + _espacamento * 4, "Ouro: " + string(global.gold));
+draw_text(_xx, _yy_recursos + _espacamento * 5, "Almas: " + string(global.souls));
+draw_set_color(c_white); // Volta para branco para garantir

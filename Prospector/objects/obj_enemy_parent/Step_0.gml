@@ -5,9 +5,8 @@ if (hp <= 0) {
     if (state != "death") {
         state = "death";
         sprite_index = spr_death;
-        image_index = 0; // Garante que a animação comece do início
+        image_index = 0; 
         
-        // Toca o som de morte (se o filho tiver um configurado)
         if (snd_death != -1) {
             audio_play_sound(snd_death, 1, false);
         }
@@ -15,10 +14,26 @@ if (hp <= 0) {
     
     // Se a animação de morte chegou ao último frame
     if (image_index >= image_number - 1) {
-        show_debug_message("Inimigo destruído!");
+        
+        // --- CORREÇÃO DA POSIÇÃO E ESCALA DA SOUL ---
+        // Posição: Como a origem é Top-Center, o centro verdadeiro
+        // fica no "x" normal, mas o "y" tem que descer metade da altura atual.
+        var _meu_centro_x = x;
+        var _meu_centro_y = y + (sprite_height / 2);
+        
+        var _soul = instance_create_layer(_meu_centro_x, _meu_centro_y, "Instances", obj_loot_soul);
+        
+        _soul.quantidade = souls_para_dropar;
+        
+        // Tamanho ignorando a escala do inimigo, usando apenas o multiplicador!
+        var _final_scale = 0.15 * souls_scale_mult;
+        _soul.image_xscale = _final_scale;
+        _soul.image_yscale = _final_scale;
+        
+        show_debug_message("Inimigo destruído! Dropou " + string(souls_para_dropar) + " souls.");
         instance_destroy();
     }
-    exit; // O "exit" impede que o inimigo continue andando/atacando depois de morto
+    exit; 
 }
 
 // --- 2. LÓGICA DURANTE O ATAQUE ---

@@ -13,47 +13,59 @@ switch (state) {
         }
         break;
 
-    // --- 2. PRONTA PARA MINERAR ---
+	// --- 2. PRONTA PARA MINERAR ---
     case "idle":
-        if (instance_exists(obj_player)) {
-            var _dist = point_distance(x, y, obj_player.x, obj_player.y);
+        // 1. Verifica se o player existe
+        if (!instance_exists(obj_player)) break;
+        
+        // 2. Só permite interagir se o jogador estiver VIVO
+        if (global.player_hp > 0) {
             
-            // NOVIDADE: Verifica se o jogador está pressionando alguma tecla de movimento
+            var _dist = point_distance(x, y, obj_player.x, obj_player.y);
             var _movendo = keyboard_check(ord("W")) || keyboard_check(ord("A")) || keyboard_check(ord("S")) || keyboard_check(ord("D"));
             
-            // Adicionado o !_movendo aqui para respeitar o cancelamento!
+            // 3. Se estiver perto, segurando "E" E NÃO estiver tentando se mover
             if (_dist <= distancia_minima && keyboard_check(ord("E")) && !_movendo) {
-                timer_atual += 1; 
                 
-                // Faz o jogador usar o machado
-                if (obj_player.sprite_index != spr_player_axe) {
-                    obj_player.sprite_index = spr_player_axe;
-                    obj_player.image_index = 0;
-                }
-                
-                if (timer_atual >= tempo_mineracao_max) {
-                    timer_atual = 0; 
-                    global.wood += 1; 
-                    show_debug_message("Madeira coletada!");
+                // Garante que o jogador NÃO esteja com a espada na mão
+                if (obj_player.sprite_index != spr_player_sword) {
                     
-                    if (instance_exists(obj_player)) {
-                        obj_player.sprite_index = spr_player_still;
+                    timer_atual += global.mine_speed;
+                    
+                    // Faz o jogador usar o machado
+                    if (obj_player.sprite_index != spr_player_axe) {
+                        obj_player.sprite_index = spr_player_axe;
                         obj_player.image_index = 0;
                     }
                     
-                    // Inicia a animação de queda
-                    state = "falling";
-                    sprite_index = sprite_fall;
-                    image_index = 0;
-                    image_speed = 1;
-                    mask_index = spr_empty;
-                    
-                    // INVERTIDO: Faz a árvore cair para o lado OPOSTO do player
-                    if (obj_player.x <= x) {
-                        image_xscale = -1;  // Antes era 1. Agora vira para o lado oposto!
-                    } else {
-                        image_xscale = 1;   // Antes era -1.
+                    // 4. Quando completar a mineração
+                    if (timer_atual >= tempo_mineracao_max) {
+                        timer_atual = 0; 
+                        global.wood += 1; 
+                        show_debug_message("Madeira coletada!");
+                        
+                        if (instance_exists(obj_player)) {
+                            obj_player.sprite_index = spr_player_still;
+                            obj_player.image_index = 0;
+                        }
+                        
+                        // Inicia a animação de queda
+                        state = "falling";
+                        sprite_index = sprite_fall;
+                        image_index = 0;
+                        image_speed = 1;
+                        mask_index = spr_empty;
+                        
+                        // INVERTIDO: Faz a árvore cair para o lado OPOSTO do player
+                        if (obj_player.x <= x) {
+                            image_xscale = -1;  
+                        } else {
+                            image_xscale = 1;   
+                        }
                     }
+                } else {
+                    // Se o jogador puxou a espada, reseta o progresso da árvore
+                    timer_atual = 0;
                 }
             } else {
                 // Se soltar a tecla, afastar, OU tentar andar, o progresso reseta

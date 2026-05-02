@@ -22,9 +22,9 @@ regrow_timer = 0;
 sprite_base = sprite_index; 
 
 // Define dinamicamente a sprite de queda baseada no objeto filho
-if (object_index == obj_oak_tree) {
+if (object_index == obj_tree_oak) {
     sprite_fall = spr_oak_fall;
-} else if (object_index == obj_birch_tree) {
+} else if (object_index == obj_tree_birch) {
     sprite_fall = spr_birch_fall;
 } else {
     sprite_fall = sprite_index; // Fallback de segurança

@@ -7,6 +7,7 @@ if (keyboard_check_pressed(vk_f8)) {
     global.gold = 999;
     global.iron = 999;
     global.wood = 999;
+	global.souls = 999;
     show_debug_message("DEBUG: Todos os recursos foram para 999!");
 }
 
@@ -16,6 +17,7 @@ if (keyboard_check_pressed(vk_f9)) {
     global.gold = 0;
     global.iron = 0;
     global.wood = 0;
+	global.souls = 0;
     show_debug_message("DEBUG: Todos os recursos zerados!");
 }
 
@@ -34,12 +36,13 @@ if (keyboard_check_pressed(vk_f10)) {
 // =======================================================
 // 0. LÓGICA DE MORTE (Sempre checar primeiro)
 // =======================================================
+// =======================================================
+// 0. LÓGICA DE MORTE (Sempre checar primeiro)
+// =======================================================
 if (global.player_hp <= 0) {
     if (sprite_index != spr_player_death) {
         sprite_index = spr_player_death;
         image_index = 0;
-        
-        // NOVIDADE: Toca o som de morte UMA vez quando a animação começa!
         audio_play_sound(sfx_player_death, 1, false);
     }
 
@@ -51,12 +54,19 @@ if (global.player_hp <= 0) {
         ini_write_real("Recursos", "gold", global.gold);
         ini_write_real("Recursos", "iron", global.iron);
         ini_write_real("Recursos", "wood", global.wood);
+        ini_write_real("Recursos", "souls", global.souls);
         ini_close();
         
         room_goto(rm_upgrades);
+    } else {
+        image_speed = 1; // IMPORTANTE: Deixa a animação de morte rodar
     }
     
-    exit; // Impede tudo abaixo de rodar se o player estiver morto
+    // ANULA QUALQUER COMANDO DE TECLADO ENQUANTO MORTO!
+    keyboard_clear(ord("E"));
+    keyboard_clear(ord("Z"));
+    
+    exit; 
 }
 
 // =======================================================
@@ -120,22 +130,24 @@ if (!_is_acting) {
     // 5. LÓGICA DE AÇÕES (Espada, Picareta, Machado)
     // =======================================================
     
+    // ---> NOVIDADE: RESET GERAL DO SOM <---
+    // Se a animação de QUALQUER ação voltou para o início, libera para tocar o som de novo!
+    if (image_index < 1) {
+        action_sound_played = false;
+    }
+    
     // ---> A. SONS DE FERRAMENTAS (70% da animação) <---
     if (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe) {
         
         if (image_index >= image_number * 0.7 && !action_sound_played) {
-            action_sound_played = true; // Trava para não repetir o som no mesmo golpe
+            action_sound_played = true; 
             
             if (sprite_index == spr_player_axe) {
                 audio_play_sound(sfx_player_chopping, 1, false);
             } 
             else if (sprite_index == spr_player_pickaxe) {
                 var _snd = audio_play_sound(sfx_player_mining, 1, false);
-                var _pitch = 1.0; 
-                
-                // Exemplo de pitch (pode ser ajustado com a sua variável depois)
-                // _pitch = random_range(0.9, 1.1); 
-                audio_sound_pitch(_snd, _pitch);
+                audio_sound_pitch(_snd, random_range(0.9, 1.1));
             }
         }
     }
@@ -174,10 +186,11 @@ if (!_is_acting) {
         }
     }
 
-    // ---> C. FINALIZAR AÇÃO E RESETAR ESTADOS <---
+	// ---> C. FINALIZAR AÇÃO E RESETAR ESTADOS <---
     if (image_index >= image_number - 1) {
         ds_list_clear(hit_list); 
-        action_sound_played = false; // Libera o som para o próximo golpe
+        
+        // A LINHA DO SOM FOI APAGADA DAQUI!
         
         // Só interrompe a animação se for a espada, 
         // OU se for ferramenta e o jogador NÃO estiver segurando o "E".
