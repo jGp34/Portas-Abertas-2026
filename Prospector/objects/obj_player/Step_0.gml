@@ -67,7 +67,7 @@ var _is_acting = (sprite_index == spr_player_pickaxe || sprite_index == spr_play
 // 2. GET MOVEMENT INPUTS
 var _hinput = keyboard_check(ord("D")) - keyboard_check(ord("A"));
 var _vinput = keyboard_check(ord("S")) - keyboard_check(ord("W"));
-var _move_speed = 4;
+var _move_speed = global.player_move_speed;
 
 // -> CANCELAMENTO DA ANIMAÇÃO DE FERRAMENTAS PELO MOVIMENTO <-
 if (_is_acting && (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe)) {
@@ -152,8 +152,8 @@ if (!_is_acting) {
                 action_sound_played = true; // Usa a mesma trava para não repetir o som
             }
 
-            var _dist = 80; 
-            var _raio = 60;
+            var _dist = 80 + (global.atk_area - 60);
+            var _raio = global.atk_area;
             var _hx = x + lengthdir_x(_dist, (image_xscale > 0 ? 0 : 180));
             var _hy = y;
 
@@ -192,4 +192,13 @@ if (!_is_acting) {
 // =======================================================
 if (_hinput != 0 && !_is_acting) {
     image_xscale = abs(image_xscale) * sign(_hinput); 
+}
+
+// 7. CONTROLE DA VELOCIDADE DA ANIMAÇÃO
+if (sprite_index == spr_player_sword) {
+    image_speed = global.atk_speed; // Acelera o ataque com base no upgrade!
+} else if (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe) {
+    image_speed = global.mine_speed; // Bônus: Aplica o upgrade de vel. de mineração aqui também!
+} else {
+    image_speed = 1; // Andar e Parado tocam na velocidade normal
 }
