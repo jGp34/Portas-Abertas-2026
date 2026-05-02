@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_goblin_icon",
-    "path":"sprites/spr_goblin_icon/spr_goblin_icon.yy",
+    "name":"spr_icon_goblin",
+    "path":"sprites/spr_icon_goblin/spr_icon_goblin.yy",
   },
   "spriteMaskId":null,
   "visible":false,

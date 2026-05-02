@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_ogre_icon",
-    "path":"sprites/spr_ogre_icon/spr_ogre_icon.yy",
+    "name":"spr_icon_ogre",
+    "path":"sprites/spr_icon_ogre/spr_icon_ogre.yy",
   },
   "spriteMaskId":null,
   "visible":false,

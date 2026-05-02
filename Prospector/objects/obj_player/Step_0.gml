@@ -3,11 +3,11 @@
 // =======================================================
 // F8 para colocar tudo no 999
 if (keyboard_check_pressed(vk_f8)) {
-    global.carvao = 999;
-    global.gold = 999;
-    global.iron = 999;
-    global.wood = 999;
-	global.souls = 999;
+    global.carvao = 9999;
+    global.gold = 9999;
+    global.iron = 9999;
+    global.wood = 9999;
+	global.souls = 9999;
     show_debug_message("DEBUG: Todos os recursos foram para 999!");
 }
 

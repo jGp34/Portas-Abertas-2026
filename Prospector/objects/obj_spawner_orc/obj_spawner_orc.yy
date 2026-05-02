@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_orc_icon",
-    "path":"sprites/spr_orc_icon/spr_orc_icon.yy",
+    "name":"spr_icon_orc",
+    "path":"sprites/spr_icon_orc/spr_icon_orc.yy",
   },
   "spriteMaskId":null,
   "visible":false,

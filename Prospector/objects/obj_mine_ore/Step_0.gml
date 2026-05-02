@@ -41,3 +41,4 @@ if (global.player_hp > 0) {
         timer_atual = 0; 
     }
 }
+
