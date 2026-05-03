@@ -33,9 +33,15 @@ if (keyboard_check_pressed(vk_f10)) {
     game_restart();
 }
 
-// =======================================================
-// 0. LÓGICA DE MORTE (Sempre checar primeiro)
-// =======================================================
+// Spawna a Fada automaticamente se o jogador comprou ela e ela ainda não existe
+if (global.fairy_unlocked == 1 && !instance_exists(obj_fairy)) {
+    instance_create_layer(x, y, "Instances", obj_fairy);
+}
+
+if (global.burguer_unlocked == 1 && !instance_exists(obj_burguer)) {
+    instance_create_layer(x, y, "Instances", obj_burguer);
+}
+
 // =======================================================
 // 0. LÓGICA DE MORTE (Sempre checar primeiro)
 // =======================================================
@@ -172,14 +178,32 @@ if (!_is_acting) {
             var _hit_instances = ds_list_create();
             var _num = collision_circle_list(_hx, _hy, _raio, obj_enemy_parent, false, true, _hit_instances, false);
 
-            for (var i = 0; i < _num; i++) {
+for (var i = 0; i < _num; i++) {
                 var _inst = _hit_instances[| i];
                 
                 if (ds_list_find_index(hit_list, _inst) == -1) {
-                    _inst.hp -= global.player_damage; 
+                    
+                    // --- SISTEMA DE CRÍTICO ---
+                    var _dano_final = global.player_damage; // Começa com o dano normal
+                    var _foi_critico = false;
+                    
+                    // Sorteia um número de 0 a 100. Se cair abaixo da sua chance, é CRÍTICO!
+                    if (random(100) < global.crit_chance) {
+                        _dano_final = global.player_damage * 2; // Crítico dá o DOBRO de dano!
+                        _foi_critico = true;
+                    }
+                    
+                    // Aplica o dano no inimigo
+                    _inst.hp -= _dano_final; 
                     ds_list_add(hit_list, _inst);
                     
-                    show_debug_message("HIT! Alvo: " + object_get_name(_inst.object_index) + " | HP: " + string(_inst.hp));
+                    // Mostra no console se foi crítico ou não
+                    if (_foi_critico) {
+                        show_debug_message("CRÍTICO! Alvo: " + object_get_name(_inst.object_index) + " | Dano: " + string(_dano_final) + " | HP: " + string(_inst.hp));
+                        audio_play_sound(sfx_player_crit, 1, false);
+                    } else {
+                        show_debug_message("HIT! Alvo: " + object_get_name(_inst.object_index) + " | Dano: " + string(_dano_final) + " | HP: " + string(_inst.hp));
+                    }
                 }
             }
             ds_list_destroy(_hit_instances);
