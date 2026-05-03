@@ -1,3 +1,6 @@
+// Variável para rastrear se alguma compra foi feita neste frame
+var _comprou_algo = false;
+
 // ==========================================
 // TROCAR DE PÁGINA
 // ==========================================
@@ -14,6 +17,7 @@ if (menu_page == 0) {
         global.wood -= custo_vida;
         global.max_hp += 10;
         custo_vida += 25; 
+        _comprou_algo = true;
     }
 
     // 2. COMPRAR DANO (+2)
@@ -21,6 +25,7 @@ if (menu_page == 0) {
         global.iron -= custo_dano;
         global.player_damage += 2;
         custo_dano += 15;
+        _comprou_algo = true;
     }
 
     // 3. COMPRAR VELOCIDADE DE MINERAR (+0.2)
@@ -28,6 +33,7 @@ if (menu_page == 0) {
         global.carvao -= custo_vel;
         global.mine_speed += 0.2;
         custo_vel += 20;
+        _comprou_algo = true;
     }
 
     // 4. COMPRAR BÔNUS DE DROP (+1)
@@ -35,6 +41,7 @@ if (menu_page == 0) {
         global.gold -= custo_yield;
         global.mine_yield += 1;
         custo_yield += 50;
+        _comprou_algo = true;
     }
 
     // 5. COMPRAR VELOCIDADE DE ATAQUE (+0.1)
@@ -42,6 +49,7 @@ if (menu_page == 0) {
         global.gold -= custo_atk_speed;
         global.atk_speed += 0.1;
         custo_atk_speed += 20;
+        _comprou_algo = true;
     }
 
     // 6. COMPRAR VELOCIDADE DE MOVIMENTO (+0.5)
@@ -49,6 +57,7 @@ if (menu_page == 0) {
         global.carvao -= custo_move_speed;
         global.player_move_speed += 0.5;
         custo_move_speed += 15;
+        _comprou_algo = true;
     }
 
     // 7. COMPRAR ÁREA DE ATAQUE (+10)
@@ -56,6 +65,7 @@ if (menu_page == 0) {
         global.iron -= custo_atk_area;
         global.atk_area += 10;
         custo_atk_area += 15;
+        _comprou_algo = true;
     }
 
     // 8. COMPRAR CHANCE CRÍTICO (+5%)
@@ -63,10 +73,11 @@ if (menu_page == 0) {
         global.souls -= custo_critico;
         global.crit_chance += 5; 
         custo_critico += 15; 
+        _comprou_algo = true;
     }
 }
 // ==========================================
-// PÁGINA 1: UPGRADES DA FADA
+// PÁGINA 1: UPGRADES DE MAGIA E ALIADOS
 // ==========================================
 else if (menu_page == 1) {
     
@@ -75,21 +86,23 @@ else if (menu_page == 1) {
         if (global.fairy_unlocked == 0 && global.souls >= custo_fada_unlock) {
             global.souls -= custo_fada_unlock;
             global.fairy_unlocked = 1;
+            _comprou_algo = true;
         } 
         else if (global.fairy_unlocked == 1 && global.gold >= custo_fada_dano) {
             global.gold -= custo_fada_dano;
             global.fairy_damage += 2;
             custo_fada_dano += 15;
+            _comprou_algo = true;
         }
     }
 
-	// ---> 2. UPAR VEL. DE ATAQUE DA FADA (-10 frames) <---
+    // ---> 2. UPAR VEL. DE ATAQUE DA FADA (-10 frames) <---
     if (keyboard_check_pressed(ord("2")) && global.fairy_unlocked == 1) {
-        // Reduzimos o limite de 30 para 10! Assim você pode upar mais vezes.
         if (global.gold >= custo_fada_vel && global.fairy_atk_speed > 10) {
             global.gold -= custo_fada_vel;
             global.fairy_atk_speed -= 10; 
             custo_fada_vel += 20;
+            _comprou_algo = true;
         }
     }
 
@@ -99,12 +112,12 @@ else if (menu_page == 1) {
             global.iron -= custo_fada_range;
             global.fairy_vision += 50; 
             custo_fada_range += 15;
+            _comprou_algo = true;
         }
     }
-}
 
-// ==========================================
-    // UPGRADES DO HAMBÚRGUER (Botões 4, 5 e 6)
+    // ==========================================
+    // UPGRADES DO HAMBÚRGUER (Botões 4 e 5)
     // ==========================================
 
     // ---> 4. DESBLOQUEAR HAMBÚRGUER OU UPAR CURA (+2 HP) <---
@@ -112,25 +125,37 @@ else if (menu_page == 1) {
         if (global.burguer_unlocked == 0 && global.souls >= custo_burguer_unlock) {
             global.souls -= custo_burguer_unlock;
             global.burguer_unlocked = 1;
+            _comprou_algo = true;
         } 
         else if (global.burguer_unlocked == 1 && global.gold >= custo_burguer_heal) {
             global.gold -= custo_burguer_heal;
             global.burguer_heal_amount += 2;
             custo_burguer_heal += 15;
+            _comprou_algo = true;
         }
     }
 
     // ---> 5. UPAR VEL. DE CURA DO HAMBÚRGUER (-15 frames) <---
     if (keyboard_check_pressed(ord("5")) && global.burguer_unlocked == 1) {
-        // Reduzimos o limite para 30 frames (meio segundo)
         if (global.iron >= custo_burguer_speed && global.burguer_heal_speed > 30) {
             global.iron -= custo_burguer_speed;
             global.burguer_heal_speed -= 15; 
             custo_burguer_speed += 20;
+            _comprou_algo = true;
         }
     }
+} // <--- A CHAVE QUE FECHA A PÁGINA 1 FICA AQUI AGORA!
 
-// 9. RESSUSCITAR (Salvar)
+// ==========================================
+// TOCA O SOM SE COMPROU ALGO
+// ==========================================
+if (_comprou_algo) {
+    audio_play_sound(sfx_buying, 1, false);
+}
+
+// ==========================================
+// 9. RESSUSCITAR E SALVAR
+// ==========================================
 if (keyboard_check_pressed(vk_space)) {
     ini_open("meu_save.ini");
     
@@ -146,10 +171,11 @@ if (keyboard_check_pressed(vk_space)) {
     ini_write_real("Upgrades", "fairy_unlocked", global.fairy_unlocked); 
     ini_write_real("Upgrades", "fairy_dano", global.fairy_damage); 
     ini_write_real("Upgrades", "fairy_atk", global.fairy_atk_speed); 
-	ini_write_real("Upgrades", "fairy_vision", global.fairy_vision);
-	ini_write_real("Upgrades", "burguer_unlocked", global.burguer_unlocked); 
+    ini_write_real("Upgrades", "fairy_vision", global.fairy_vision);
+    ini_write_real("Upgrades", "burguer_unlocked", global.burguer_unlocked); 
     ini_write_real("Upgrades", "burguer_heal_amount", global.burguer_heal_amount); 
     ini_write_real("Upgrades", "burguer_heal_speed", global.burguer_heal_speed);
+    
     // --- SALVA TODOS OS CUSTOS ---
     ini_write_real("Custos", "custo_vida", custo_vida);
     ini_write_real("Custos", "custo_dano", custo_dano);
@@ -162,8 +188,8 @@ if (keyboard_check_pressed(vk_space)) {
     ini_write_real("Custos", "custo_fada_unlock", custo_fada_unlock); 
     ini_write_real("Custos", "custo_fada_dano", custo_fada_dano); 
     ini_write_real("Custos", "custo_fada_vel", custo_fada_vel);
-	ini_write_real("Custos", "custo_fada_range", custo_fada_range);
-	ini_write_real("Custos", "custo_burguer_unlock", custo_burguer_unlock); 
+    ini_write_real("Custos", "custo_fada_range", custo_fada_range);
+    ini_write_real("Custos", "custo_burguer_unlock", custo_burguer_unlock); 
     ini_write_real("Custos", "custo_burguer_heal", custo_burguer_heal); 
     ini_write_real("Custos", "custo_burguer_speed", custo_burguer_speed);
 
