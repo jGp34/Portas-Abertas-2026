@@ -17,7 +17,7 @@ image_yscale = base_scale;
 
 // --- DROP DE MORTE ---
 souls_para_dropar = 3;
-souls_scale_mult = 1.0; 
+souls_scale_mult = 1.6; 
 
 // --- VARIÁVEIS DE COMPORTAMENTO ---
 destino_x = x; // Preenchido pelo Spawner

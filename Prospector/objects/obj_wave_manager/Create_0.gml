@@ -12,11 +12,14 @@ onda_atual = 0;
 // Cada índice (0, 1, 2...) é uma onda diferente. 
 // Coloque dentro do array exatamente os inimigos que você quer que nasçam.
 
-ondas[0] = [obj_enemy_hound]; // Onda 1: 3 Goblins
-ondas[1] = [obj_enemy_hound, obj_enemy_hound];    // Onda 2: 2 Goblins e 1 Orc
+ondas[0] = [obj_enemy_skeleton];
+ondas[1] = [obj_enemy_hound, obj_enemy_hound];
 ondas[3] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound];
-ondas[4] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_hound];
-// Adicione quantas ondas quiser seguindo essa lógica!
+ondas[4] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton];
+ondas[5] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton];
+ondas[6] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
+ondas[7] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
+ondas[8] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
 
 // Inicia o relógio para a primeira onda
 alarm[0] = tempo_primeira_onda;
