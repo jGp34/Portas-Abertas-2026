@@ -35,3 +35,11 @@ can_wander = false;      // Desligado por padrão para os Goblins/Orcs
 wander_timer = 0;        // Cronômetro da ação
 wander_state = "idle";   // Controla se está no tempo de andar ou parar
 wander_dir = 0;          // Direção do movimento
+
+// --- SISTEMA DE RETORNO AO SPAWN ---
+spawn_x = x; // Memoriza o X exato onde o Spawner o criou
+spawn_y = y; // Memoriza o Y exato onde o Spawner o criou
+
+tempo_sem_ver = 0;        // Cronômetro (começa em 0)
+limite_sem_ver = irandom_range(480, 720)     // 600 frames = 10 segundos (a 60 FPS)
+retornando = false;       // Flag para saber se ele já desistiu e está voltando

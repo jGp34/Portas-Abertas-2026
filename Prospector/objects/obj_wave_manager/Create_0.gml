@@ -14,12 +14,13 @@ onda_atual = 0;
 
 ondas[0] = [obj_enemy_hound];
 ondas[1] = [obj_enemy_hound, obj_enemy_hound];
-ondas[3] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound];
-ondas[4] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton];
-ondas[5] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton];
-ondas[6] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
-ondas[7] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
-ondas[8] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
+ondas[3] = [obj_enemy_skeleton];
+ondas[4] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound];
+ondas[5] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton];
+ondas[6] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton];
+ondas[7] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
+ondas[8] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
+ondas[9] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
 
 // Inicia o relógio para a primeira onda
 alarm[0] = tempo_primeira_onda;
