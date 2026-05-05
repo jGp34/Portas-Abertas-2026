@@ -15,64 +15,64 @@ if (menu_page == 0) {
     // 1. COMPRAR VIDA (+10)
     if (keyboard_check_pressed(ord("1")) && global.wood >= custo_vida) {
         global.wood -= custo_vida;
-        global.max_hp += 10;
-        custo_vida += 25; 
-        _comprou_algo = true;
+        global.max_hp = round(global.max_hp * 1.6);
+        custo_vida = round(custo_vida * 1.5); 
+        _comprou_algo = true; 
     }
 
     // 2. COMPRAR DANO (+2)
     if (keyboard_check_pressed(ord("2")) && global.iron >= custo_dano) {
         global.iron -= custo_dano;
-        global.player_damage += 2;
-        custo_dano += 15;
+        global.player_damage = round(global.player_damage * 1.3);
+        custo_dano = round(custo_dano * 1.2);
         _comprou_algo = true;
     }
 
     // 3. COMPRAR VELOCIDADE DE MINERAR (+0.2)
     if (keyboard_check_pressed(ord("3")) && global.carvao >= custo_vel) {
         global.carvao -= custo_vel;
-        global.mine_speed += 0.2;
-        custo_vel += 20;
+        global.mine_speed = round(global.mine_speed * 1.5);
+        custo_vel = round(custo_vel * 1.4);
         _comprou_algo = true;
     }
 
     // 4. COMPRAR BÔNUS DE DROP (+1)
     if (keyboard_check_pressed(ord("4")) && global.gold >= custo_yield) {
         global.gold -= custo_yield;
-        global.mine_yield += 1;
-        custo_yield += 50;
+        global.mine_yield = round(global.mine_yield * 1.7);
+        custo_yield = round(custo_yield * 1.6);
         _comprou_algo = true;
     }
 
     // 5. COMPRAR VELOCIDADE DE ATAQUE (+0.1)
     if (keyboard_check_pressed(ord("5")) && global.gold >= custo_atk_speed) {
         global.gold -= custo_atk_speed;
-        global.atk_speed += 0.1;
-        custo_atk_speed += 20;
+        global.atk_speed = round(global.atk_speed * 1.5);
+        custo_atk_speed = round(custo_atk_speed * 1.4);
         _comprou_algo = true;
     }
 
     // 6. COMPRAR VELOCIDADE DE MOVIMENTO (+0.5)
     if (keyboard_check_pressed(ord("6")) && global.carvao >= custo_move_speed) {
         global.carvao -= custo_move_speed;
-        global.player_move_speed += 0.5;
-        custo_move_speed += 15;
+        global.player_move_speed = round(global.player_move_speed * 1.5);
+        custo_move_speed = round(custo_move_speed * 1.4);
         _comprou_algo = true;
     }
 
     // 7. COMPRAR ÁREA DE ATAQUE (+10)
     if (keyboard_check_pressed(ord("7")) && global.iron >= custo_atk_area) {
         global.iron -= custo_atk_area;
-        global.atk_area += 10;
-        custo_atk_area += 15;
+        global.atk_area = round(global.atk_area * 1.4);
+        custo_atk_area = round(custo_atk_area * 1.3);
         _comprou_algo = true;
     }
 
     // 8. COMPRAR CHANCE CRÍTICO (+5%)
     if (keyboard_check_pressed(ord("8")) && global.souls >= custo_critico) {
         global.souls -= custo_critico;
-        global.crit_chance += 5; 
-        custo_critico += 15; 
+        global.crit_chance = round(global.crit_chance * 1.4); 
+        custo_critico = round(custo_critico * 1.3); 
         _comprou_algo = true;
     }
 }
