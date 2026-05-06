@@ -3,7 +3,7 @@ event_inherited();
 
 // Sobrescreve os Stats
 hp = 20; 
-damage = 10; // Esse dano será repassado ao projétil
+damage = 15; // Esse dano será repassado ao projétil
 move_spd = 1.0;
 
 // --- SISTEMA DE DISTÂNCIA E TIRO ---
@@ -12,7 +12,7 @@ detect_radius = 300; // Vê o jogador de muito longe
 ideal_dist_min = 120; // Se o jogador chegar a menos de 120 pixels, ele FOGE!
 ideal_dist_max = 200; // Se ficar mais longe que 200 pixels, ele APROXIMA!
 
-shoot_cooldown = 120; // Atira a cada 1.5 segundos (90 frames)
+shoot_cooldown = 120; // Atira a cada 2 segundos (120 frames)
 shoot_timer = shoot_cooldown;
 
 // Animações (Troque pelos nomes das suas sprites)

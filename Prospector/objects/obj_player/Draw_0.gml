@@ -1,7 +1,7 @@
 draw_self(); // Desenha o player
 
 // EFEITO VISUAL DO ATAQUE (Arco com ajuste fino de posição)
-if (sprite_index == spr_player_sword && image_index >= 10 && image_index <= 15) {
+if (sprite_index == spr_player_sword && image_index >= 10) {
     
     // Área base da colisão e direção
     var _dist_final = 80 + (global.atk_area - 60); 
@@ -9,7 +9,7 @@ if (sprite_index == spr_player_sword && image_index >= 10 && image_index <= 15) 
     var _dir = (image_xscale > 0) ? 0 : 180;
     
     // --- MATEMÁTICA DO IMPACTO ---
-    var _progresso = (image_index - 10) / 5;
+    var _progresso = clamp((image_index - 10) / 5, 0, 1);
     
     // ==========================================
     // AJUSTES FINOS (Mude esses números se precisar)

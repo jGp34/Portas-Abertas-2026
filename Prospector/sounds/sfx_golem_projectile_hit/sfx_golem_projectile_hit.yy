@@ -1,6 +1,6 @@
 {
   "$GMSound":"v2",
-  "%Name":"sfx_projectile_hit",
+  "%Name":"sfx_golem_projectile_hit",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -10,9 +10,9 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":1.8,
+  "duration":0.5280045,
   "exportDir":"",
-  "name":"sfx_projectile_hit",
+  "name":"sfx_golem_projectile_hit",
   "parent":{
     "name":"Attack",
     "path":"folders/Sounds/SFX/Attack.yy",
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"sfx_projectile_hit.mp3",
+  "soundFile":"sfx_golem_projectile_hit.mp3",
   "volume":1.0,
 }

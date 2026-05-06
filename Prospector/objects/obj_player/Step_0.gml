@@ -158,55 +158,60 @@ if (!_is_acting) {
         }
     }
 
-	// ---> B. DANO DA ESPADA <---
+// ---> B. DANO DA ESPADA <---
     if (sprite_index == spr_player_sword) {
         
-        // Frames 11 ao 16 (índices 10 a 15) - É aqui que o círculo de dano existe
-        if (image_index >= 10 && image_index <= 15) { 
+        // CORREÇÃO AQUI: Mudamos para >= 10 sem o limite superior fechado.
+        // A trava 'action_sound_played' garantirá que o som/dano só aconteça UMA VEZ por animação.
+        if (image_index >= 10) { 
             
             // NOVIDADE: Toca o som do corte assim que o círculo aparece!
             if (!action_sound_played) {
                 audio_play_sound(sfx_player_attack, 1, false);
-                action_sound_played = true; // Usa a mesma trava para não repetir o som
-            }
-
-            var _dist = 80 + (global.atk_area - 60);
-            var _raio = global.atk_area;
-            var _hx = x + lengthdir_x(_dist, (image_xscale > 0 ? 0 : 180));
-            var _hy = y;
-
-            var _hit_instances = ds_list_create();
-            var _num = collision_circle_list(_hx, _hy, _raio, obj_enemy_parent, false, true, _hit_instances, false);
-
-for (var i = 0; i < _num; i++) {
-                var _inst = _hit_instances[| i];
+                action_sound_played = true; // Usa a mesma trava para não repetir o som E o dano
                 
-                if (ds_list_find_index(hit_list, _inst) == -1) {
+                // === APLICAR DANO ===
+                // (Movemos o cálculo do dano para dentro do 'if (!action_sound_played)', 
+                // para garantir que o dano e o hit_list também só sejam calculados uma vez por ataque, 
+                // poupando processamento em altas velocidades).
+                var _dist = 80 + (global.atk_area - 60);
+                var _raio = global.atk_area;
+                var _hx = x + lengthdir_x(_dist, (image_xscale > 0 ? 0 : 180));
+                var _hy = y;
+
+                var _hit_instances = ds_list_create();
+                var _num = collision_circle_list(_hx, _hy, _raio, obj_enemy_parent, false, true, _hit_instances, false);
+
+                for (var i = 0; i < _num; i++) {
+                    var _inst = _hit_instances[| i];
                     
-                    // --- SISTEMA DE CRÍTICO ---
-                    var _dano_final = global.player_damage; // Começa com o dano normal
-                    var _foi_critico = false;
-                    
-                    // Sorteia um número de 0 a 100. Se cair abaixo da sua chance, é CRÍTICO!
-                    if (random(100) < global.crit_chance) {
-                        _dano_final = global.player_damage * 2; // Crítico dá o DOBRO de dano!
-                        _foi_critico = true;
-                    }
-                    
-                    // Aplica o dano no inimigo
-                    _inst.hp -= _dano_final; 
-                    ds_list_add(hit_list, _inst);
-                    
-                    // Mostra no console se foi crítico ou não
-                    if (_foi_critico) {
-                        show_debug_message("CRÍTICO! Alvo: " + object_get_name(_inst.object_index) + " | Dano: " + string(_dano_final) + " | HP: " + string(_inst.hp));
-                        audio_play_sound(sfx_player_crit, 1, false);
-                    } else {
-                        show_debug_message("HIT! Alvo: " + object_get_name(_inst.object_index) + " | Dano: " + string(_dano_final) + " | HP: " + string(_inst.hp));
+                    if (ds_list_find_index(hit_list, _inst) == -1) {
+                        
+                        // --- SISTEMA DE CRÍTICO ---
+                        var _dano_final = global.player_damage; // Começa com o dano normal
+                        var _foi_critico = false;
+                        
+                        // Sorteia um número de 0 a 100. Se cair abaixo da sua chance, é CRÍTICO!
+                        if (random(100) < global.crit_chance) {
+                            _dano_final = global.player_damage * 2; // Crítico dá o DOBRO de dano!
+                            _foi_critico = true;
+                        }
+                        
+                        // Aplica o dano no inimigo
+                        _inst.hp -= _dano_final; 
+                        ds_list_add(hit_list, _inst);
+                        
+                        // Mostra no console se foi crítico ou não
+                        if (_foi_critico) {
+                            show_debug_message("CRÍTICO! Alvo: " + object_get_name(_inst.object_index) + " | Dano: " + string(_dano_final) + " | HP: " + string(_inst.hp));
+                            audio_play_sound(sfx_player_crit, 1, false);
+                        } else {
+                            show_debug_message("HIT! Alvo: " + object_get_name(_inst.object_index) + " | Dano: " + string(_dano_final) + " | HP: " + string(_inst.hp));
+                        }
                     }
                 }
+                ds_list_destroy(_hit_instances);
             }
-            ds_list_destroy(_hit_instances);
         }
     }
 

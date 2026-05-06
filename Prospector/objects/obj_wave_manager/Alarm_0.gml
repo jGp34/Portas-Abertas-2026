@@ -20,8 +20,31 @@ if (_qtd_spawners > 0) {
         var _index_sorteado = irandom(_qtd_spawners - 1);
         var _spawner_escolhido = instance_find(obj_spawner_point, _index_sorteado);
         
-        // Cria o inimigo exatamente na posição (x, y) do spawner sorteado
-        instance_create_layer(_spawner_escolhido.x, _spawner_escolhido.y, "Instances", _inimigo_tipo);
+        // Cria o inimigo e guarda a ID dele na variável _novo_inimigo
+        var _novo_inimigo = instance_create_layer(_spawner_escolhido.x, _spawner_escolhido.y, "Instances", _inimigo_tipo);
+        
+        // =======================================================
+        // SISTEMA ANTI-STUCK (Desempacar da parede)
+        // =======================================================
+        with (_novo_inimigo) {
+            // Pega a direção que aponta para o meio da tela
+            var _dir_centro = point_direction(x, y, room_width / 2, room_height / 2);
+            var _limite = 500; // Limite de segurança para não travar o jogo
+            
+            // Enquanto estiver dentro da barreira, dá um passinho pro meio da tela
+            while (place_meeting(x, y, obj_barrier) && _limite > 0) {
+                x += lengthdir_x(1, _dir_centro);
+                y += lengthdir_y(1, _dir_centro);
+                _limite--;
+            }
+            
+            // MUITO IMPORTANTE: Atualiza o ponto de spawn! 
+            // Como o Golem e outros inimigos guardam o x e y inicial para voltar pra casa,
+            // precisamos avisar que a casa dele agora é fora da parede.
+            spawn_x = x;
+            spawn_y = y;
+        }
+        // =======================================================
     }
     
     // Mostra no console se é uma onda normal ou a onda final repetida
@@ -37,4 +60,4 @@ if (_qtd_spawners > 0) {
 
 // 3. O RELÓGIO: Prepara o terreno para a próxima onda
 onda_atual++; // A onda atual continua subindo infinitamente (Onda 4, 5, 10, 100...)
-alarm[0] = tempo_entre_ondas; // Relógio de 30 segundos
+alarm[0] = tempo_entre_ondas; // Relógio para a próxima onda
