@@ -7,7 +7,7 @@ if (keyboard_check_pressed(vk_f8)) {
     global.gold = 9999;
     global.iron = 9999;
     global.wood = 9999;
-	global.souls = 9999;
+    global.souls = 9999;
     show_debug_message("DEBUG: Todos os recursos foram para 999!");
 }
 
@@ -17,7 +17,7 @@ if (keyboard_check_pressed(vk_f9)) {
     global.gold = 0;
     global.iron = 0;
     global.wood = 0;
-	global.souls = 0;
+    global.souls = 0;
     show_debug_message("DEBUG: Todos os recursos zerados!");
 }
 
@@ -100,6 +100,7 @@ if (!_is_acting) {
     if (keyboard_check_pressed(ord("Z"))) {
         sprite_index = spr_player_sword;
         image_index = 0;
+        action_sound_played = false; // <--- FIX: Reseta o ataque assim que aperta o botão!
     } 
     // 4. MOVEMENT & WALKING ANIMATION
     else {
@@ -136,12 +137,6 @@ if (!_is_acting) {
     // 5. LÓGICA DE AÇÕES (Espada, Picareta, Machado)
     // =======================================================
     
-    // ---> NOVIDADE: RESET GERAL DO SOM <---
-    // Se a animação de QUALQUER ação voltou para o início, libera para tocar o som de novo!
-    if (image_index < 1) {
-        action_sound_played = false;
-    }
-    
     // ---> A. SONS DE FERRAMENTAS (70% da animação) <---
     if (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe) {
         
@@ -161,19 +156,14 @@ if (!_is_acting) {
 // ---> B. DANO DA ESPADA <---
     if (sprite_index == spr_player_sword) {
         
-        // CORREÇÃO AQUI: Mudamos para >= 10 sem o limite superior fechado.
         // A trava 'action_sound_played' garantirá que o som/dano só aconteça UMA VEZ por animação.
         if (image_index >= 10) { 
             
-            // NOVIDADE: Toca o som do corte assim que o círculo aparece!
             if (!action_sound_played) {
                 audio_play_sound(sfx_player_attack, 1, false);
                 action_sound_played = true; // Usa a mesma trava para não repetir o som E o dano
                 
                 // === APLICAR DANO ===
-                // (Movemos o cálculo do dano para dentro do 'if (!action_sound_played)', 
-                // para garantir que o dano e o hit_list também só sejam calculados uma vez por ataque, 
-                // poupando processamento em altas velocidades).
                 var _dist = 80 + (global.atk_area - 60);
                 var _raio = global.atk_area;
                 var _hx = x + lengthdir_x(_dist, (image_xscale > 0 ? 0 : 180));
@@ -215,11 +205,10 @@ if (!_is_acting) {
         }
     }
 
-	// ---> C. FINALIZAR AÇÃO E RESETAR ESTADOS <---
+    // ---> C. FINALIZAR AÇÃO E RESETAR ESTADOS <---
     if (image_index >= image_number - 1) {
         ds_list_clear(hit_list); 
-        
-        // A LINHA DO SOM FOI APAGADA DAQUI!
+        action_sound_played = false; // <--- FIX: Garante o reset também no final do loop
         
         // Só interrompe a animação se for a espada, 
         // OU se for ferramenta e o jogador NÃO estiver segurando o "E".

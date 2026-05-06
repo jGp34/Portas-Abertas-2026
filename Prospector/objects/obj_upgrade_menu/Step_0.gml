@@ -31,7 +31,7 @@ if (menu_page == 0) {
     // 3. COMPRAR VELOCIDADE DE MINERAR (+0.2)
     if (keyboard_check_pressed(ord("3")) && global.carvao >= custo_vel) {
         global.carvao -= custo_vel;
-        global.mine_speed = round(global.mine_speed * 1.5);
+        global.mine_speed += 0.5;
         custo_vel = round(custo_vel * 1.4);
         _comprou_algo = true;
     }
@@ -47,7 +47,7 @@ if (menu_page == 0) {
     // 5. COMPRAR VELOCIDADE DE ATAQUE (+0.1)
     if (keyboard_check_pressed(ord("5")) && global.gold >= custo_atk_speed) {
         global.gold -= custo_atk_speed;
-        global.atk_speed = round(global.atk_speed * 1.5);
+        global.atk_speed += 0.5;
         custo_atk_speed = round(custo_atk_speed * 1.4);
         _comprou_algo = true;
     }
@@ -55,7 +55,7 @@ if (menu_page == 0) {
     // 6. COMPRAR VELOCIDADE DE MOVIMENTO (+0.5)
     if (keyboard_check_pressed(ord("6")) && global.carvao >= custo_move_speed) {
         global.carvao -= custo_move_speed;
-        global.player_move_speed = round(global.player_move_speed * 1.5);
+        global.player_move_speed += 0.5;
         custo_move_speed = round(custo_move_speed * 1.4);
         _comprou_algo = true;
     }

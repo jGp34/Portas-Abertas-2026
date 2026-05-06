@@ -43,3 +43,8 @@ spawn_y = y; // Memoriza o Y exato onde o Spawner o criou
 tempo_sem_ver = 0;        // Cronômetro (começa em 0)
 limite_sem_ver = irandom_range(480, 720)     // 600 frames = 10 segundos (a 60 FPS)
 retornando = false;       // Flag para saber se ele já desistiu e está voltando
+
+
+
+// Guarda quem foi o spawner que criou este inimigo
+meu_spawner = noone;
