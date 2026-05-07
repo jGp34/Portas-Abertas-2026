@@ -1,20 +1,19 @@
 {
   "$GMObject":"",
-  "%Name":"obj_intro_manager",
+  "%Name":"obj_cutscene_manager",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":64,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_intro_manager",
+  "name":"obj_cutscene_manager",
   "overriddenProperties":[],
   "parent":{
     "name":"Cutscenes",
     "path":"folders/Objects/Cutscenes.yy",
   },
-  "parentObjectId":{
-    "name":"obj_cutscene_manager",
-    "path":"objects/obj_cutscene_manager/obj_cutscene_manager.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
