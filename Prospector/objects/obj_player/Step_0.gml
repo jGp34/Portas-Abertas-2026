@@ -137,19 +137,24 @@ if (!_is_acting) {
     // 5. LÓGICA DE AÇÕES (Espada, Picareta, Machado)
     // =======================================================
     
-    // ---> A. SONS DE FERRAMENTAS (70% da animação) <---
+// ---> A. SONS DE FERRAMENTAS (70% da animação) <---
     if (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe) {
         
-        if (image_index >= image_number * 0.7 && !action_sound_played) {
-            action_sound_played = true; 
-            
-            if (sprite_index == spr_player_axe) {
-                audio_play_sound(sfx_player_chopping, 1, false);
-            } 
-            else if (sprite_index == spr_player_pickaxe) {
-                var _snd = audio_play_sound(sfx_player_mining, 1, false);
-                audio_sound_pitch(_snd, random_range(0.9, 1.1));
+        if (image_index >= image_number * 0.7) {
+            if (!action_sound_played) {
+                action_sound_played = true; 
+                
+                if (sprite_index == spr_player_axe) {
+                    audio_play_sound(sfx_player_chopping, 1, false);
+                } 
+                else if (sprite_index == spr_player_pickaxe) {
+                    var _snd = audio_play_sound(sfx_player_mining, 1, false);
+                    audio_sound_pitch(_snd, random_range(0.9, 1.1));
+                }
             }
+        } else {
+            // SOLUÇÃO: Só reseta a trava quando a animação voltar para o começo (antes dos 70%)!
+            action_sound_played = false;
         }
     }
 
@@ -202,13 +207,15 @@ if (!_is_acting) {
                 }
                 ds_list_destroy(_hit_instances);
             }
+        } else {
+            // CORREÇÃO AQUI: O 'else' fica alinhado com o 'if (image_index >= 10)'
+            action_sound_played = false;
         }
     }
 
     // ---> C. FINALIZAR AÇÃO E RESETAR ESTADOS <---
-    if (image_index >= image_number - 1) {
+    if (image_index + image_speed >= image_number) {
         ds_list_clear(hit_list); 
-        action_sound_played = false; // <--- FIX: Garante o reset também no final do loop
         
         // Só interrompe a animação se for a espada, 
         // OU se for ferramenta e o jogador NÃO estiver segurando o "E".
