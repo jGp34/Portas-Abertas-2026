@@ -204,5 +204,5 @@ if (keyboard_check_pressed(vk_space)) {
     
     // Restaura a vida para o novo limite e volta pro jogo
     global.player_hp = global.max_hp;
-    room_goto(Room1); 
+    room_goto(rm_game); 
 }
