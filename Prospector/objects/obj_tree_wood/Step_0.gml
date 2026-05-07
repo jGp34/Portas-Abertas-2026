@@ -62,7 +62,7 @@ switch (state) {
                     // 4. Quando completar a mineração
                     if (timer_atual >= tempo_mineracao_max) {
                         timer_atual = 0; 
-                        global.wood += 1; 
+                        global.wood += global.mine_yield;
                         show_debug_message("Madeira coletada!");
                         
                         if (instance_exists(obj_player)) {

@@ -48,11 +48,11 @@ if (global.player_hp > 0) {
             if (timer_atual >= tempo_mineracao_max) {
                 timer_atual = 0; 
                 
-                switch (tipo_minerio) {
-                    case "carvao": global.carvao += 1; break;
-                    case "iron": global.iron += 1; break;
-                    case "gold": global.gold += 1; break;
-                }
+				switch (tipo_minerio) {
+				    case "carvao": global.carvao += global.mine_yield; break;
+				    case "iron": global.iron += global.mine_yield; break;
+				    case "gold": global.gold += global.mine_yield; break;
+				}
                 
                 show_debug_message("Minério coletado: " + tipo_minerio);
             }

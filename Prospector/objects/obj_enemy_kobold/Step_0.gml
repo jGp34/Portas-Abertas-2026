@@ -54,49 +54,51 @@ if (hp < prev_hp) {
     var _chance_carvao = 0, _chance_ferro = 0, _chance_ouro = 0;
     
     if (meu_numero_spawn <= 2) { 
-        // 0 a 1m (Kobolds 1 e 2)
         _chance_carvao = 50; 
     } 
     else if (meu_numero_spawn <= 4) { 
-        // 1m a 2m (Kobolds 3 e 4)
         _chance_carvao = 70; _chance_ferro = 25; 
     } 
     else if (meu_numero_spawn <= 6) { 
-        // 2m a 3m (Kobolds 5 e 6)
         _chance_carvao = 85; _chance_ferro = 50; _chance_ouro = 25; 
     } 
     else { 
-        // 3m+ (Kobolds 7 em diante)
         _chance_carvao = 100; _chance_ferro = 75; _chance_ouro = 50; 
     }
     
-    // ---> NOVIDADE: Rastreador de Drop <---
+    // ========================================================
+    // A MÁGICA ACONTECE AQUI: CÁLCULO DOS "HITS VIRTUAIS"
+    // Divide o dano por 5 (dano base). O "max(1, ...)" garante 
+    // que se o dano for menor que 5, ele ainda role pelo menos 1 vez.
+    // ========================================================
+    var _hits_virtuais = max(1, round(_dano_tomado / 5)); 
+    
     var _dropou_algo = false; // Começa assumindo que deu azar
     
-    // Rola os dados (0 a 100)
-    if (random(100) < _chance_carvao) { 
-        global.carvao += 1; 
-        _dropou_algo = true; 
-        show_debug_message("Kobold dropou Carvão!"); 
-    }
-    if (random(100) < _chance_ferro) { 
-        global.iron += 1; 
-        _dropou_algo = true; 
-        show_debug_message("Kobold dropou Ferro!"); 
-    }
-    if (random(100) < _chance_ouro) { 
-        global.gold += 1; 
-        _dropou_algo = true; 
-        show_debug_message("Kobold dropou Ouro!"); 
+    // Roda a roleta de drops várias vezes dependendo da força do golpe!
+    for (var i = 0; i < _hits_virtuais; i++) {
+        
+        if (random(100) < _chance_carvao) { 
+            global.carvao += global.mine_yield;  
+            _dropou_algo = true; 
+        }
+        if (random(100) < _chance_ferro) { 
+            global.iron += global.mine_yield;  
+            _dropou_algo = true; 
+        }
+        if (random(100) < _chance_ouro) { 
+            global.gold += global.mine_yield;  
+            _dropou_algo = true; 
+        }
     }
     
-	// Opcional: Toca o som SOMENTE se a variável de drop ficou verdadeira!
+    // Opcional: Toca o som e mostra no console SOMENTE se caiu algo.
+    // Ele fica FORA do "for" para não tocar o som 10 vezes no mesmo milissegundo e estourar o ouvido do jogador!
     if (_dropou_algo) {
-        // CORREÇÃO AQUI: Se o nome do seu arquivo for "sfx_kobold_drop", isso vai tocar!
         audio_play_sound(sfx_kobold_drop, 1, false);
+        show_debug_message("Kobold apanhou feio! Roletas giradas: " + string(_hits_virtuais));
     }
 }
-
 // 4. SISTEMA DE MOVIMENTO
 if (!foi_atacado) {
     // Alterna entre andar e parar
