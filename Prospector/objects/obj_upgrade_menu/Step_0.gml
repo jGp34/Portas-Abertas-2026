@@ -15,15 +15,15 @@ if (menu_page == 0) {
     // 1. COMPRAR VIDA (+10)
     if (keyboard_check_pressed(ord("1")) && global.wood >= custo_vida) {
         global.wood -= custo_vida;
-        global.max_hp = round(global.max_hp * 1.6);
-        custo_vida = round(custo_vida * 1.5); 
+        global.max_hp = round(global.max_hp * 1.8);
+        custo_vida = round(custo_vida * 1.4); 
         _comprou_algo = true; 
     }
 
     // 2. COMPRAR DANO (+2)
     if (keyboard_check_pressed(ord("2")) && global.iron >= custo_dano) {
         global.iron -= custo_dano;
-        global.player_damage = round(global.player_damage * 1.3);
+        global.player_damage = round(global.player_damage * 1.8);
         custo_dano = round(custo_dano * 1.2);
         _comprou_algo = true;
     }
