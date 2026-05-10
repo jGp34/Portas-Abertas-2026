@@ -18,6 +18,7 @@ global.max_hp = ini_read_real("Upgrades", "max_hp", 15);
 global.player_damage = ini_read_real("Upgrades", "dano", 10);
 global.mine_speed = ini_read_real("Upgrades", "mine_speed", 1); 
 global.mine_yield = ini_read_real("Upgrades", "mine_yield", 1); 
+global.crit_dano = ini_read_real("Upgrades", "crit_dano", 2);
 
 // ---> ADICIONADO: Novos Upgrades <---
 global.atk_speed = ini_read_real("Upgrades", "atk_speed", 1); // 1 = 100% da velocidade da animação

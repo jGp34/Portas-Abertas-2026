@@ -61,8 +61,8 @@ if (menu_page == 0) {
     // 4. COMPRAR BÔNUS DE DROP
     if (keyboard_check_pressed(ord("4")) && global.gold >= custo_yield) {
         global.gold -= custo_yield;
-        global.mine_yield = round(global.mine_yield * 1.4);
-        custo_yield = round(custo_yield * 1.2);
+        global.mine_yield += 1;
+        custo_yield = round(custo_yield * 1.5);
         _comprou_algo = true;
     }
 

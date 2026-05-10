@@ -35,3 +35,7 @@ phase2_next_attack = "vomit";  // Alterna qual o próximo ataque à distância
 vomit_spawned = false;		   // Trava para spawnar apenas 1 inimigo por vômito
 // Encontra o ponto de espera
 target_wait = instance_nearest(x, y, obj_knight_wait);
+
+// Variáveis para desenhar o efeito visual do corte
+draw_boss_slash = false;
+slash_frame = 0;
