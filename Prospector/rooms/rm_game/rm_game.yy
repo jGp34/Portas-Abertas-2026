@@ -234,6 +234,7 @@
     {"name":"inst_1045103B","path":"rooms/rm_game/rm_game.yy",},
     {"name":"inst_7F69571A","path":"rooms/rm_game/rm_game.yy",},
     {"name":"inst_5D671558","path":"rooms/rm_game/rm_game.yy",},
+    {"name":"inst_1E948ADC","path":"rooms/rm_game/rm_game.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -466,6 +467,7 @@
         {"$GMRInstance":"v4","%Name":"inst_1045103B","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_1045103B","objectId":{"name":"obj_spawner_ogre","path":"objects/obj_spawner_ogre/obj_spawner_ogre.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":128.0,"y":576.0,},
         {"$GMRInstance":"v4","%Name":"inst_7F69571A","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_7F69571A","objectId":{"name":"obj_tree_birch","path":"objects/obj_tree_birch/obj_tree_birch.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":736.0,"y":64.0,},
         {"$GMRInstance":"v4","%Name":"inst_5D671558","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_5D671558","objectId":{"name":"obj_spawner_goblin","path":"objects/obj_spawner_goblin/obj_spawner_goblin.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":128.0,"y":256.0,},
+        {"$GMRInstance":"v4","%Name":"inst_1E948ADC","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_1E948ADC","objectId":{"name":"obj_knight_wait","path":"objects/obj_knight_wait/obj_knight_wait.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":704.0,"y":320.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRTileLayer":"","%Name":"Tiles_1","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Tiles_1","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":48,"SerialiseWidth":86,"TileCompressedData":[
           -43,32,-43,-2147483648,-43,32,-43,-2147483648,-14,32,7,47,32,32,47,32,32,47,-6,32,-3,47,-14,32,-42,-2147483648,

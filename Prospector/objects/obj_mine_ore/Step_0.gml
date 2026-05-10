@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 // 1. Verifica se o player existe
 if (!instance_exists(obj_player)) exit;
 

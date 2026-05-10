@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 // Efeito de partícula bonitinho deixando um rastro
 // instance_create_layer(x, y, "Instances", obj_fairy_trail); // Opcional, se você quiser fazer rastro depois
 

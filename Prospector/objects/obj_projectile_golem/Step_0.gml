@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 // 2. MOVIMENTO DO PROJÉTIL
 x += lengthdir_x(move_spd, direction);
 y += lengthdir_y(move_spd, direction);

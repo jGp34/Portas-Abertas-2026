@@ -12,7 +12,8 @@ onda_atual = 0;
 // Cada índice (0, 1, 2...) é uma onda diferente. 
 // Coloque dentro do array exatamente os inimigos que você quer que nasçam.
 
-ondas[0] = [obj_enemy_hound];
+
+ondas[0] = [obj_enemy_knight] 
 ondas[1] = [obj_enemy_hound, obj_enemy_hound];
 ondas[2] = [obj_enemy_skeleton];
 ondas[3] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound];

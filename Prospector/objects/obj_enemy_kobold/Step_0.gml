@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 // 1. CHECAGEM DE MORTE (Mesmo código do pai para garantir as Souls)
 if (hp <= 0) {
     if (state != "death") {

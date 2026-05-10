@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 // Se foi coletado, começa a desaparecer
 if (coletado) {
     image_alpha -= fade_speed; // Perde transparência

@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 // Pega os frames por segundo do jogo para calcular os segundos exatos (ex: 60fps)
 var _fps = game_get_speed(gamespeed_fps);
 

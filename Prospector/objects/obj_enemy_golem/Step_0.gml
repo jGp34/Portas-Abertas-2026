@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 if (!instance_exists(obj_player)) exit;
 
 // Calcula a distância do Golem até o jogador (usando o chão como base)

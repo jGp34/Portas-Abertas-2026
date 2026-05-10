@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 if (!instance_exists(obj_player)) exit;
 
 // Se o jogador morreu, ela roda a animação de morte também

@@ -1,0 +1,421 @@
+depth = -bbox_bottom;
+	if (!instance_exists(obj_player)) exit;
+
+	// ==========================================
+	// 1. LÓGICA DE INVULNERABILIDADE NA TRANSFORMAÇÃO
+	// ==========================================
+	if (state == "transform") {
+	    hp = max_hp / 2; 
+	}
+
+	// ==========================================
+	// 2. LÓGICA DE MORTE
+	// ==========================================
+	if (hp <= 0) {
+	    if (state != "death") {
+	        state = "death";
+	        sprite_index = spr_knight_death;
+	        image_index = 0;
+	        show_debug_message("Boss derrotado! Morrendo...");
+	    }
+    
+	    if (image_index >= image_number - 1) {
+	        instance_destroy();
+	    }
+	    exit; 
+	}
+
+	// ==========================================
+	// 3. TRANSIÇÃO PARA A FASE 2 (50% de Vida)
+	// ==========================================
+	if (hp <= max_hp / 2 && phase == 1) {
+	    phase = 2;
+	    state = "transform";
+	    sprite_index = spr_knight_transform;
+	    image_index = 0;
+	    chase_timer = 0; // Garante que o cronômetro comece zerado na fase 2
+	    alarm[0] = -1; 
+	    show_debug_message("FASE 2 INICIADA!");
+	}
+
+	var _folga = 8;
+	var _meu_chao = bbox_bottom;
+	var _player_chao = obj_player.bbox_bottom;
+
+	// ==========================================
+	// 4. MÁQUINA DE ESTADOS DO BOSS
+	// ==========================================
+	switch (state) {
+    
+	    // ------------------------------------------
+	    // ESTADOS DE INTRODUÇÃO
+	    // ------------------------------------------
+	    case "intro_walk":
+	        sprite_index = spr_knight_walk;
+        
+	        if (hp < max_hp || place_meeting(x, y, obj_player)) {
+	            state = "chase";
+	            chase_timer = 0;
+	            break; 
+	        }
+        
+	        if (target_wait != noone) {
+	            var _dist_wait = point_distance(x, y, target_wait.x, target_wait.y);
+	            if (_dist_wait > 3) {
+	                var _dir = point_direction(x, y, target_wait.x, target_wait.y);
+	                x += lengthdir_x(move_spd, _dir);
+	                y += lengthdir_y(move_spd, _dir);
+	                if (abs(lengthdir_x(move_spd, _dir)) > 0.1) {
+	                    image_xscale = sign(lengthdir_x(move_spd, _dir)) * base_scale;
+	                }
+	            } else {
+	                state = "intro_wait";
+	            }
+	        } else {
+	            state = "intro_wait";
+	        }
+	        break;
+        
+	    case "intro_wait":
+	        sprite_index = spr_knight_still;
+	        if (hp < max_hp || place_meeting(x, y, obj_player)) {
+	            state = "chase";
+	            chase_timer = 0;
+	        }
+	        break;
+
+	    // ------------------------------------------
+	    // FASE 1: COMBATE E DESCANSOS
+	    // ------------------------------------------
+	    case "chase":
+	        sprite_index = spr_knight_walk;
+	        chase_timer++; 
+        
+	        var _dist_player = point_distance(x, _meu_chao, obj_player.x, _player_chao);
+        
+	        if (abs(obj_player.x - x) > 1) {
+	            image_xscale = sign(obj_player.x - x) * base_scale;
+	        }
+        
+			if (_dist_player <= attack_dist || chase_timer > (attack_cooldown * 3)) {
+	            chase_timer = 0; 
+            
+	            // NOVO: Avalia se o jogador está mais vertical ou horizontal
+	            var _dist_x = abs(obj_player.x - x);
+	            var _dist_y = abs(obj_player.y - y);
+            
+	            // Se a distância vertical for maior, o jogador está em cima ou embaixo!
+	            if (_dist_y > _dist_x) {
+	                state = "attack_beam";
+	                sprite_index = spr_knight_beam;
+            } else {
+                state = "attack_slash";
+                sprite_index = spr_knight_slash;
+            }
+            
+            image_index = 0;
+            attack_hit = false;
+        } else {
+	            var _dir = point_direction(x, _meu_chao, obj_player.x, _player_chao);
+	            var _hspd = lengthdir_x(move_spd, _dir);
+	            var _vspd = lengthdir_y(move_spd, _dir);
+            
+	            if (place_meeting(x + _hspd + (sign(_hspd) * _folga), y, obj_barrier)) {
+	                while (!place_meeting(x + sign(_hspd), y, obj_barrier)) { x += sign(_hspd); }
+	                _hspd = 0;
+	            }
+	            x += _hspd;
+        
+	            if (place_meeting(x, y + _vspd + (sign(_vspd) * _folga), obj_barrier)) {
+	                while (!place_meeting(x, y + sign(_vspd), obj_barrier)) { y += sign(_vspd); }
+	                _vspd = 0;
+	            }
+	            y += _vspd;
+	        }
+	        break;
+
+		// ------------------------------------------
+	    // FASE 1: ATAQUES ESPECÍFICOS
+	    // ------------------------------------------
+	    case "attack_beam":
+	        // Aos 40% da animação, ele cria o marcador do raio no chão
+	        if (image_index >= image_number * 0.4) && (!attack_hit) {
+	            attack_hit = true; // Usamos isso como trava pra não criar vários raios
+            
+	            // O raio spawna no pé do boss e desce
+	            var _beam = instance_create_layer(x, bbox_bottom - 10, "Instances", obj_projectile_knight_beam);
+	            _beam.damage = damage; 
+	            show_debug_message("Preparando Raio Arco-Íris!");
+	        }
+        
+	        // Fim da animação
+	        if (image_index >= image_number - 1) {
+	            attack_count++;
+	            if (attack_count >= 3) {
+	                state = "kneel_down";
+	                sprite_index = spr_knight_kneel_down;
+	                image_index = 0;
+	            } else {
+	                state = "cooldown";
+	                sprite_index = spr_knight_still;
+	                alarm[0] = attack_cooldown;
+	            }
+	        }
+	        break;
+
+	    case "attack_slash":
+	        // Por enquanto, o slash só roda a animação (dano dele vem depois)
+	        if (image_index >= image_number - 1) {
+	            attack_count++;
+	            if (attack_count >= 3) {
+	                state = "kneel_down";
+	                sprite_index = spr_knight_kneel_down;
+	                image_index = 0;
+	            } else {
+	                state = "cooldown";
+	                sprite_index = spr_knight_still;
+	                alarm[0] = attack_cooldown;
+	            }
+	        }
+	        break;
+
+	    case "cooldown":
+	        sprite_index = spr_knight_still;
+	        break;
+
+	    case "kneel_down":
+	        if (image_index >= image_number - 1) {
+	            state = "kneel_still";
+	            sprite_index = spr_knight_kneel_still;
+	            image_index = 0;
+	            kneel_loops = 0; 
+	        }
+	        break;
+        
+case "kneel_still":
+        // --- LÓGICA DO ATAQUE ARCO-ÍRIS ---
+        kneel_attack_timer++;
+        
+        // Dispara muito mais rápido: a cada 25 frames (~0.4 segundos)
+        if (kneel_attack_timer >= 25 && kneel_attack_index < 7) {
+            kneel_attack_timer = 0;
+            
+            // Cria o círculo menor e mais rápido
+            var _inst = instance_create_layer(obj_player.x, obj_player.y, "Instances", obj_projectile_knight_blast);
+            _inst.damage = damage;
+            
+            kneel_attack_index++;
+            show_debug_message("Explosão " + string(kneel_attack_index) + "/7 lançada!");
+        }
+
+        // Lógica de animação
+        if (image_index + image_speed >= image_number) {
+            kneel_loops++;
+            
+            // CONDIÇÃO DE SAÍDA: 
+            // Ele só levanta se já fez PELO MENOS 10 loops (mais tempo ajoelhado)
+            // E se já disparou todos os 7 ataques da sequência.
+            if (kneel_loops >= 10 && kneel_attack_index >= 7) {
+                state = "kneel_stand";
+                sprite_index = spr_knight_kneel_stand;
+                image_index = 0;
+                
+                // Reseta variáveis para a próxima vez
+                kneel_attack_index = 0;
+                kneel_attack_timer = 0;
+            }
+        }
+        break;
+        
+	    case "kneel_stand":
+	        if (image_index >= image_number - 1) {
+	            attack_count = 0; 
+	            chase_timer = 0; 
+	            state = "chase"; 
+	        }
+	        break;
+
+	    // ------------------------------------------
+	    // TRANSIÇÃO PARA FASE 2
+	    // ------------------------------------------
+	    case "transform":
+	        if (image_index >= image_number - 1) {
+	            state = "chase2";
+	            move_spd *= 3;               
+	            attack_cooldown *= 2;      
+	            attack_dist = 30;
+	            phase2_timer = attack_cooldown; 
+	        }
+	        break;
+
+		// ------------------------------------------
+	    // FASE 2: PERSEGUIÇÃO IMPLACÁVEL
+	    // ------------------------------------------
+	    case "chase2":
+	        sprite_index = spr_knight_walk2;
+	        phase2_timer--; // Timer para os ataques de longe
+	        chase_timer++;  // Cronômetro global anti-spam de mordida!
+        
+	        var _dist_player = point_distance(x, _meu_chao, obj_player.x, _player_chao);
+        
+	        if (abs(obj_player.x - x) > 1) {
+	            image_xscale = sign(obj_player.x - x) * base_scale;
+	        }
+        
+	        // 1º Prioridade ABSOLUTA: Demorou muito sem soltar buff/vômito? Força a barra!
+	        if (chase_timer > (attack_cooldown * 3)) {
+	            state = "attack_phase2"; 
+	            vomit_spawned = false;
+	            if (phase2_next_attack == "vomit") {
+	                sprite_index = spr_knight_vomit;
+	                phase2_next_attack = "buff"; 
+	            } else {
+	                sprite_index = spr_knight_buff;
+	                phase2_next_attack = "vomit"; 
+	            }
+            
+	            image_index = 0;
+	            phase2_timer = attack_cooldown; 
+	            chase_timer = 0; // Zera o cronômetro para contar de novo
+	        }
+	        // 2º Prioridade: O jogador está perto o suficiente para morder?
+	        else if (_dist_player <= attack_dist) {
+	            state = "attack_bite";
+	            sprite_index = spr_knight_bite;
+	            image_index = 0;
+	            attack_hit = false; // <--- NOVO: Ativa a trava para dar dano nesta mordida!
+	        } 
+	        // 3º Prioridade: O timer estourou de longe? Faz o ataque especial
+	        else if (phase2_timer <= 0) {
+	            state = "attack_phase2"; 
+	            vomit_spawned = false;
+	            if (phase2_next_attack == "vomit") {
+	                sprite_index = spr_knight_vomit;
+	                phase2_next_attack = "buff"; 
+	            } else {
+	                sprite_index = spr_knight_buff;
+	                phase2_next_attack = "vomit"; 
+	            }
+            
+	            image_index = 0;
+	            phase2_timer = attack_cooldown; 
+	            chase_timer = 0; // Zera o cronômetro aqui também
+	        } 
+	        // 4º Prioridade: Apenas continua perseguindo
+	        else {
+	            var _dir = point_direction(x, _meu_chao, obj_player.x, _player_chao);
+	            var _hspd = lengthdir_x(move_spd, _dir);
+	            var _vspd = lengthdir_y(move_spd, _dir);
+            
+	            if (place_meeting(x + _hspd + (sign(_hspd) * _folga), y, obj_barrier)) {
+	                while (!place_meeting(x + sign(_hspd), y, obj_barrier)) { x += sign(_hspd); }
+	                _hspd = 0;
+	            }
+	            x += _hspd;
+        
+	            if (place_meeting(x, y + _vspd + (sign(_vspd) * _folga), obj_barrier)) {
+	                while (!place_meeting(x, y + sign(_vspd), obj_barrier)) { y += sign(_vspd); }
+	                _vspd = 0;
+	            }
+	            y += _vspd;
+	        }
+	        break;
+
+	    // ------------------------------------------
+	    // FASE 2: ATAQUE CORPO A CORPO (MORDIDA)
+	    // ------------------------------------------
+	    case "attack_bite":
+	        chase_timer++; // O cronômetro DEVE continuar contando enquanto ele morde!
+        
+	        // ---> LÓGICA DO IMPACTO (Apenas na Mordida) <---
+	        if (image_index >= image_number * 0.35) && (!attack_hit) {
+	            attack_hit = true; 
+            
+	            var _dist_impacto = point_distance(x, _meu_chao, obj_player.x, _player_chao);
+            
+	            // Checa se o jogador ainda está no alcance (com +10 de folga)
+	            if (_dist_impacto <= attack_dist + 10) { 
+	                global.player_hp -= damage; // Aplica os 100 de dano definidos no Create!
+	                show_debug_message("Mordida acertou! Dano: " + string(damage));
+                
+	                if (snd_hit != -1) audio_play_sound(snd_hit, 1, false);
+	            } else {
+	                if (snd_miss != -1) {
+	                    var _miss_snd = audio_play_sound(snd_miss, 1, false);
+	                    audio_sound_pitch(_miss_snd, snd_pitch); 
+	                }
+	            }
+	        }
+        
+	        // Fim da animação
+	        if (image_index >= image_number - 1) {
+	            state = "chase2";
+            
+	            if (phase2_timer < 15) {
+	                phase2_timer = 15; 
+	            }
+	        }
+	        break;
+
+
+		// ------------------------------------------
+	    // FASE 2: ATAQUES ESPECIAIS (VÔMITO / BUFF)
+	    // ------------------------------------------
+	    case "attack_phase2":
+        
+	        // ---> LÓGICA EXCLUSIVA DO VÔMITO <---
+	        if (sprite_index == spr_knight_vomit) {
+	            if (image_index >= image_number * 0.9) && (!vomit_spawned) {
+	                vomit_spawned = true; 
+                
+	                var _spawn_x = (image_xscale > 0) ? bbox_right : bbox_left;
+	                var _y_offset = 25; 
+	                var _spawn_y = bbox_bottom - _y_offset; 
+                
+	                var _sahur = instance_create_layer(_spawn_x, _spawn_y, "Instances", obj_enemy_sahur);
+	                _sahur.image_xscale = sign(image_xscale) * _sahur.base_scale;
+                
+	                show_debug_message("Sahur invocado!");
+	            }
+	        }
+        
+	        // ---> LÓGICA EXCLUSIVA DO BUFF <---
+	        else if (sprite_index == spr_knight_buff) {
+            
+	            // Dispara o buff na metade da animação (ajuste se precisar)
+	            if (image_index >= image_number * 0.5) && (!vomit_spawned) {
+	                vomit_spawned = true; // Usamos a mesma trava para rodar só 1 vez
+                
+	                // Percorre TODOS os inimigos do jogo (filhos de obj_enemy_parent)
+	                with (obj_enemy_parent) {
+                    
+	                    // Garante que o Boss não buffe a si mesmo!
+	                    if (id != other.id) {
+                        
+	                        // 1. HP / Max HP: O maior entre 50 ou (HP atual + 25%)
+	                        var _novo_hp = max(50, hp * 1.25);
+	                        hp = _novo_hp;
+	                        max_hp = _novo_hp;
+                        
+	                        // 2. Aumenta Velocidade e Visão
+	                        move_spd *= 1.2;       // +20%
+	                        detect_radius *= 1.10;  // +10%
+                        
+	                        // 3. Reduz Cooldown (Atira mais rápido) e Dano
+	                        shoot_cooldown *= 0.90; // -10%
+                        
+	                        // ---> NOVO: Dano alterado e arredondado para cima! <---
+	                        damage = ceil(damage * 1.25);         
+	                    }
+	                }
+                
+	                show_debug_message("Buff em área aplicado! Dano arredondado.");
+	            }
+	        }
+        
+	        // Finaliza os ataques especiais e volta a correr
+	        if (image_index >= image_number - 1) {
+	            state = "chase2";
+	        }
+	        break;
+	}

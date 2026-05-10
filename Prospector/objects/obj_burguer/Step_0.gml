@@ -1,3 +1,4 @@
+depth = -bbox_bottom;
 if (!instance_exists(obj_player)) exit;
 
 // 1. SE O JOGADOR MORREU, FICA PARADO
