@@ -33,11 +33,11 @@ if (menu_page == 0) {
     draw_text(50, 190, "[6] +Vel. Movimento (Custa " + string(custo_move_speed) + " Carvão) | Atual: " + string(global.player_move_speed));
 
     draw_set_color(c_orange);
-    draw_text(50, 230, "[3] +Vel. Minerar (Custa " + string(custo_vel) + " Carvão) | Atual: " + string(global.mine_speed));
+    draw_text(50, 230, "[3] +Vel. Minerar (Custa " + string(custo_vel) + " Ferro) | Atual: " + string(global.mine_speed));
     draw_text(50, 270, "[4] +Drop Extra (Custa " + string(custo_yield) + " Ouro) | Atual: " + string(global.mine_yield));
 
     draw_set_color(c_red);
-    draw_text(50, 310, "[2] +Dano (Custa " + string(custo_dano) + " Ferro) | Atual: " + string(global.player_damage));
+    draw_text(50, 310, "[2] +Dano (Custa " + string(custo_dano) + " Carvao) | Atual: " + string(global.player_damage));
     draw_text(50, 350, "[5] +Vel. Ataque (Custa " + string(custo_atk_speed) + " Ouro) | Atual: " + string(global.atk_speed));
     draw_text(50, 390, "[7] +Área Ataque (Custa " + string(custo_atk_area) + " Ferro) | Atual: " + string(global.atk_area));
 

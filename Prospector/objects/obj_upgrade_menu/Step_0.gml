@@ -8,6 +8,28 @@ if (keyboard_check_pressed(ord("Q"))) {
     menu_page = !menu_page; // Alterna entre 0 e 1
 }
 
+// =======================================================
+// TELA CHEIA (FULLSCREEN) - AGORA NO MENU TAMBÉM!
+// =======================================================
+if (keyboard_check_pressed(vk_f11)) {
+    var _is_fullscreen = window_get_fullscreen();
+    
+    // Inverte a tela (Se estava fullscreen, vai pra janela. E vice-versa)
+    window_set_fullscreen(!_is_fullscreen);
+
+    // Dá um atraso de 1 frame para dar tempo do Windows 
+    // redimensionar a tela, e então ajustamos a qualidade gráfica do jogo
+    call_later(1, time_source_units_frames, function() {
+        if (window_get_fullscreen()) {
+            // Ajusta a superfície do jogo para o tamanho do monitor
+            surface_resize(application_surface, display_get_width(), display_get_height());
+        } else {
+            // Ajusta a superfície do jogo para o tamanho da janela
+            surface_resize(application_surface, window_get_width(), window_get_height());
+        }
+    });
+}
+
 // ==========================================
 // PÁGINA 0: UPGRADES DO JOGADOR
 // ==========================================
@@ -15,32 +37,32 @@ if (menu_page == 0) {
     // 1. COMPRAR VIDA
     if (keyboard_check_pressed(ord("1")) && global.wood >= custo_vida) {
         global.wood -= custo_vida;
-        global.max_hp = round(global.max_hp * 1.8);
+        global.max_hp = round(global.max_hp * 1.6);
         custo_vida = round(custo_vida * 1.4); 
         _comprou_algo = true; 
     }
 
     // 2. COMPRAR DANO
-    if (keyboard_check_pressed(ord("2")) && global.iron >= custo_dano) {
-        global.iron -= custo_dano;
+    if (keyboard_check_pressed(ord("2")) && global.carvao >= custo_dano) {
+        global.carvao -= custo_dano;
         global.player_damage = round(global.player_damage * 1.6);
         custo_dano = round(custo_dano * 1.4);
         _comprou_algo = true;
     }
 
     // 3. COMPRAR VELOCIDADE DE MINERAR
-    if (keyboard_check_pressed(ord("3")) && global.carvao >= custo_vel) {
-        global.carvao -= custo_vel;
+    if (keyboard_check_pressed(ord("3")) && global.iron >= custo_vel) {
+        global.iron -= custo_vel;
         global.mine_speed += 0.5;
-        custo_vel = round(custo_vel * 1.4);
+        custo_vel = round(custo_vel * 1.5);
         _comprou_algo = true;
     }
 
     // 4. COMPRAR BÔNUS DE DROP
     if (keyboard_check_pressed(ord("4")) && global.gold >= custo_yield) {
         global.gold -= custo_yield;
-        global.mine_yield = round(global.mine_yield * 1.7);
-        custo_yield = round(custo_yield * 1.6);
+        global.mine_yield = round(global.mine_yield * 1.4);
+        custo_yield = round(custo_yield * 1.2);
         _comprou_algo = true;
     }
 
@@ -48,7 +70,7 @@ if (menu_page == 0) {
     if (keyboard_check_pressed(ord("5")) && global.gold >= custo_atk_speed) {
         global.gold -= custo_atk_speed;
         global.atk_speed += 0.5;
-        custo_atk_speed = round(custo_atk_speed * 1.4);
+        custo_atk_speed = round(custo_atk_speed * 1.5);
         _comprou_algo = true;
     }
 
