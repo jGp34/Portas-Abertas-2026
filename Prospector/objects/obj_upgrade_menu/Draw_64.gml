@@ -42,9 +42,11 @@ if (menu_page == 0) {
     draw_text(50, 390, "[7] +Área Ataque (Custa " + string(custo_atk_area) + " Ferro) | Atual: " + string(global.atk_area));
 
     draw_set_color(make_color_rgb(180, 130, 255)); // Roxo
-    draw_text(50, 430, "[8] +Dano Crítico (Custa " + string(custo_critico) + " Souls) | Atual: " + string(global.crit_chance) + "%");
+    draw_text(50, 430, "[8] +Chance Crítico (Custa " + string(custo_critico) + " Souls) | Atual: " + string(global.crit_chance) + "%");
+    
+    // ---> AQUI ESTÁ O NOVO ITEM [9] <---
+    draw_text(50, 470, "[9] +Mult. Crítico (Custa " + string(custo_crit_dano) + " Souls) | Atual: " + string(global.crit_dano) + "x");
 }
-
 
 // ==========================================
 // PÁGINA 1: MAGIA E ALIADOS
@@ -60,7 +62,7 @@ else if (menu_page == 1) {
         draw_text(50, 200, "[1] DESBLOQUEAR Fada (Custa " + string(custo_fada_unlock) + " Souls)");
     } else {
         draw_set_color(c_aqua);
-        draw_text(50, 200, "[1] +Dano Fada (Custa " + string(custo_fada_dano) + " Ouro) | Atual: " + string(global.fairy_damage));
+        draw_text(50, 200, "[1] +Dano Fada (Custa " + string(custo_fada_dano) + " Souls) | Atual: " + string(global.fairy_damage)); // Corrigido para Souls
         draw_text(50, 240, "[2] +Vel. Atk Fada (Custa " + string(custo_fada_vel) + " Ouro) | Atual: " + string(global.fairy_atk_speed) + " frames");
         draw_text(50, 280, "[3] +Range Visão (Custa " + string(custo_fada_range) + " Ferro) | Atual: " + string(global.fairy_vision) + "px");
     }
@@ -78,6 +80,7 @@ else if (menu_page == 1) {
         draw_text(50, 430, "[5] +Vel. Cura Hambúrguer (Custa " + string(custo_burguer_speed) + " Ferro) | Atual: " + string(global.burguer_heal_speed) + " frames");
     }
 }
+
 // ==========================================
 // RODAPÉ / RESSUSCITAR (Sempre visível)
 // ==========================================
@@ -91,7 +94,7 @@ draw_set_color(c_white);
 var _gui_w = display_get_gui_width();
 var _gui_h = display_get_gui_height();
 
-// ---> NOVIDADE: NOVA ESCALA DA DEUSA <---
+// Escala da Deusa
 var _gscale = 2.5; 
 
 // Pega os dados de tamanho da sprite já multiplicados pela nova escala
@@ -102,11 +105,7 @@ var _goddess_h = sprite_get_height(goddess_sprite) * _gscale;
 var _margem_direita = 30; 
 
 // Matemática da Origem Top Center (Ajustada para a escala):
-// X: Pega a borda direita, volta metade da largura da sprite e subtrai a margem.
 var _gx = _gui_w - (_goddess_w / 2) - _margem_direita;
-
-// Y: Pega a base da tela e sobe o equivalente a altura total da sprite. 
-// Assim os pés dela encostam certinho na borda de baixo!
 var _gy = _gui_h - _goddess_h;
 
 // Desenha a Deusa maior usando draw_sprite_ext

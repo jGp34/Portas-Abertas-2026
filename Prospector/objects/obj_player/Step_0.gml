@@ -1,6 +1,11 @@
 // =======================================================
 // CHEATS / DEBUG (Teclas secretas)
 // =======================================================
+// F7 para MATAR O PLAYER (Testar tela de morte e save)
+if (keyboard_check_pressed(vk_f7)) {
+    global.player_hp = 0;
+    show_debug_message("DEBUG: Player morto forçadamente!");
+}
 // F8 para colocar tudo no 999
 if (keyboard_check_pressed(vk_f8)) {
     global.carvao = 9999;
@@ -188,7 +193,7 @@ if (!_is_acting) {
                         
                         // Sorteia um número de 0 a 100. Se cair abaixo da sua chance, é CRÍTICO!
                         if (random(100) < global.crit_chance) {
-                            _dano_final = global.player_damage * 2; // Crítico dá o DOBRO de dano!
+                            _dano_final = global.player_damage * global.crit_dano; // Crítico dá o DOBRO de dano!
                             _foi_critico = true;
                         }
                         

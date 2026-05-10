@@ -12,7 +12,7 @@ if (keyboard_check_pressed(ord("Q"))) {
 // PÁGINA 0: UPGRADES DO JOGADOR
 // ==========================================
 if (menu_page == 0) {
-    // 1. COMPRAR VIDA (+10)
+    // 1. COMPRAR VIDA
     if (keyboard_check_pressed(ord("1")) && global.wood >= custo_vida) {
         global.wood -= custo_vida;
         global.max_hp = round(global.max_hp * 1.8);
@@ -20,15 +20,15 @@ if (menu_page == 0) {
         _comprou_algo = true; 
     }
 
-    // 2. COMPRAR DANO (+2)
+    // 2. COMPRAR DANO
     if (keyboard_check_pressed(ord("2")) && global.iron >= custo_dano) {
         global.iron -= custo_dano;
-        global.player_damage = round(global.player_damage * 1.8);
-        custo_dano = round(custo_dano * 1.2);
+        global.player_damage = round(global.player_damage * 1.6);
+        custo_dano = round(custo_dano * 1.4);
         _comprou_algo = true;
     }
 
-    // 3. COMPRAR VELOCIDADE DE MINERAR (+0.2)
+    // 3. COMPRAR VELOCIDADE DE MINERAR
     if (keyboard_check_pressed(ord("3")) && global.carvao >= custo_vel) {
         global.carvao -= custo_vel;
         global.mine_speed += 0.5;
@@ -36,7 +36,7 @@ if (menu_page == 0) {
         _comprou_algo = true;
     }
 
-    // 4. COMPRAR BÔNUS DE DROP (+1)
+    // 4. COMPRAR BÔNUS DE DROP
     if (keyboard_check_pressed(ord("4")) && global.gold >= custo_yield) {
         global.gold -= custo_yield;
         global.mine_yield = round(global.mine_yield * 1.7);
@@ -44,7 +44,7 @@ if (menu_page == 0) {
         _comprou_algo = true;
     }
 
-    // 5. COMPRAR VELOCIDADE DE ATAQUE (+0.1)
+    // 5. COMPRAR VELOCIDADE DE ATAQUE
     if (keyboard_check_pressed(ord("5")) && global.gold >= custo_atk_speed) {
         global.gold -= custo_atk_speed;
         global.atk_speed += 0.5;
@@ -52,7 +52,7 @@ if (menu_page == 0) {
         _comprou_algo = true;
     }
 
-    // 6. COMPRAR VELOCIDADE DE MOVIMENTO (+0.5)
+    // 6. COMPRAR VELOCIDADE DE MOVIMENTO
     if (keyboard_check_pressed(ord("6")) && global.carvao >= custo_move_speed) {
         global.carvao -= custo_move_speed;
         global.player_move_speed += 0.5;
@@ -60,24 +60,32 @@ if (menu_page == 0) {
         _comprou_algo = true;
     }
 
-    // 7. COMPRAR ÁREA DE ATAQUE (+10)
+    // 7. COMPRAR ÁREA DE ATAQUE
     if (keyboard_check_pressed(ord("7")) && global.iron >= custo_atk_area) {
         global.iron -= custo_atk_area;
-        global.atk_area = round(global.atk_area * 1.4);
-        custo_atk_area = round(custo_atk_area * 1.3);
+        global.atk_area = round(global.atk_area * 1.3);
+        custo_atk_area = round(custo_atk_area * 1.2);
         _comprou_algo = true;
     }
 
     // 8. COMPRAR CHANCE CRÍTICO (+5%)
     if (keyboard_check_pressed(ord("8")) && global.souls >= custo_critico) {
         global.souls -= custo_critico;
-        global.crit_chance = round(global.crit_chance * 1.4); 
+        global.crit_chance += 5; 
         custo_critico = round(custo_critico * 1.3); 
+        _comprou_algo = true;
+    }
+    
+    // ---> 9. COMPRAR MULTIPLICADOR DE DANO CRÍTICO (+0.5x) <---
+    if (keyboard_check_pressed(ord("9")) && global.souls >= custo_crit_dano) {
+        global.souls -= custo_crit_dano;
+        global.crit_dano += 0.5; 
+        custo_crit_dano = round(custo_crit_dano * 1.4); 
         _comprou_algo = true;
     }
 }
 // ==========================================
-// PÁGINA 1: UPGRADES DE MAGIA E ALIADOS
+// PÁGINA 1: MAGIA E ALIADOS
 // ==========================================
 else if (menu_page == 1) {
     
@@ -88,10 +96,10 @@ else if (menu_page == 1) {
             global.fairy_unlocked = 1;
             _comprou_algo = true;
         } 
-        else if (global.fairy_unlocked == 1 && global.gold >= custo_fada_dano) {
-            global.gold -= custo_fada_dano;
+        else if (global.fairy_unlocked == 1 && global.souls >= custo_fada_dano) {
+            global.souls -= custo_fada_dano; // Corrigido para subtrair Souls
             global.fairy_damage += 2;
-            custo_fada_dano += 15;
+            custo_fada_dano = round(custo_fada_dano * 1.5); // Multiplicador correto
             _comprou_algo = true;
         }
     }
@@ -101,7 +109,7 @@ else if (menu_page == 1) {
         if (global.gold >= custo_fada_vel && global.fairy_atk_speed > 10) {
             global.gold -= custo_fada_vel;
             global.fairy_atk_speed -= 10; 
-            custo_fada_vel += 20;
+            custo_fada_vel = round(custo_fada_vel * 1.5); // Multiplicador correto
             _comprou_algo = true;
         }
     }
@@ -111,7 +119,7 @@ else if (menu_page == 1) {
         if (global.iron >= custo_fada_range) {
             global.iron -= custo_fada_range;
             global.fairy_vision += 50; 
-            custo_fada_range += 15;
+            custo_fada_range = round(custo_fada_range * 1.4); // Multiplicador correto
             _comprou_algo = true;
         }
     }
@@ -130,7 +138,7 @@ else if (menu_page == 1) {
         else if (global.burguer_unlocked == 1 && global.gold >= custo_burguer_heal) {
             global.gold -= custo_burguer_heal;
             global.burguer_heal_amount += 2;
-            custo_burguer_heal += 15;
+            custo_burguer_heal = round(custo_burguer_heal * 1.5); // Multiplicador correto
             _comprou_algo = true;
         }
     }
@@ -140,18 +148,18 @@ else if (menu_page == 1) {
         if (global.iron >= custo_burguer_speed && global.burguer_heal_speed > 30) {
             global.iron -= custo_burguer_speed;
             global.burguer_heal_speed -= 15; 
-            custo_burguer_speed += 20;
+            custo_burguer_speed = round(custo_burguer_speed * 1.5); // Multiplicador correto
             _comprou_algo = true;
         }
     }
-} // <--- A CHAVE QUE FECHA A PÁGINA 1 FICA AQUI AGORA!
+} 
 
 // ==========================================
-// TOCA O SOM SE COMPROU ALGO
+// TOCA O SOM E ANIMA A DEUSA
 // ==========================================
 if (_comprou_algo) {
     audio_play_sound(sfx_buying, 1, false);
-	if (goddess_sprite != spr_goddess_thanks) {
+    if (goddess_sprite != spr_goddess_thanks) {
         goddess_sprite = spr_goddess_thanks;
         goddess_frame = 0;
         goddess_spd = sprite_get_speed(spr_goddess_thanks) / game_get_speed(gamespeed_fps);
@@ -161,18 +169,15 @@ if (_comprou_algo) {
 // ==========================================
 // CONTROLE DE ANIMAÇÃO DA DEUSA
 // ==========================================
-goddess_frame += goddess_spd; // Avança o frame da animação
+goddess_frame += goddess_spd; 
 
-// Se ela estiver agradecendo e a animação chegar ao fim...
 if (goddess_sprite == spr_goddess_thanks) {
     if (goddess_frame >= sprite_get_number(spr_goddess_thanks)) {
-        // ... ela volta para a pose normal!
         goddess_sprite = spr_goddess_still;
         goddess_frame = 0;
         goddess_spd = sprite_get_speed(spr_goddess_still) / game_get_speed(gamespeed_fps);
     }
 } else {
-    // Se for a animação normal (still), faz o loop infinito clássico
     if (goddess_frame >= sprite_get_number(spr_goddess_still)) {
         goddess_frame = 0;
     }
@@ -193,6 +198,8 @@ if (keyboard_check_pressed(vk_space)) {
     ini_write_real("Upgrades", "move_speed", global.player_move_speed);
     ini_write_real("Upgrades", "atk_area", global.atk_area);
     ini_write_real("Upgrades", "crit_chance", global.crit_chance); 
+    ini_write_real("Upgrades", "crit_dano", global.crit_dano); 
+    
     ini_write_real("Upgrades", "fairy_unlocked", global.fairy_unlocked); 
     ini_write_real("Upgrades", "fairy_dano", global.fairy_damage); 
     ini_write_real("Upgrades", "fairy_atk", global.fairy_atk_speed); 
@@ -210,6 +217,8 @@ if (keyboard_check_pressed(vk_space)) {
     ini_write_real("Custos", "custo_move_speed", custo_move_speed);
     ini_write_real("Custos", "custo_atk_area", custo_atk_area);
     ini_write_real("Custos", "custo_critico", custo_critico); 
+    ini_write_real("Custos", "custo_crit_dano", custo_crit_dano); 
+    
     ini_write_real("Custos", "custo_fada_unlock", custo_fada_unlock); 
     ini_write_real("Custos", "custo_fada_dano", custo_fada_dano); 
     ini_write_real("Custos", "custo_fada_vel", custo_fada_vel);
