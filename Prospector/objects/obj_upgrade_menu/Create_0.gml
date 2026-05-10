@@ -24,4 +24,10 @@ custo_burguer_heal = ini_read_real("Custos", "custo_burguer_heal", 30);     // C
 custo_burguer_speed = ini_read_real("Custos", "custo_burguer_speed", 25);   // Custa Ferro para curar mais rápido
 
 menu_page = 0;
+// ---> VARIÁVEIS DA DEUSA <---
+goddess_sprite = spr_goddess_still;
+goddess_frame = 0;
+// Pega a velocidade padrão da sprite baseada nas configurações do seu projeto
+goddess_spd = sprite_get_speed(spr_goddess_still) / game_get_speed(gamespeed_fps);
+
 ini_close();

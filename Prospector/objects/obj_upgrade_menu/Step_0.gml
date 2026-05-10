@@ -151,6 +151,31 @@ else if (menu_page == 1) {
 // ==========================================
 if (_comprou_algo) {
     audio_play_sound(sfx_buying, 1, false);
+	if (goddess_sprite != spr_goddess_thanks) {
+        goddess_sprite = spr_goddess_thanks;
+        goddess_frame = 0;
+        goddess_spd = sprite_get_speed(spr_goddess_thanks) / game_get_speed(gamespeed_fps);
+    }
+}
+
+// ==========================================
+// CONTROLE DE ANIMAÇÃO DA DEUSA
+// ==========================================
+goddess_frame += goddess_spd; // Avança o frame da animação
+
+// Se ela estiver agradecendo e a animação chegar ao fim...
+if (goddess_sprite == spr_goddess_thanks) {
+    if (goddess_frame >= sprite_get_number(spr_goddess_thanks)) {
+        // ... ela volta para a pose normal!
+        goddess_sprite = spr_goddess_still;
+        goddess_frame = 0;
+        goddess_spd = sprite_get_speed(spr_goddess_still) / game_get_speed(gamespeed_fps);
+    }
+} else {
+    // Se for a animação normal (still), faz o loop infinito clássico
+    if (goddess_frame >= sprite_get_number(spr_goddess_still)) {
+        goddess_frame = 0;
+    }
 }
 
 // ==========================================

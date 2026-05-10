@@ -84,3 +84,30 @@ else if (menu_page == 1) {
 draw_set_color(c_yellow);
 draw_text(50, 600, "Pressione [ESPAÇO] para Ressuscitar e Voltar para a Mina");
 draw_set_color(c_white);
+
+// ==========================================
+// DESENHAR A DEUSA (Canto Inferior Direito)
+// ==========================================
+var _gui_w = display_get_gui_width();
+var _gui_h = display_get_gui_height();
+
+// ---> NOVIDADE: NOVA ESCALA DA DEUSA <---
+var _gscale = 2.5; 
+
+// Pega os dados de tamanho da sprite já multiplicados pela nova escala
+var _goddess_w = sprite_get_width(goddess_sprite) * _gscale;
+var _goddess_h = sprite_get_height(goddess_sprite) * _gscale;
+
+// Define uma margem para ela não ficar 100% colada na borda direita
+var _margem_direita = 30; 
+
+// Matemática da Origem Top Center (Ajustada para a escala):
+// X: Pega a borda direita, volta metade da largura da sprite e subtrai a margem.
+var _gx = _gui_w - (_goddess_w / 2) - _margem_direita;
+
+// Y: Pega a base da tela e sobe o equivalente a altura total da sprite. 
+// Assim os pés dela encostam certinho na borda de baixo!
+var _gy = _gui_h - _goddess_h;
+
+// Desenha a Deusa maior usando draw_sprite_ext
+draw_sprite_ext(goddess_sprite, goddess_frame, _gx, _gy, _gscale, _gscale, 0, c_white, 1);

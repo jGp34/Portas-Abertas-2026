@@ -1,6 +1,8 @@
 // --- obj_cutscene_manager -> Step ---
 
+// =======================================================
 // 1. TELA CHEIA (F11)
+// =======================================================
 if (keyboard_check_pressed(vk_f11)) {
     var _is_fullscreen = window_get_fullscreen();
     window_set_fullscreen(!_is_fullscreen);
@@ -14,20 +16,23 @@ if (keyboard_check_pressed(vk_f11)) {
     });
 }
 
-// 2. CONTROLES DA CUTSCENE
+// =======================================================
+// 2. CONTROLES DA CUTSCENE (Enter = Pular Tudo)
+// =======================================================
+
+// ---> PULAR TUDO (Enter) <---
 if (keyboard_check_pressed(vk_enter)) {
-    if (target_room != noone) room_goto(target_room);
-    exit; 
-}
-
-if (keyboard_check_pressed(vk_space)) {
-    if (state == "fade_in" || state == "waiting") {
-        state = "fade_out"; 
+    if (target_room != noone) {
+        audio_stop_all(); // Garante que a música pare ao pular
+        room_goto(target_room);
     }
+    exit; // Interrompe o resto do código
 }
 
-// 3. MÁQUINA DE ESTADOS 
-if (array_length(scenes) > 0) { // Previne erros se o filho esquecer de colocar cenas
+// =======================================================
+// 3. MÁQUINA DE ESTADOS (Reprodução Automática)
+// =======================================================
+if (array_length(scenes) > 0) {
     switch (state) {
         case "fade_in":
             fade_alpha -= fade_speed;
@@ -54,7 +59,11 @@ if (array_length(scenes) > 0) { // Previne erros se o filho esquecer de colocar 
                     timer = 0;
                     state = "fade_in";
                 } else {
-                    if (target_room != noone) room_goto(target_room);
+                    // Acabou a cutscene naturalmente
+                    if (target_room != noone) {
+                        audio_stop_all(); // Garante que a música pare ao terminar
+                        room_goto(target_room);
+                    }
                 }
             }
             break;
