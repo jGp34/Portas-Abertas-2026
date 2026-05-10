@@ -22,6 +22,8 @@ ondas[5] = [obj_enemy_golem];
 ondas[7] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton];
 ondas[8] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_golem];
 ondas[9] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton, obj_enemy_golem];
+// ondas[10] = [obj_enemy_knight] 
+ondas[10] = [obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_hound, obj_enemy_skeleton, obj_enemy_skeleton, obj_enemy_golem];
 
 // Inicia o relógio para a primeira onda
 alarm[0] = tempo_primeira_onda;
