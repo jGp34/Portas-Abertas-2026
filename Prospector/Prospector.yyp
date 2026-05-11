@@ -59,8 +59,12 @@
     {"$GMFolder":"","%Name":"Tree","folderPath":"folders/Sprites/Resources/Tree.yy","name":"Tree","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Tile Sets","folderPath":"folders/Tile Sets.yy","name":"Tile Sets","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
-  "ForcedPrefabProjectReferences":[],
-  "IncludedFiles":[],
+  "ForcedPrefabProjectReferences":[
+    {"link":"io.gamemaker.sdfshaders-1.0.0","name":"io.gamemaker.sdfshaders-1.0.0","path":"io.gamemaker.sdfshaders-1.0.0.yyp",},
+  ],
+  "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"Mork Dungeon.ttf","CopyToMask":-1,"filePath":"datafiles","name":"Mork Dungeon.ttf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+  ],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
