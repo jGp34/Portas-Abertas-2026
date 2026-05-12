@@ -94,6 +94,8 @@ salvar_jogo = function() {
     ini_write_real("Recursos", "carvao", global.carvao);
     ini_write_real("Recursos", "gold", global.gold);
     ini_write_real("Recursos", "souls", global.souls); 
+	
+	ini_write_real("Progresso", "boss_morto", global.boss_morto);
     
     ini_close();
     show_debug_message("Jogo salvo com sucesso no menu!");

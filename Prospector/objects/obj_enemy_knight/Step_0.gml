@@ -17,6 +17,7 @@ if (hp <= 0) {
         sprite_index = spr_knight_death;
         image_index = 0;
         audio_play_sound(sfx_knight_death, 1, false); 
+		global.boss_morto = true;
         show_debug_message("Boss derrotado! Morrendo...");
     }
     
