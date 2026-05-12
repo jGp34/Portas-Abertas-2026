@@ -1,4 +1,4 @@
-depth = -bbox_bottom;
+fxdepth = -bbox_bottom;
 if (!instance_exists(obj_player)) exit;
 
 // ==========================================
@@ -16,6 +16,7 @@ if (hp <= 0) {
         state = "death";
         sprite_index = spr_knight_death;
         image_index = 0;
+        audio_play_sound(sfx_knight_death, 1, false); 
         show_debug_message("Boss derrotado! Morrendo...");
     }
     
@@ -35,6 +36,7 @@ if (hp <= max_hp / 2 && phase == 1) {
     image_index = 0;
     chase_timer = 0; // Garante que o cronômetro comece zerado na fase 2
     alarm[0] = -1; 
+    audio_play_sound(sfx_knight_transform, 1, false); 
     show_debug_message("FASE 2 INICIADA!");
 }
 
@@ -137,8 +139,13 @@ switch (state) {
     // FASE 1: ATAQUES ESPECÍFICOS
     // ------------------------------------------
     case "attack_beam":
-        if (image_index >= image_number * 0.25) && (!attack_hit) {
+        // ---> ATRASADO: Foi para 0.45 para tocar mais tarde <---
+        if (image_index >= image_number * 0.45) && (!attack_hit) {
             attack_hit = true; 
+            
+            // Toca o som e aumenta volume em 5%
+            var _snd_beam = audio_play_sound(sfx_knight_beam, 1, false); 
+            audio_sound_gain(_snd_beam, 1.05, 0); 
             
             var _beam = instance_create_layer(x, bbox_bottom - 10, "Instances", obj_projectile_knight_beam);
             _beam.damage = damage; 
@@ -164,12 +171,14 @@ switch (state) {
         if (image_index >= image_number * 0.4) && (!attack_hit) {
             attack_hit = true; 
             
+            audio_play_sound(sfx_knight_slash, 1, false); 
+            
             if (snd_miss != -1) {
                 var _snd = audio_play_sound(snd_miss, 1, false);
                 audio_sound_pitch(_snd, snd_pitch); 
             }
             
-            // Matemática da área de acerto gigante (O desenho visual está lá no Evento Draw!)
+            // Matemática da área de acerto gigante
             var _alcance_frente = 60; 
             var _raio_corte = 80;     
             var _hitbox_x = x + lengthdir_x(_alcance_frente, (image_xscale > 0 ? 0 : 180));
@@ -215,11 +224,15 @@ switch (state) {
         // --- LÓGICA DO ATAQUE ARCO-ÍRIS ---
         kneel_attack_timer++;
         
-        // Primeiro golpe avisa (60 frames), os outros metralham (45 frames)
-        var _tempo_necessario = (kneel_attack_index == 0) ? 60 : 45;
+        // O primeiro ataque sai quase na hora (5 frames). Os outros saem a cada 25 frames.
+        var _tempo_necessario = (kneel_attack_index == 0) ? 5 : 25;
         
         if (kneel_attack_timer >= _tempo_necessario && kneel_attack_index < 7) {
             kneel_attack_timer = 0;
+            
+            // Toca o som e aumenta volume em 25%
+            var _snd_blast = audio_play_sound(sfx_knight_blast, 1, false); 
+            audio_sound_gain(_snd_blast, 1.25, 0); 
             
             var _inst = instance_create_layer(obj_player.x, obj_player.y, "Instances", obj_projectile_knight_blast);
             _inst.damage = damage;
@@ -345,6 +358,10 @@ switch (state) {
         if (image_index >= image_number * 0.35) && (!attack_hit) {
             attack_hit = true; 
             
+            // Toca o som e aumenta volume em 30%
+            var _snd_bite = audio_play_sound(sfx_knight_bite, 1, false); 
+            audio_sound_gain(_snd_bite, 1.30, 0); 
+            
             var _dist_impacto = point_distance(x, _meu_chao, obj_player.x, _player_chao);
             
             if (_dist_impacto <= attack_dist + 10) { 
@@ -375,8 +392,13 @@ switch (state) {
     case "attack_phase2":
         
         if (sprite_index == spr_knight_vomit) {
-            if (image_index >= image_number * 0.9) && (!vomit_spawned) {
+            // ---> ADIANTADO: Foi para 0.60 para iniciar antes <---
+            if (image_index >= image_number * 0.60) && (!vomit_spawned) {
                 vomit_spawned = true; 
+                
+                // Toca o som e aumenta volume em 15%
+                var _snd_vomit = audio_play_sound(sfx_knight_vomit, 1, false); 
+                audio_sound_gain(_snd_vomit, 1.4, 0); 
                 
                 var _spawn_x = (image_xscale > 0) ? bbox_right : bbox_left;
                 var _y_offset = 25; 
@@ -388,9 +410,13 @@ switch (state) {
                 show_debug_message("Sahur invocado!");
             }
         }
+        // ---> LÓGICA EXCLUSIVA DO BUFF <---
         else if (sprite_index == spr_knight_buff) {
-            if (image_index >= image_number * 0.5) && (!vomit_spawned) {
+            
+            if (image_index >= image_number * 0.35) && (!vomit_spawned) {
                 vomit_spawned = true; 
+                
+                audio_play_sound(sfx_knight_buff, 1, false); 
                 
                 with (obj_enemy_parent) {
                     if (id != other.id) {
@@ -401,12 +427,16 @@ switch (state) {
                         move_spd *= 1.2;       
                         detect_radius *= 1.10;  
                         shoot_cooldown *= 0.90; 
-                        
                         damage = ceil(damage * 1.25);         
                     }
                 }
-                
-                show_debug_message("Buff em área aplicado! Dano arredondado.");
+                show_debug_message("Buff em área aplicado!");
+            }
+            
+            if (image_index >= image_number * 0.5) && (image_index <= image_number * 0.8) {
+                var _spawn_x = x + random_range(-30, 30);
+                var _spawn_y = bbox_bottom + random_range(-10, -50); 
+                instance_create_layer(_spawn_x, _spawn_y, "Instances", obj_projectile_buff_arrow);
             }
         }
         

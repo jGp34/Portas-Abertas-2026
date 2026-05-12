@@ -1,8 +1,23 @@
 if (!instance_exists(obj_player)) exit;
 
-// 1. GARANTIR QUE ELE POSSA MORRER ENQUANTO NASCE (Se o jogador bater nele)
+// 1. LÓGICA DE MORTE (Atirar no final da animação)
 if (hp <= 0) {
-    event_inherited(); // Chama a lógica de morte do pai e drop de souls
+    
+    // NOVO: Verifica se já está no estado de morte E se a animação chegou no último frame
+    if (state == "death" && image_index >= image_number - 1) {
+        var _angulos = [45, 135, 225, 315]; // As 4 diagonais
+        var _centro_y = y + (sprite_height / 2); // Nasce no meio do corpo
+        
+        for (var i = 0; i < 4; i++) {
+            var _proj = instance_create_layer(x, _centro_y, "Instances", obj_projectile_sahur);
+            _proj.damage = damage;             // Repassa o dano do Sahur (50)
+            _proj.direction = _angulos[i];     // Aplica a direção diagonal
+            _proj.image_angle = _angulos[i];   // Gira a sprite para a diagonal
+        }
+    }
+    
+    // Chama a lógica de morte do pai (que vai iniciar a animação e depois destruir o objeto)
+    event_inherited(); 
     exit;
 }
 

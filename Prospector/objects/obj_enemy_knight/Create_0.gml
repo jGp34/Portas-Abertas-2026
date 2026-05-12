@@ -39,3 +39,4 @@ target_wait = instance_nearest(x, y, obj_knight_wait);
 // Variáveis para desenhar o efeito visual do corte
 draw_boss_slash = false;
 slash_frame = 0;
+snd_miss = sfx_attack_swing;

@@ -42,3 +42,59 @@ goddess_frame = 0;
 goddess_spd = sprite_get_speed(spr_goddess_still) / game_get_speed(gamespeed_fps);
 
 ini_close();
+
+
+// ==========================================
+// 5. FUNÇÃO DE SALVAMENTO AUTOMÁTICO
+// ==========================================
+salvar_jogo = function() {
+    ini_open("meu_save.ini");
+    
+    // Upgrades Globais
+    ini_write_real("Upgrades", "max_hp", global.max_hp);
+    ini_write_real("Upgrades", "dano", global.player_damage);
+    ini_write_real("Upgrades", "mine_speed", global.mine_speed);
+    ini_write_real("Upgrades", "mine_yield", global.mine_yield);
+    ini_write_real("Upgrades", "atk_speed", global.atk_speed);
+    ini_write_real("Upgrades", "move_speed", global.player_move_speed);
+    ini_write_real("Upgrades", "atk_area", global.atk_area);
+    ini_write_real("Upgrades", "crit_chance", global.crit_chance); 
+    ini_write_real("Upgrades", "crit_dano", global.crit_dano); 
+    
+    ini_write_real("Upgrades", "fairy_unlocked", global.fairy_unlocked); 
+    ini_write_real("Upgrades", "fairy_dano", global.fairy_damage); 
+    ini_write_real("Upgrades", "fairy_atk", global.fairy_atk_speed); 
+    ini_write_real("Upgrades", "fairy_vision", global.fairy_vision);
+    ini_write_real("Upgrades", "burguer_unlocked", global.burguer_unlocked); 
+    ini_write_real("Upgrades", "burguer_heal_amount", global.burguer_heal_amount); 
+    ini_write_real("Upgrades", "burguer_heal_speed", global.burguer_heal_speed);
+    
+    // Custos Locais
+    ini_write_real("Custos", "custo_vida", custo_vida);
+    ini_write_real("Custos", "custo_dano", custo_dano);
+    ini_write_real("Custos", "custo_vel", custo_vel);
+    ini_write_real("Custos", "custo_yield", custo_yield);
+    ini_write_real("Custos", "custo_atk_speed", custo_atk_speed);
+    ini_write_real("Custos", "custo_move_speed", custo_move_speed);
+    ini_write_real("Custos", "custo_atk_area", custo_atk_area);
+    ini_write_real("Custos", "custo_critico", custo_critico); 
+    ini_write_real("Custos", "custo_crit_dano", custo_crit_dano); 
+    
+    ini_write_real("Custos", "custo_fada_unlock", custo_fada_unlock); 
+    ini_write_real("Custos", "custo_fada_dano", custo_fada_dano); 
+    ini_write_real("Custos", "custo_fada_vel", custo_fada_vel);
+    ini_write_real("Custos", "custo_fada_range", custo_fada_range);
+    ini_write_real("Custos", "custo_burguer_unlock", custo_burguer_unlock); 
+    ini_write_real("Custos", "custo_burguer_heal", custo_burguer_heal); 
+    ini_write_real("Custos", "custo_burguer_speed", custo_burguer_speed);
+
+    // Recursos
+    ini_write_real("Recursos", "wood", global.wood);
+    ini_write_real("Recursos", "iron", global.iron);
+    ini_write_real("Recursos", "carvao", global.carvao);
+    ini_write_real("Recursos", "gold", global.gold);
+    ini_write_real("Recursos", "souls", global.souls); 
+    
+    ini_close();
+    show_debug_message("Jogo salvo com sucesso no menu!");
+}

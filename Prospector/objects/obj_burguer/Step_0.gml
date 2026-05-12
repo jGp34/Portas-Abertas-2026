@@ -1,14 +1,21 @@
 depth = -bbox_bottom;
 if (!instance_exists(obj_player)) exit;
 
-// 1. SE O JOGADOR MORREU, FICA PARADO
+// 1. SE O JOGADOR MORREU, RODA A ANIMAÇÃO DE MORTE
 if (global.player_hp <= 0) {
-    state = "idle";
-    sprite_index = spr_burguer_still;
-    image_speed = 0;
+    if (state != "death") {
+        state = "death";
+        sprite_index = spr_burguer_death; // Coloque a sprite correta de morte aqui
+        image_index = 0;
+        image_speed = 1; // Garante que a animação vai rodar
+    }
+    
+    // Trava no último frame quando a animação de morte acabar
+    if (image_index >= image_number - 1) {
+        image_speed = 0; 
+    }
     exit;
 }
-
 // --- 2. LÓGICA DE SEGUIR O PLAYER ---
 // Diferente da fada (que voa), o hambúrguer vai pelo chão.
 // Vamos colocá-lo um pouco mais atrás e no nível dos pés do jogador.
