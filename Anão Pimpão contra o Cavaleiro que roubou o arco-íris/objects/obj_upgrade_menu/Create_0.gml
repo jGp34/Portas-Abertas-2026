@@ -18,7 +18,7 @@ custo_crit_dano  = ini_read_real("Custos", "custo_crit_dano", 25);
 // ==========================================
 // 2. CUSTOS DA FADA ATIRADORA
 // ==========================================
-custo_fada_unlock = ini_read_real("Custos", "custo_fada_unlock", 50); 
+custo_fada_unlock = ini_read_real("Custos", "custo_fada_unlock", 40); 
 custo_fada_dano   = ini_read_real("Custos", "custo_fada_dano", 25);   
 custo_fada_vel    = ini_read_real("Custos", "custo_fada_vel", 30);    
 custo_fada_range  = ini_read_real("Custos", "custo_fada_range", 20);  

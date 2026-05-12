@@ -1,5 +1,5 @@
 // Abre o arquivo de save (se não existir, o GameMaker lê na memória temporária)
-file_delete("meu_save.ini");
+// file_delete("meu_save.ini");
 ini_open("meu_save.ini");
 
 // ==========================================
