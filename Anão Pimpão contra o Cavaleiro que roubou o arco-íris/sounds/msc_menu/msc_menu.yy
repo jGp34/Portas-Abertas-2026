@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":4.775986,
+  "duration":38.605217,
   "exportDir":"",
   "name":"msc_menu",
   "parent":{
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"msc_menu.mp3",
+  "soundFile":"msc_menu.wav",
   "volume":1.0,
 }

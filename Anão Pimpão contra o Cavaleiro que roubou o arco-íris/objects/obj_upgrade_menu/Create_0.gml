@@ -1,5 +1,8 @@
 ini_open("meu_save.ini");
-
+// Toca a música do menu em loop (o 'true' faz ela repetir infinitamente)
+if (!audio_is_playing(msc_menu)) {
+    audio_play_sound(msc_menu, 1, true);
+}
 // ==========================================
 // 1. CUSTOS DOS UPGRADES DO JOGADOR
 // ==========================================
