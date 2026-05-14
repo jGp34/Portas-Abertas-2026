@@ -361,7 +361,7 @@ switch (state) {
             
             // Toca o som e aumenta volume em 30%
             var _snd_bite = audio_play_sound(sfx_knight_bite, 1, false); 
-            audio_sound_gain(_snd_bite, 1.30, 0); 
+            audio_sound_gain(_snd_bite, 1.45, 0); 
             
             var _dist_impacto = point_distance(x, _meu_chao, obj_player.x, _player_chao);
             
@@ -399,7 +399,7 @@ switch (state) {
                 
                 // Toca o som e aumenta volume em 15%
                 var _snd_vomit = audio_play_sound(sfx_knight_vomit, 1, false); 
-                audio_sound_gain(_snd_vomit, 1.4, 0); 
+                audio_sound_gain(_snd_vomit, 2.5, 0); 
                 
                 var _spawn_x = (image_xscale > 0) ? bbox_right : bbox_left;
                 var _y_offset = 25; 

@@ -1,8 +1,8 @@
 event_inherited();
 
 // --- STATS ÚNICOS DO KOBOLD ---
-hp = 120;
-max_hp = 120;
+hp = 100;
+max_hp = 100;
 move_spd = 2.0;
 
 // Animações (crie ou troque para os nomes das suas sprites)

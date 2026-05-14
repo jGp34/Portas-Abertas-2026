@@ -13,5 +13,6 @@ if (place_meeting(x, y, obj_player)) {
     global.player_hp -= damage;
     // Opcional: Adicione um som de impacto específico do Golem aqui
     var _snd = audio_play_sound(sfx_golem_projectile_hit, 1, false);
-    instance_destroy();
+    audio_sound_gain(_snd, 2.0, 0);
+	instance_destroy();
 }

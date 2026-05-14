@@ -22,5 +22,5 @@
   "resourceVersion":"2.0",
   "sampleRate":44100,
   "soundFile":"sfx_player_attack.mp3",
-  "volume":0.8,
+  "volume":0.75,
 }
