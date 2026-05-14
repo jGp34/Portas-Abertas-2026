@@ -105,6 +105,7 @@
     {"name":"sfx_player_chopping","order":1,"path":"sounds/sfx_player_chopping/sfx_player_chopping.yy",},
     {"name":"sfx_player_crit","order":5,"path":"sounds/sfx_player_crit/sfx_player_crit.yy",},
     {"name":"sfx_player_death","order":3,"path":"sounds/sfx_player_death/sfx_player_death.yy",},
+    {"name":"sfx_player_destroy_tree","order":6,"path":"sounds/sfx_player_destroy_tree/sfx_player_destroy_tree.yy",},
     {"name":"sfx_player_soul","order":4,"path":"sounds/sfx_player_soul/sfx_player_soul.yy",},
     {"name":"sfx_poor","order":1,"path":"sounds/sfx_poor/sfx_poor.yy",},
     {"name":"sfx_sahur_attack","order":10,"path":"sounds/sfx_sahur_attack/sfx_sahur_attack.yy",},

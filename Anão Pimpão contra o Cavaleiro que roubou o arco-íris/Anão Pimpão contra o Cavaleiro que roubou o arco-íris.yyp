@@ -155,6 +155,7 @@
     {"id":{"name":"sfx_player_chopping","path":"sounds/sfx_player_chopping/sfx_player_chopping.yy",},},
     {"id":{"name":"sfx_player_crit","path":"sounds/sfx_player_crit/sfx_player_crit.yy",},},
     {"id":{"name":"sfx_player_death","path":"sounds/sfx_player_death/sfx_player_death.yy",},},
+    {"id":{"name":"sfx_player_destroy_tree","path":"sounds/sfx_player_destroy_tree/sfx_player_destroy_tree.yy",},},
     {"id":{"name":"sfx_player_mining","path":"sounds/sfx_player_mining/sfx_player_mining.yy",},},
     {"id":{"name":"sfx_player_soul","path":"sounds/sfx_player_soul/sfx_player_soul.yy",},},
     {"id":{"name":"sfx_poor","path":"sounds/sfx_poor/sfx_poor.yy",},},

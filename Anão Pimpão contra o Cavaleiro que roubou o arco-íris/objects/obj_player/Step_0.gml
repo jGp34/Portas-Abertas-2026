@@ -68,7 +68,7 @@ if (global.player_hp <= 0) {
         ini_write_real("Recursos", "wood", global.wood);
         ini_write_real("Recursos", "souls", global.souls);
         ini_close();
-        
+        audio_stop_all();
         room_goto(rm_upgrades);
     } else {
         image_speed = 1; // IMPORTANTE: Deixa a animação de morte rodar

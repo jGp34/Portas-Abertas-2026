@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":4.775986,
+  "duration":85.8683,
   "exportDir":"",
   "name":"msc_game",
   "parent":{
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"msc_game.mp3",
+  "soundFile":"msc_game.wav",
   "volume":1.0,
 }

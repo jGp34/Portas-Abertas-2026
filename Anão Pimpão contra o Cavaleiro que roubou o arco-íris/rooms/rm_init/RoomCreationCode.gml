@@ -24,6 +24,7 @@ global.atk_speed = ini_read_real("Upgrades", "atk_speed", 1); // 1 = 100% da vel
 global.player_move_speed = ini_read_real("Upgrades", "move_speed", 4); // 4 é a velocidade base
 global.atk_area = ini_read_real("Upgrades", "atk_area", 60); // 60 é o raio base
 global.crit_chance = ini_read_real("Upgrades", "crit_chance", 0); // 0% de chance base
+global.crit_dano = ini_read_real("Upgrades", "crit_dano", 2); // 2x de dano base no crítico
 // ---> ADICIONADO: Aliado Fada <---
 global.fairy_unlocked = ini_read_real("Upgrades", "fairy_unlocked", 0); // 0 = Bloqueada, 1 = Desbloqueada
 global.fairy_damage = ini_read_real("Upgrades", "fairy_dano", 5);       // Dano base
