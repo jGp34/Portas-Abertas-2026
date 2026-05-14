@@ -1,4 +1,4 @@
-// Abre o arquivo de save (se não existir, o GameMaker lê na memória temporária)
+// Abre o arquivo de save (se não existir, o GameMaker lê na memória temporária)//
 //file_delete("meu_save.ini");
 ini_open("meu_save.ini");
 random_set_seed(current_time);
@@ -14,8 +14,8 @@ global.souls = ini_read_real("Recursos", "souls", 0); // <--- ADICIONADO: Souls
 // ==========================================
 // 2. UPGRADES
 // ==========================================
-global.max_hp = ini_read_real("Upgrades", "max_hp", 10);
-global.player_damage = ini_read_real("Upgrades", "dano", 5);
+global.max_hp = ini_read_real("Upgrades", "max_hp", 15);
+global.player_damage = ini_read_real("Upgrades", "dano", 10);
 global.mine_speed = ini_read_real("Upgrades", "mine_speed", 1); 
 global.mine_yield = ini_read_real("Upgrades", "mine_yield", 1); 
 

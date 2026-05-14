@@ -127,6 +127,7 @@
     {"name":"spr_fairy_death","order":2,"path":"sprites/spr_fairy_death/spr_fairy_death.yy",},
     {"name":"spr_fairy_fly","order":3,"path":"sprites/spr_fairy_fly/spr_fairy_fly.yy",},
     {"name":"spr_fairy_projectile","order":4,"path":"sprites/spr_fairy_projectile/spr_fairy_projectile.yy",},
+    {"name":"spr_fundo_santuario","order":6,"path":"sprites/spr_fundo_santuario/spr_fundo_santuario.yy",},
     {"name":"spr_goblin_attack","order":2,"path":"sprites/spr_goblin_attack/spr_goblin_attack.yy",},
     {"name":"spr_goblin_death","order":3,"path":"sprites/spr_goblin_death/spr_goblin_death.yy",},
     {"name":"spr_goblin_default","order":4,"path":"sprites/spr_goblin_default/spr_goblin_default.yy",},

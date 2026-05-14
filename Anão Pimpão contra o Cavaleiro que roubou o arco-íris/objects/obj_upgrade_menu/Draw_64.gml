@@ -2,6 +2,8 @@ draw_set_font(fnt_text);
 var _gui_w = display_get_gui_width();
 var _gui_h = display_get_gui_height();
 
+draw_sprite_stretched(spr_fundo_santuario, 0, 0, 0, _gui_w, _gui_h);
+
 // ========================================================
 // TRAVA DE SEGURANÇA (Impede a tela de ficar preta/vazia)
 // ========================================================
@@ -21,7 +23,7 @@ var _desenhar_carta = function(_cx, _cy, _tecla, _titulo, _val_atual, _custo_txt
     // Se atingiu o limite, força a carta a bloquear visualmente
     if (_limite_atingido) {
         _pode_comprar = false;
-        _custo_txt = "LIMITE ALCANÇADO";
+        _custo_txt = "LIMITE ALCANÇADO!";
         _custo_cor = make_color_rgb(255, 80, 80); // Vermelho
     }
     
@@ -130,9 +132,9 @@ var _space_y = 130;
 // ==========================================
 if (menu_page == 0) {
     // Checagens com os valores EXATOS do seu Evento Step
-    var _vida_max      = (global.max_hp >= 100 && !global.boss_morto);
+    var _vida_max      = (global.max_hp >= 220 && !global.boss_morto);
     var _dano_max      = (global.player_damage >= 100 && !global.boss_morto);
-    var _atk_spd_max   = (global.atk_speed >= 5 && !global.boss_morto);
+    var _atk_spd_max   = (global.atk_speed >= 3 && !global.boss_morto);
     var _atk_area_max  = (global.atk_area >= 100 && !global.boss_morto);
     var _crit_max      = (global.crit_chance >= 30 && !global.boss_morto);
     var _crit_dano_max = (global.crit_dano >= 4 && !global.boss_morto);

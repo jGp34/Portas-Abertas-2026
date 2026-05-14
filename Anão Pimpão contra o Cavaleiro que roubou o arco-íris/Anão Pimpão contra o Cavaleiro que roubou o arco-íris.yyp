@@ -182,6 +182,7 @@
     {"id":{"name":"spr_fairy_default","path":"sprites/spr_fairy_default/spr_fairy_default.yy",},},
     {"id":{"name":"spr_fairy_fly","path":"sprites/spr_fairy_fly/spr_fairy_fly.yy",},},
     {"id":{"name":"spr_fairy_projectile","path":"sprites/spr_fairy_projectile/spr_fairy_projectile.yy",},},
+    {"id":{"name":"spr_fundo_santuario","path":"sprites/spr_fundo_santuario/spr_fundo_santuario.yy",},},
     {"id":{"name":"spr_goblin_attack","path":"sprites/spr_goblin_attack/spr_goblin_attack.yy",},},
     {"id":{"name":"spr_goblin_death","path":"sprites/spr_goblin_death/spr_goblin_death.yy",},},
     {"id":{"name":"spr_goblin_default","path":"sprites/spr_goblin_default/spr_goblin_default.yy",},},
