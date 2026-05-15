@@ -44,10 +44,6 @@ ini_close();
 // 3. OTIMIZAÇÃO (Prefetch)
 // ==========================================
 // Carrega as texturas pesadas dos personagens na memória de vídeo antecipadamente
-sprite_prefetch(spr_player_walk);
-sprite_prefetch(spr_player_pickaxe);
-sprite_prefetch(spr_player_axe);
-sprite_prefetch(spr_player_sword);
-sprite_prefetch(spr_intro_1);
+//texture_prefetch("Default");
 // fazer isso para os sprites dos inimigos também se eles forem pesados
 room_goto(rm_intro);

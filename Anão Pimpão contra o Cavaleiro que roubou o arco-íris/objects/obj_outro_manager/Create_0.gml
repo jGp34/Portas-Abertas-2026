@@ -4,7 +4,7 @@
 event_inherited(); 
 
 // Define para onde vai ao terminar os créditos
-target_room = rm_game; 
+target_room = rm_upgrades; 
 
 call_later(2, time_source_units_frames, function() {
     if (!audio_is_playing(msc_outro)) {
