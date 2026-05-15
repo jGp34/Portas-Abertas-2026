@@ -36,6 +36,7 @@ global.burguer_heal_amount = ini_read_real("Upgrades", "burguer_heal_amount", 5)
 global.burguer_heal_speed = ini_read_real("Upgrades", "burguer_heal_speed", 480); //480 frames = 8 segundos
 // O jogador nasce com a vida cheia baseada no upgrade atual
 global.player_hp = global.max_hp;
+global.boss_morto = ini_read_real("Progresso", "boss_morto", false);
 
 ini_close();
 

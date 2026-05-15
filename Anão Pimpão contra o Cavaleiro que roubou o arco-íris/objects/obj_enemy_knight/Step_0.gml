@@ -18,6 +18,9 @@ if (hp <= 0) {
         image_index = 0;
         audio_play_sound(sfx_knight_death, 1, false); 
 		global.boss_morto = true;
+		ini_open("meu_save.ini");
+		ini_write_real("Progresso", "boss_morto", global.boss_morto);
+		ini_close();
         show_debug_message("Boss derrotado! Morrendo...");
     }
     
