@@ -24,3 +24,6 @@ if (!variable_instance_exists(id, "hp_smooth")) {
 
 // O lerp faz a barra "hp_smooth" perseguir a vida real devagarinho (10% a cada frame)
 hp_smooth = lerp(hp_smooth, global.player_hp, 0.1);
+
+
+

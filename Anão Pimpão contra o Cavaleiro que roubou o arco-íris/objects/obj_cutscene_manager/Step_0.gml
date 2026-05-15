@@ -21,7 +21,7 @@ if (keyboard_check_pressed(vk_f11)) {
 // =======================================================
 
 // ---> PULAR TUDO (Enter) <---
-if (keyboard_check_pressed(vk_enter)) {
+if (keyboard_check_pressed(vk_enter)) || keyboard_check_pressed(vk_space) {
     if (target_room != noone) {
         audio_stop_all(); // Garante que a música pare ao pular
         room_goto(target_room);

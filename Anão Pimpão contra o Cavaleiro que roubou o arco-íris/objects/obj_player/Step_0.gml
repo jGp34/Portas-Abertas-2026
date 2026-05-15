@@ -87,8 +87,13 @@ if (global.player_hp <= 0) {
 var _is_acting = (sprite_index == spr_player_pickaxe || sprite_index == spr_player_axe || sprite_index == spr_player_sword);
 
 // 2. GET MOVEMENT INPUTS
-var _hinput = keyboard_check(ord("D")) - keyboard_check(ord("A"));
-var _vinput = keyboard_check(ord("S")) - keyboard_check(ord("W"));
+var _right = keyboard_check(ord("D")) || keyboard_check(vk_right);
+var _left  = keyboard_check(ord("A")) || keyboard_check(vk_left);
+var _down  = keyboard_check(ord("S")) || keyboard_check(vk_down);
+var _up    = keyboard_check(ord("W")) || keyboard_check(vk_up);
+
+var _hinput = _right - _left;
+var _vinput = _down - _up;
 var _move_speed = global.player_move_speed;
 
 // -> CANCELAMENTO DA ANIMAÇÃO DE FERRAMENTAS PELO MOVIMENTO <-
@@ -103,7 +108,7 @@ if (_is_acting && (sprite_index == spr_player_pickaxe || sprite_index == spr_pla
 
 if (!_is_acting) {
     // 3. AÇÃO INDEPENDENTE: Apenas a espada ("Z")
-    if (keyboard_check_pressed(ord("Z"))) {
+    if (keyboard_check_pressed(ord("Z")) ||keyboard_check_pressed(ord("C"))) {
         sprite_index = spr_player_sword;
         image_index = 0;
         action_sound_played = false; // <--- FIX: Reseta o ataque assim que aperta o botão!

@@ -93,6 +93,7 @@
     {"id":{"name":"obj_intro_manager","path":"objects/obj_intro_manager/obj_intro_manager.yy",},},
     {"id":{"name":"obj_knight_wait","path":"objects/obj_knight_wait/obj_knight_wait.yy",},},
     {"id":{"name":"obj_loot_soul","path":"objects/obj_loot_soul/obj_loot_soul.yy",},},
+    {"id":{"name":"obj_menu_pause","path":"objects/obj_menu_pause/obj_menu_pause.yy",},},
     {"id":{"name":"obj_mine_coal","path":"objects/obj_mine_coal/obj_mine_coal.yy",},},
     {"id":{"name":"obj_mine_gold","path":"objects/obj_mine_gold/obj_mine_gold.yy",},},
     {"id":{"name":"obj_mine_iron","path":"objects/obj_mine_iron/obj_mine_iron.yy",},},

@@ -60,6 +60,7 @@
     {"name":"obj_hud","order":1,"path":"objects/obj_hud/obj_hud.yy",},
     {"name":"obj_intro_manager","order":1,"path":"objects/obj_intro_manager/obj_intro_manager.yy",},
     {"name":"obj_knight_wait","order":3,"path":"objects/obj_knight_wait/obj_knight_wait.yy",},
+    {"name":"obj_menu_pause","order":2,"path":"objects/obj_menu_pause/obj_menu_pause.yy",},
     {"name":"obj_mine_gold","order":1,"path":"objects/obj_mine_gold/obj_mine_gold.yy",},
     {"name":"obj_mine_iron","order":2,"path":"objects/obj_mine_iron/obj_mine_iron.yy",},
     {"name":"obj_mine_ore","order":4,"path":"objects/obj_mine_ore/obj_mine_ore.yy",},

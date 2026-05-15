@@ -172,3 +172,7 @@ draw_set_color(c_aqua);   draw_text(_inv_x + 15, _ry, "Alm: " + string(global.so
 
 // Reseta tudo pro resto do jogo não bugar
 draw_set_color(c_white);
+
+
+
+
