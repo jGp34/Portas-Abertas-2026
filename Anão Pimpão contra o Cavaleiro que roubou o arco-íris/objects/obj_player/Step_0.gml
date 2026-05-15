@@ -39,6 +39,13 @@ if (keyboard_check_pressed(vk_f10)) {
     game_restart();
 }
 
+if (keyboard_check_pressed(vk_f6)) {
+    audio_stop_all(); // Para a música do jogo antes de ir
+    room_goto(rm_outro);
+    show_debug_message("DEBUG: Indo para a tela de créditos!");
+    exit; // Sai do step para evitar rodar lógica de movimento/ataque
+}
+
 // Spawna a Fada automaticamente se o jogador comprou ela e ela ainda não existe
 if (global.fairy_unlocked == 1 && !instance_exists(obj_fairy)) {
     instance_create_layer(x, y, "Instances", obj_fairy);
