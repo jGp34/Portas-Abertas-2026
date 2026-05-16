@@ -71,9 +71,10 @@ if (global.is_paused) {
         
         draw_text(_tx, _ty, "Mover: W, A, S, D ou Setinhas"); _ty += _t_esp;
         draw_text(_tx, _ty, "Atacar: Z ou C"); _ty += _t_esp;
-        draw_text(_tx, _ty, "Minerar: E"); _ty += _t_esp;
+        draw_text(_tx, _ty, "Coletar Recursos/Gênio: E"); _ty += _t_esp;
         draw_text(_tx, _ty, "Ver Atributos: Segurar TAB"); _ty += _t_esp;
         draw_text(_tx, _ty, "Pausar Jogo: ESC"); _ty += _t_esp;
+		draw_text(_tx, _ty, "Selecionar: Espaço ou Enter"); _ty += _t_esp;
         draw_text(_tx, _ty, "Tela Cheia: F11"); _ty += _t_esp * 2;
         
         draw_set_color(make_color_rgb(200, 150, 255));
