@@ -40,3 +40,4 @@ target_wait = instance_nearest(x, y, obj_knight_wait);
 draw_boss_slash = false;
 slash_frame = 0;
 snd_miss = sfx_attack_swing;
+audio_play_sound(sfx_knight_spawn, 2, false);

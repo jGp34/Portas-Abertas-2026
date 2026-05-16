@@ -149,6 +149,7 @@
     {"id":{"name":"sfx_knight_buff","path":"sounds/sfx_knight_buff/sfx_knight_buff.yy",},},
     {"id":{"name":"sfx_knight_death","path":"sounds/sfx_knight_death/sfx_knight_death.yy",},},
     {"id":{"name":"sfx_knight_slash","path":"sounds/sfx_knight_slash/sfx_knight_slash.yy",},},
+    {"id":{"name":"sfx_knight_spawn","path":"sounds/sfx_knight_spawn/sfx_knight_spawn.yy",},},
     {"id":{"name":"sfx_knight_transform","path":"sounds/sfx_knight_transform/sfx_knight_transform.yy",},},
     {"id":{"name":"sfx_knight_vomit","path":"sounds/sfx_knight_vomit/sfx_knight_vomit.yy",},},
     {"id":{"name":"sfx_kobold_death","path":"sounds/sfx_kobold_death/sfx_kobold_death.yy",},},

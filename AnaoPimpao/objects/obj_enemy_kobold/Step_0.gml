@@ -1,53 +1,12 @@
+// --- obj_kobold -> Step ---
+
 depth = -bbox_bottom;
+if (!instance_exists(obj_player)) exit;
 
 // ==========================================
-// 1. CHECAGEM DE MORTE (Apenas Almas)
+// 1. SISTEMA DE HIT E DROP DE RECURSOS (AGORA NO TOPO!)
 // ==========================================
-if (hp <= 0) {
-    if (state != "death") {
-        state = "death";
-        sprite_index = spr_death;
-        image_index = 0; 
-        
-        if (snd_death != -1) audio_play_sound(snd_death, 1, false);
-    }
-    
-    if (image_index >= image_number - 1) {
-        var _meu_centro_x = x;
-        var _meu_centro_y = y + (sprite_height / 2);
-        var _soul = instance_create_layer(_meu_centro_x, _meu_centro_y, "Instances", obj_loot_soul);
-        
-        // A alma continua usando a quantidade fixa estipulada no Create, sem sofrer ação do Yield
-        _soul.quantidade = souls_para_dropar;
-        
-        var _final_scale = 0.15 * souls_scale_mult; 
-        _soul.image_xscale = _final_scale;
-        _soul.image_yscale = _final_scale;
-        
-        instance_destroy();
-    }
-    exit; 
-}
-
-// ==========================================
-// 2. CHECAGEM DE DESTINO E FADE (Sumir)
-// ==========================================
-if (is_fading) {
-    image_alpha -= 0.05; 
-    if (image_alpha <= 0) {
-        instance_destroy(); 
-    }
-    exit; 
-}
-
-var _dist_destino = point_distance(x, y, destino_x, destino_y);
-if (_dist_destino < 10) {
-    is_fading = true; 
-}
-
-// ==========================================
-// 3. SISTEMA DE HIT E DROP DE RECURSOS
-// ==========================================
+// Rodando primeiro para garantir que o golpe fatal também entregue minérios!
 if (hp < prev_hp) {
     var _dano_tomado = prev_hp - hp;
     prev_hp = hp;
@@ -70,7 +29,6 @@ if (hp < prev_hp) {
     var _qnt_drop = global.mine_yield;
     
     for (var i = 0; i < _hits_virtuais; i++) {
-        
         if (random(100) < _chance_carvao) { 
             global.carvao += _qnt_drop;  
             _dropou_algo = true; 
@@ -92,6 +50,50 @@ if (hp < prev_hp) {
 }
 
 // ==========================================
+// 2. CHECAGEM DE MORTE (Apenas Almas)
+// ==========================================
+if (hp <= 0) {
+    if (state != "death") {
+        state = "death";
+        sprite_index = spr_death;
+        image_index = 0; 
+        
+        if (snd_death != -1) audio_play_sound(snd_death, 1, false);
+    }
+    
+    if (image_index >= image_number - 1) {
+        var _meu_centro_x = x;
+        var _meu_centro_y = y + (sprite_height / 2);
+        var _soul = instance_create_layer(_meu_centro_x, _meu_centro_y, "Instances", obj_loot_soul);
+        
+        _soul.quantidade = souls_para_dropar;
+        
+        var _final_scale = 0.15 * souls_scale_mult; 
+        _soul.image_xscale = _final_scale;
+        _soul.image_yscale = _final_scale;
+        
+        instance_destroy();
+    }
+    exit; // Agora o exit só roda depois que o hit lá em cima já foi processado!
+}
+
+// ==========================================
+// 3. CHECAGEM DE DESTINO E FADE (Sumir se chegar na toca)
+// ==========================================
+if (is_fading) {
+    image_alpha -= 0.05; 
+    if (image_alpha <= 0) {
+        instance_destroy(); 
+    }
+    exit; 
+}
+
+var _dist_destino = point_distance(x, y, destino_x, destino_y);
+if (_dist_destino < 10) {
+    is_fading = true; 
+}
+
+// ==========================================
 // 4. SISTEMA DE MOVIMENTO
 // ==========================================
 if (!foi_atacado) {
@@ -101,7 +103,7 @@ if (!foi_atacado) {
         move_timer = irandom_range(0.5 * 60, 2 * 60); 
     }
 } else {
-    is_moving = true; // Se tomou porrada, corre direto!
+    is_moving = true; // Se tomou porrada, corre direto pro destino!
 }
 
 if (is_moving) {

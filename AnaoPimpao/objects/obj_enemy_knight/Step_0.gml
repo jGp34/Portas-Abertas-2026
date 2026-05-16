@@ -8,9 +8,7 @@ if (state == "transform") {
     hp = max_hp / 2; 
 }
 
-// ==========================================
-// 2. LÓGICA DE MORTE
-// ==========================================
+
 // ==========================================
 // 2. LÓGICA DE MORTE
 // ==========================================
@@ -36,8 +34,25 @@ if (hp <= 0) {
             audio_stop_all();
             room_goto(rm_outro);
         } else {
-            // JÁ MORREU ANTES: Só destrói o corpo e continua o jogo normal
+            // JÁ MORREU ANTES: Só destrói o corpo e continua o jogo normal (Modo Infinito)
             show_debug_message("Cavaleiro já havia sido derrotado neste save. Sem créditos!");
+            
+            // --------------------------------------------------------
+            // ---> NOVO: DROP DE ALMAS PARA O BOSS REPETIDO <---
+            // --------------------------------------------------------
+            var _meu_centro_x = x;
+            var _meu_centro_y = y + (sprite_height / 2);
+            
+            var _soul = instance_create_layer(_meu_centro_x, _meu_centro_y, "Instances", obj_loot_soul);
+            
+            _soul.quantidade = souls_para_dropar;
+            
+            // Aplica a escala premium baseada no multiplicador dele (vai ficar gigante!)
+            var _final_scale = 0.15 * souls_scale_mult;
+            _soul.image_xscale = _final_scale;
+            _soul.image_yscale = _final_scale;
+            
+            show_debug_message("Cavaleiro do modo infinito destruído! Dropou " + string(souls_para_dropar) + " souls.");
         }
         
         instance_destroy(); // Independente da rota, destrói o objeto
@@ -230,35 +245,6 @@ case "attack_slash":
             
             sound_played = false; // <--- Reseta o som para o próximo ataque!
             
-            if (attack_count >= 3) {
-                state = "kneel_down";
-                sprite_index = spr_knight_kneel_down;
-                image_index = 0;
-            } else {
-                state = "cooldown";
-                sprite_index = spr_knight_still;
-                alarm[0] = attack_cooldown;
-            }
-        }
-        break;
-
-        // 3. FINALIZA O ATAQUE
-        if (image_index >= image_number - 1) {
-            attack_count++;
-            if (attack_count >= 3) {
-                state = "kneel_down";
-                sprite_index = spr_knight_kneel_down;
-                image_index = 0;
-            } else {
-                state = "cooldown";
-                sprite_index = spr_knight_still;
-                alarm[0] = attack_cooldown;
-            }
-        }
-        break;
-
-        if (image_index >= image_number - 1) {
-            attack_count++;
             if (attack_count >= 3) {
                 state = "kneel_down";
                 sprite_index = spr_knight_kneel_down;

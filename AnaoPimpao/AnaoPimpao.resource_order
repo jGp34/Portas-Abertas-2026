@@ -100,6 +100,7 @@
     {"name":"sfx_knight_buff","order":4,"path":"sounds/sfx_knight_buff/sfx_knight_buff.yy",},
     {"name":"sfx_knight_death","order":6,"path":"sounds/sfx_knight_death/sfx_knight_death.yy",},
     {"name":"sfx_knight_slash","order":2,"path":"sounds/sfx_knight_slash/sfx_knight_slash.yy",},
+    {"name":"sfx_knight_spawn","order":8,"path":"sounds/sfx_knight_spawn/sfx_knight_spawn.yy",},
     {"name":"sfx_knight_transform","order":7,"path":"sounds/sfx_knight_transform/sfx_knight_transform.yy",},
     {"name":"sfx_knight_vomit","order":3,"path":"sounds/sfx_knight_vomit/sfx_knight_vomit.yy",},
     {"name":"sfx_kobold_death","order":4,"path":"sounds/sfx_kobold_death/sfx_kobold_death.yy",},

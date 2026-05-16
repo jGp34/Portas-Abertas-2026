@@ -138,14 +138,15 @@ if (menu_page == 0) {
     var _atk_area_max  = (global.atk_area >= 100 && !global.boss_morto);
     var _crit_max      = (global.crit_chance >= 30 && !global.boss_morto);
     var _crit_dano_max = (global.crit_dano >= 4 && !global.boss_morto);
-
+	var _move_spd_max  = (global.player_move_speed >= 8 && !global.boss_morto);
+	
     _desenhar_carta(_grid_start_x + (_space_x * 0), _grid_start_y + (_space_y * 0), "1", "+ Vida Máxima", global.max_hp, string(custo_vida) + " Madeira", c_orange, (global.wood >= custo_vida), _vida_max);
     _desenhar_carta(_grid_start_x + (_space_x * 1), _grid_start_y + (_space_y * 0), "2", "+ Dano Base", global.player_damage, string(custo_dano) + " Carvão", c_dkgray, (global.carvao >= custo_dano), _dano_max);
     _desenhar_carta(_grid_start_x + (_space_x * 2), _grid_start_y + (_space_y * 0), "3", "+ Vel. Minerar", global.mine_speed, string(custo_vel) + " Ferro", c_ltgray, (global.iron >= custo_vel), false);
     
     _desenhar_carta(_grid_start_x + (_space_x * 0), _grid_start_y + (_space_y * 1), "4", "+ Drop Extra", global.mine_yield, string(custo_yield) + " Ouro", c_yellow, (global.gold >= custo_yield), false);
     _desenhar_carta(_grid_start_x + (_space_x * 1), _grid_start_y + (_space_y * 1), "5", "+ Vel. Ataque", global.atk_speed, string(custo_atk_speed) + " Ouro", c_yellow, (global.gold >= custo_atk_speed), _atk_spd_max);
-    _desenhar_carta(_grid_start_x + (_space_x * 2), _grid_start_y + (_space_y * 1), "6", "+ Vel. Movimento", global.player_move_speed, string(custo_move_speed) + " Carvão", c_dkgray, (global.carvao >= custo_move_speed), false);
+	_desenhar_carta(_grid_start_x + (_space_x * 2), _grid_start_y + (_space_y * 1), "6", "+ Vel. Movimento", global.player_move_speed, string(custo_move_speed) + " Carvão", c_dkgray, (global.carvao >= custo_move_speed), _move_spd_max);
     
     _desenhar_carta(_grid_start_x + (_space_x * 0), _grid_start_y + (_space_y * 2), "7", "+ Área Ataque", global.atk_area, string(custo_atk_area) + " Ferro", c_ltgray, (global.iron >= custo_atk_area), _atk_area_max);
     _desenhar_carta(_grid_start_x + (_space_x * 1), _grid_start_y + (_space_y * 2), "8", "+ Chance Crítico", string(global.crit_chance) + "%", string(custo_critico) + " Almas", c_aqua, (global.souls >= custo_critico), _crit_max);

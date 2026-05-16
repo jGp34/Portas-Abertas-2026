@@ -74,15 +74,17 @@ if (menu_page == 0) {
             } else { _falhou_compra = true; }
         } else { _falhou_compra = true; }
     }
-    if (keyboard_check_pressed(ord("6"))) {
-        // Sem cap definido
-        if (global.carvao >= custo_move_speed) {
-            global.carvao -= custo_move_speed;
-            global.player_move_speed += 0.5;
-            custo_move_speed = round(custo_move_speed * 1.4);
-            _comprou_algo = true;
-        } else { _falhou_compra = true; }
-    }
+	if (keyboard_check_pressed(ord("6"))) {
+	        // ---> NOVO: Limita a velocidade em 8 antes do boss morrer <---
+	        if (global.player_move_speed < 8 || global.boss_morto) {
+	            if (global.carvao >= custo_move_speed) {
+	                global.carvao -= custo_move_speed;
+	                global.player_move_speed += 0.5;
+	                custo_move_speed = round(custo_move_speed * 1.4);
+	                _comprou_algo = true;
+	            } else { _falhou_compra = true; }
+	        } else { _falhou_compra = true; } // <--- Limite alcançado
+	}
     if (keyboard_check_pressed(ord("7"))) {
         if (global.atk_area < 90 || global.boss_morto) {
             if (global.iron >= custo_atk_area) {
