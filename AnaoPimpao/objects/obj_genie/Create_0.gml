@@ -3,8 +3,8 @@ state = "hidden"; // Estados: "hidden", "active", "reward", "timeout"
 
 var _fps = game_get_speed(gamespeed_fps);
 
-// Aos 45s (base) + de 0 a 60s (próximo minuto)
-spawn_timer = (45 + irandom(45)) * _fps; 
+// Aos 45s (base) + de 5 a 45 (próximo minuto)
+spawn_timer = (45 + irandom_range(5, 45)) * _fps;
 active_timer = 0;
 
 image_xscale = 0.3;

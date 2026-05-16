@@ -1,3 +1,4 @@
+window_set_caption("Anão Pimpão contra o Cavaleiro que roubou o arco-íris"); // Coloque o nome que quiser!
 // Abre o arquivo de save (se não existir, o GameMaker lê na memória temporária)//
 //file_delete("meu_save.ini");
 ini_open("meu_save.ini");
