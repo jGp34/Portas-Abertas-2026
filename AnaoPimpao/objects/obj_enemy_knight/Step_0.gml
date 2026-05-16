@@ -5,7 +5,7 @@ if (!instance_exists(obj_player)) exit;
 // 1. LÓGICA DE INVULNERABILIDADE NA TRANSFORMAÇÃO
 // ==========================================
 if (state == "transform") {
-    hp = max_hp / 2; 
+    hp = 1000; 
 }
 
 
@@ -63,7 +63,7 @@ if (hp <= 0) {
 // ==========================================
 // 3. TRANSIÇÃO PARA A FASE 2 (50% de Vida)
 // ==========================================
-if (hp <= max_hp / 2 && phase == 1) {
+if (hp <= 1000 && phase == 1) {
     phase = 2;
     state = "transform";
     sprite_index = spr_knight_transform;
@@ -112,8 +112,14 @@ switch (state) {
         }
         break;
         
-    case "intro_wait":
+	case "intro_wait":
         sprite_index = spr_knight_still;
+        
+        // ---> NOVO: FAZ O CAVALEIRO ENCARAR O JOGADOR <---
+        if (abs(obj_player.x - x) > 1) {
+            image_xscale = sign(obj_player.x - x) * base_scale;
+        }
+        
         if (hp < max_hp || place_meeting(x, y, obj_player)) {
             state = "chase";
             chase_timer = 0;

@@ -24,7 +24,7 @@ credits_data = [
     { tipo: "nome",             texto: "GameMaker: Game Engine\nPixelEngine: Animação de Pixel Art\nGemini: Ajuda no Código e Imagens\nGithub: Controle de Versão\nBandlab: Músicas\nVegas Pro 22: Edição de Áudio" },
     { tipo: "espaco",           texto: "" },
     { tipo: "titulo",           texto: "AGRADECIMENTOS ESPECIAIS" },
-    { tipo: "nome",             texto: "Jorge: Organização\nVini: Imagem" },
+    { tipo: "nome",             texto: "Arthur: Teste\nJorge: Organização\nVini: Imagem" },
     { tipo: "espaco",           texto: "" },
     { tipo: "espaco",           texto: "" },
     { tipo: "agradecimento",    texto: "Obrigado por jogar!" }

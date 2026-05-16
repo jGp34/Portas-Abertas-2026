@@ -2,7 +2,7 @@
 event_inherited();
 
 // Sobrescrever Stats do Boss
-hp = 2000;
+hp = 3000;
 max_hp = hp;
 move_spd = 1.0;       // Caminhada imponente e mais lenta
 attack_dist = 80;     // Distância para iniciar os golpes
