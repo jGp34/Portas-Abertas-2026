@@ -18,6 +18,12 @@ show_credits = false;    // Fica falso por padrão (A Intro não usa)
 credits_text = "";       // Texto que será desenhado
 credits_y = gui_height;  // Começa fora da tela (embaixo)
 
+// ---> NOVO: Sincronização de Áudio <---
+music_asset = noone;         // Arquivo da música
+music_id = noone;            // ID exato do som tocando
+credits_speed = 1.5;         // Velocidade de segurança (fallback)
+speed_calculated = false;    // Trava do cálculo
+
 if (window_get_fullscreen()) {
     call_later(1, time_source_units_frames, function() {
         surface_resize(application_surface, display_get_width(), display_get_height());

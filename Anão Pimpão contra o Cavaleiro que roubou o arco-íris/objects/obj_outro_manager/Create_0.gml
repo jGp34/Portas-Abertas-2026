@@ -6,18 +6,21 @@ event_inherited();
 // Define para onde vai ao terminar os créditos
 target_room = rm_upgrades; 
 
+music_asset = msc_outro;
 call_later(2, time_source_units_frames, function() {
-    if (!audio_is_playing(msc_outro)) {
-        audio_play_sound(msc_outro, 1, false);
+    if (!audio_is_playing(music_asset)) {
+        music_id = audio_play_sound(music_asset, 1, false);
     }
 });
 
 // ---> ATIVANDO OS CRÉDITOS <---
 show_credits = true;
-credits_text = "DESENVOLVEDORES\nAugusto\nJoão Gabriel\n\n\n" +
+credits_text = "Anão Pimpão contra o Cavaleiro que roubou o arco-íris\n\n\n" +
+               "DESENVOLVEDORES\nAugusto\nJoão Gabriel\n\n\n" +
                "MÚSICA\nEmma Beatriz\n\n\n" +
-               "FERRAMENTAS UTILIZADAS\nGameMaker\nPixelEngine\nGemini\nGithub\nBandlab\n\n\n\n" +
-               "Obrigado por jogar!";
+               "FERRAMENTAS UTILIZADAS\nGameMaker: Game Engine\nPixelEngine: Animação de Pixel Art\nGemini: Ajuda no Código e Imagens\nGithub: Controle de Versão\nBandlab: Músicas\nVegas Pro 22: Edição de Áudio\n\n\n" +
+               "AGRADECIMENTOS ESPECIAIS\nJorge\nVini\n\n\n" +
+			   "Obrigado por jogar!";
 
 // Define a "playlist" desta cutscene
 scenes = [
