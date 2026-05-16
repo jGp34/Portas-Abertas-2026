@@ -2,14 +2,14 @@
 event_inherited();
 
 // --- STATS DO GOLEM ---
-hp = 50; 
-max_hp = 50;
-damage = 25; // Dano repassado ao projétil
+hp = 100; 
+max_hp = 100;
+damage = 50; // Dano repassado ao projétil
 move_spd = 0.8; // Um pouco mais lento que o esqueleto (que era 1.0)
 
 // --- SISTEMA DE TIRO ---
-// Ele atira a cada 4 segundos (240 frames a 60FPS) para não ser muito rápido
-shoot_cooldown =180; 
+// Ele atira a cada 2.5 segundos (150 frames a 60FPS) para não ser muito rápido
+shoot_cooldown = 150; 
 shoot_timer = shoot_cooldown;
 
 // --- ANIMAÇÕES ---
