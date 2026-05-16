@@ -18,7 +18,7 @@ attack_count = 0;
 kneel_loops = 0;      
 chase_timer = 0;
 
-
+sound_played = false;
 souls_para_dropar = 10;
 souls_scale_mult = 2;
 

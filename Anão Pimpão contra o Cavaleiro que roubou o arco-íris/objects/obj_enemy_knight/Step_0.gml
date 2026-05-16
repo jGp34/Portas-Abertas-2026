@@ -185,32 +185,77 @@ switch (state) {
         }
         break;
 
-    case "attack_slash":
-        // ---> LÓGICA MATEMÁTICA DO SLASH <---
-        if (image_index >= image_number * 0.4) && (!attack_hit) {
-            attack_hit = true; 
+case "attack_slash":
+        var _frame_impacto = image_number * 0.25;
+        
+        // 1. TOCA O SOM UMA ÚNICA VEZ
+        if (image_index >= _frame_impacto) && (!sound_played) {
+            sound_played = true; // <--- Trava o som para ele não repetir!
             
             audio_play_sound(sfx_knight_slash, 1, false); 
-            
             if (snd_miss != -1) {
                 var _snd = audio_play_sound(snd_miss, 1, false);
                 audio_sound_pitch(_snd, snd_pitch); 
             }
-            
-            // Matemática da área de acerto gigante
-            var _alcance_frente = 60; 
-            var _raio_corte = 80;     
-            var _hitbox_x = x + lengthdir_x(_alcance_frente, (image_xscale > 0 ? 0 : 180));
-            var _hitbox_y = y;
+        }
 
-            // Checa se pegou o jogador!
-            if (collision_circle(_hitbox_x, _hitbox_y, _raio_corte, obj_player, false, true)) {
+        // 2. LÓGICA DE DANO CONTÍNUA (Acompanha a onda visual!)
+        if (image_index >= _frame_impacto) && (!attack_hit) {
+            
+            var _frames_restantes = image_number - _frame_impacto;
+            var _progresso = clamp((image_index - _frame_impacto) / _frames_restantes, 0, 1);
+            
+            var _dir = (image_xscale > 0) ? 0 : 180;
+            var _dist_atual = lerp(15, 70, _progresso); 
+            var _tamanho_atual = lerp(20, 90, _progresso);  
+            
+            var _hitbox_x = x + lengthdir_x(_dist_atual, _dir);
+            var _hitbox_y = y + 40; 
+            
+            var _raio_justo = max(10, _tamanho_atual - 10); 
+
+            if (collision_circle(_hitbox_x, _hitbox_y, _raio_justo, obj_player, false, true)) {
+                
+                attack_hit = true; 
                 global.player_hp -= damage;
-                show_debug_message("Slash Gigante acertou! Dano: " + string(damage));
+                show_debug_message("Slash Dinâmico acertou! Dano: " + string(damage));
                 
                 if (snd_hit != -1) audio_play_sound(snd_hit, 1, false);
             }
         }
+
+        // 3. FINALIZA O ATAQUE E RESETA AS TRAVAS
+        if (image_index >= image_number - 1) {
+            attack_count++;
+            
+            sound_played = false; // <--- Reseta o som para o próximo ataque!
+            
+            if (attack_count >= 3) {
+                state = "kneel_down";
+                sprite_index = spr_knight_kneel_down;
+                image_index = 0;
+            } else {
+                state = "cooldown";
+                sprite_index = spr_knight_still;
+                alarm[0] = attack_cooldown;
+            }
+        }
+        break;
+
+        // 3. FINALIZA O ATAQUE
+        if (image_index >= image_number - 1) {
+            attack_count++;
+            if (attack_count >= 3) {
+                state = "kneel_down";
+                sprite_index = spr_knight_kneel_down;
+                image_index = 0;
+            } else {
+                state = "cooldown";
+                sprite_index = spr_knight_still;
+                alarm[0] = attack_cooldown;
+            }
+        }
+        break;
 
         if (image_index >= image_number - 1) {
             attack_count++;
