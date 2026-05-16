@@ -8,7 +8,7 @@
   "option_reddit_game_name":"${project_name}",
   "option_reddit_interpolate_pixels":true,
   "option_reddit_scale":0,
-  "option_reddit_texture_page":"2048x2048",
+  "option_reddit_texture_page":"512x512",
   "option_reddit_transparent_background":false,
   "resourceType":"GMRedditOptions",
   "resourceVersion":"2.0",
