@@ -11,23 +11,36 @@ if (state == "transform") {
 // ==========================================
 // 2. LÓGICA DE MORTE
 // ==========================================
+// ==========================================
+// 2. LÓGICA DE MORTE
+// ==========================================
 if (hp <= 0) {
     if (state != "death") {
         state = "death";
         sprite_index = spr_knight_death;
         image_index = 0;
         audio_play_sound(sfx_knight_death, 1, false); 
-		global.boss_morto = true;
-		ini_open("meu_save.ini");
-		ini_write_real("Progresso", "boss_morto", global.boss_morto);
-		ini_close();
         show_debug_message("Boss derrotado! Morrendo...");
     }
     
     if (image_index >= image_number - 1) {
-        audio_stop_all();
-		room_goto(rm_outro);
-		instance_destroy();
+        // ---> VERIFICAÇÃO DE PRIMEIRA MORTE <---
+        if (global.boss_morto == false) {
+            // É A PRIMEIRA VEZ: Salva o progresso e vai para os Créditos!
+            global.boss_morto = true;
+            
+            ini_open("meu_save.ini");
+            ini_write_real("Progresso", "boss_morto", global.boss_morto);
+            ini_close();
+            
+            audio_stop_all();
+            room_goto(rm_outro);
+        } else {
+            // JÁ MORREU ANTES: Só destrói o corpo e continua o jogo normal
+            show_debug_message("Cavaleiro já havia sido derrotado neste save. Sem créditos!");
+        }
+        
+        instance_destroy(); // Independente da rota, destrói o objeto
     }
     exit; 
 }
