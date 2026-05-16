@@ -130,11 +130,13 @@ if (can_wander) {
 
 // --- 5. APLICAR COLISÕES ---
 if (state == "walk") {
+    var _bateu = false; // Flag para impedir o bug do 360º
+    
     // Colisão Horizontal
     if (place_meeting(x + _hspd + (sign(_hspd) * _folga), y, obj_barrier)) {
         while (!place_meeting(x + sign(_hspd), y, obj_barrier)) { x += sign(_hspd); }
         _hspd = 0;
-        wander_dir += 180; // Dá meia volta ao bater na parede
+        _bateu = true; 
     }
     x += _hspd;
 
@@ -142,9 +144,24 @@ if (state == "walk") {
     if (place_meeting(x, y + _vspd + (sign(_vspd) * _folga), obj_barrier)) {
         while (!place_meeting(x, y + sign(_vspd), obj_barrier)) { y += sign(_vspd); }
         _vspd = 0;
-        wander_dir += 180; // Dá meia volta ao bater na parede
+        _bateu = true;
     }
     y += _vspd;
+    
+    // Vira apenas UMA vez, mesmo se bater numa quina!
+    if (_bateu) {
+        wander_dir += 180; 
+    }
+    
+    // --- SISTEMA DE RESGATE CONTÍNUO (Anti-Stuck de Máscara) ---
+    // Se a mudança de frame/escala colocar o inimigo dentro da parede, ele escorrega para fora
+    if (place_meeting(x, y, obj_barrier)) {
+        var _dir_centro = point_direction(x, y, room_width / 2, room_height / 2);
+        x += lengthdir_x(2, _dir_centro);
+        y += lengthdir_y(2, _dir_centro);
+    }
 }
+
+image_yscale = base_scale;
 
 image_yscale = base_scale;

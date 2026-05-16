@@ -143,12 +143,13 @@ else if (state != "attack") {
 
 // --- 4. APLICAR COLISÕES ---
 if (state == "walk") {
+    var _bateu = false; // Flag para impedir o bug do 360º
+    
     // Colisão Horizontal
     if (place_meeting(x + _hspd + (sign(_hspd) * _folga), y, obj_barrier)) {
         while (!place_meeting(x + sign(_hspd), y, obj_barrier)) { x += sign(_hspd); }
         _hspd = 0;
-        // Se bateu na parede durante a patrulha, dá meia volta
-        if (_dist >= detect_radius) wander_dir += 180;
+        if (_dist >= detect_radius) _bateu = true;
     }
     x += _hspd;
 
@@ -156,10 +157,21 @@ if (state == "walk") {
     if (place_meeting(x, y + _vspd + (sign(_vspd) * _folga), obj_barrier)) {
         while (!place_meeting(x, y + sign(_vspd), obj_barrier)) { y += sign(_vspd); }
         _vspd = 0;
-        // Se bateu na parede durante a patrulha, dá meia volta
-        if (_dist >= detect_radius) wander_dir += 180;
+        if (_dist >= detect_radius) _bateu = true;
     }
     y += _vspd;
+    
+    // Vira apenas UMA vez
+    if (_bateu) {
+        wander_dir += 180;
+    }
+    
+    // --- SISTEMA DE RESGATE CONTÍNUO (Anti-Stuck de Máscara) ---
+    if (place_meeting(x, y, obj_barrier)) {
+        var _dir_centro = point_direction(x, y, room_width / 2, room_height / 2);
+        x += lengthdir_x(2, _dir_centro);
+        y += lengthdir_y(2, _dir_centro);
+    }
 }
 
 // --- 5. OLHAR PARA O JOGADOR (SÓ SE ESTIVER VENDO ELE) ---

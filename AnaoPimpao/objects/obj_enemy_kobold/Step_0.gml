@@ -118,4 +118,4 @@ if (is_moving) {
     if (abs(_hspd) > 0.1) image_xscale = sign(_hspd) * base_scale;
 } else {
     sprite_index = spr_idle;
-}
+}	

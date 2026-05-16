@@ -2,7 +2,7 @@
 event_inherited();
 
 // Stats do Sahur
-hp = 75;
+hp = 85;
 max_hp = hp;
 damage = 50;
 move_spd = 2.5;         // Ele corre bem rápido!

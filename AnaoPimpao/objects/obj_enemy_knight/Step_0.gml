@@ -470,7 +470,7 @@ case "attack_slash":
                 
                 with (obj_enemy_parent) {
                     if (id != other.id) {
-                        var _novo_hp = max(50, hp * 1.25);
+                        var _novo_hp = max(60, hp * 1.25);
                         hp = _novo_hp;
                         max_hp = _novo_hp;
                         

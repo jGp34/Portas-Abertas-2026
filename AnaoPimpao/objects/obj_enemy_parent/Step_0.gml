@@ -237,3 +237,14 @@ else {
         }
     } // Fim do "else" (não pode fazer wander)
 } // Fim do "else" geral (fora da visão)
+
+// ==========================================
+// 6. SISTEMA DE RESGATE UNIVERSAL (Anti-Stuck)
+// ==========================================
+// Se qualquer inimigo herdeiro inverter a sprite e entrar na parede, 
+// ele escorrega como sabão de volta para o mapa!
+if (place_meeting(x, y, obj_barrier)) {
+    var _dir_centro = point_direction(x, y, room_width / 2, room_height / 2);
+    x += lengthdir_x(2, _dir_centro);
+    y += lengthdir_y(2, _dir_centro);
+}
