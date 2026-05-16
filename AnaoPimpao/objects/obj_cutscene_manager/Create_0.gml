@@ -1,5 +1,5 @@
 // --- obj_cutscene_manager -> Create ---
-gui_width = 1280;
+gui_width = 1280; // VOLTA PARA O PADRÃO SEGURO DO SEU JOGO
 gui_height = 720;
 display_set_gui_size(gui_width, gui_height);
 
@@ -13,16 +13,17 @@ timer = 0;
 target_room = noone; 
 scenes = [];
 
-// ---> NOVO: Variáveis para os Créditos <---
-show_credits = false;    // Fica falso por padrão (A Intro não usa)
-credits_text = "";       // Texto que será desenhado
-credits_y = gui_height;  // Começa fora da tela (embaixo)
+// --- DADOS DOS CRÉDITOS ---
+show_credits = false;
+credits_data = [];
+credits_y = gui_height + 50;
+credits_total_height = 0;
 
-// ---> NOVO: Sincronização de Áudio <---
-music_asset = noone;         // Arquivo da música
-music_id = noone;            // ID exato do som tocando
-credits_speed = 1.5;         // Velocidade de segurança (fallback)
-speed_calculated = false;    // Trava do cálculo
+// --- SINCRONIZAÇÃO DE ÁUDIO ---
+music_asset = noone;
+music_id = noone;
+credits_speed = 1.0; 
+speed_calculated = false;
 
 if (window_get_fullscreen()) {
     call_later(1, time_source_units_frames, function() {

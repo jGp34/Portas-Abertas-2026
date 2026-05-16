@@ -1,16 +1,16 @@
 // --- obj_intro_manager -> Create ---
-
-// ISSO É VITAL: Puxa todas as configurações do Pai (resolução, fade, etc)
 event_inherited(); 
 
-// Define para onde essa cutscene específica vai ao terminar
 target_room = rm_game; 
+show_credits = false; // Garante que a Intro vai pular direto pro jogo!
+
+music_asset = msc_intro;
 call_later(2, time_source_units_frames, function() {
-    if (!audio_is_playing(msc_intro)) {
-        audio_play_sound(msc_intro, 1, false);
+    if (!audio_is_playing(music_asset)) {
+        music_id = audio_play_sound(music_asset, 1, false);
     }
 });
-// Define a "playlist" desta cutscene
+
 scenes = [
     { spr: spr_intro_1,  dur: 120 },
     { spr: spr_intro_2,  dur: 120 },

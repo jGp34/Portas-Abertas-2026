@@ -45,7 +45,7 @@ if (global.is_paused) {
     } 
     else if (pause_state == "controls") {
         var _cw = 500; 
-        var _ch = 500; 
+        var _ch = 530; // AUMENTADO AQUI (De 500 para 530) para dar espaço ao novo cheat!
         var _cx = (_gui_w - _cw) / 2;
         var _cy = (_gui_h - _ch) / 2;
         
@@ -71,7 +71,7 @@ if (global.is_paused) {
         
         draw_text(_tx, _ty, "Mover: W, A, S, D ou Setinhas"); _ty += _t_esp;
         draw_text(_tx, _ty, "Atacar: Z ou C"); _ty += _t_esp;
-		draw_text(_tx, _ty, "Minerar: E"); _ty += _t_esp;
+        draw_text(_tx, _ty, "Minerar: E"); _ty += _t_esp;
         draw_text(_tx, _ty, "Ver Atributos: Segurar TAB"); _ty += _t_esp;
         draw_text(_tx, _ty, "Pausar Jogo: ESC"); _ty += _t_esp;
         draw_text(_tx, _ty, "Tela Cheia: F11"); _ty += _t_esp * 2;
@@ -80,10 +80,13 @@ if (global.is_paused) {
         draw_text(_tx, _ty, "CHEATKEYS"); _ty += _t_esp;
         
         draw_set_color(c_ltgray);
+        // ---> NOVO CHEAT ADICIONADO AQUI EM ORDEM CRONOLÓGICA (F6) <---
+        draw_text(_tx, _ty, "Mostrar final: F6"); _ty += _t_esp;
+        
         draw_text(_tx, _ty, "Matar personagem: F7"); _ty += _t_esp;
         draw_text(_tx, _ty, "Adicionar 9999 de recursos: F8"); _ty += _t_esp;
-		draw_text(_tx, _ty, "Zerar recursos: F9"); _ty += _t_esp;
-		draw_text(_tx, _ty, "Resetar personagem: F10"); _ty += _t_esp;
+        draw_text(_tx, _ty, "Zerar recursos: F9"); _ty += _t_esp;
+        draw_text(_tx, _ty, "Resetar personagem: F10"); _ty += _t_esp;
         
         draw_set_halign(fa_center);
         draw_set_color(c_yellow);

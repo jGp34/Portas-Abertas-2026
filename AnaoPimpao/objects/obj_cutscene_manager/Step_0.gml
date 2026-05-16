@@ -1,6 +1,6 @@
 // --- obj_cutscene_manager -> Step ---
 
-// Tela cheia e pulo (Mantém igualzinho o seu)
+// ---> 1. TELA CHEIA <---
 if (keyboard_check_pressed(vk_f11)) {
     var _is_fullscreen = window_get_fullscreen();
     window_set_fullscreen(!_is_fullscreen);
@@ -10,6 +10,7 @@ if (keyboard_check_pressed(vk_f11)) {
     });
 }
 
+// ---> 2. PULAR CUTSCENE <---
 if (keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space)) {
     if (target_room != noone) {
         audio_stop_all(); 
@@ -18,7 +19,7 @@ if (keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space)) {
     exit; 
 }
 
-// MÁQUINA DE ESTADOS
+// ---> 3. MÁQUINA DE ESTADOS <---
 if (array_length(scenes) > 0) {
     switch (state) {
         case "fade_in":
@@ -36,7 +37,7 @@ if (array_length(scenes) > 0) {
             }
             break;
             
-        case "fade_out":
+		case "fade_out":
             fade_alpha += fade_speed;
             if (fade_alpha >= 1) {
                 fade_alpha = 1;
@@ -46,9 +47,10 @@ if (array_length(scenes) > 0) {
                     timer = 0;
                     state = "fade_in";
                 } else {
-                    // ---> NOVO: Verifica se deve exibir créditos ou acabar <---
+                    // Decide o rumo final!
                     if (show_credits) {
                         state = "credits";
+                        fade_alpha = 0; // <--- CORREÇÃO AQUI! Remove a tela preta para revelar os créditos
                     } else {
                         if (target_room != noone) {
                             audio_stop_all(); 
@@ -59,44 +61,58 @@ if (array_length(scenes) > 0) {
             }
             break;
             
-        // ---> NOVO: Estado dos Créditos Rolantes <---
-// ---> ESTADO DOS CRÉDITOS ROLANTES <---
+		// ---> 4. CRÉDITOS SINCRONIZADOS <---
         case "credits":
-            
-            // 1. Calcula a velocidade exata APENAS na primeira frame dos créditos
-            if (!speed_calculated && credits_text != "") {
-                var _text_h = string_height(credits_text) * 2; 
-                var _dist_total = gui_height + _text_h + 100; // Caminho total que o texto precisa percorrer
+            if (!speed_calculated) {
+                draw_set_font(fnt_text);
+                credits_total_height = 0;
                 
-                var _tempo_restante_seg = 10; // Fallback caso a música já tenha acabado
-                
-                // Pega a duração total da música MENOS o tempo que já passou tocando as imagens
-                if (music_asset != noone && music_id != noone && audio_is_playing(music_id)) {
-                    _tempo_restante_seg = audio_sound_length(music_asset) - audio_sound_get_track_position(music_id);
-                    if (_tempo_restante_seg <= 0.1) _tempo_restante_seg = 0.1; // Trava de segurança contra divisão por 0
+                for (var i = 0; i < array_length(credits_data); i++) {
+                    var _item = credits_data[i];
+                    if (_item.tipo == "titulo_principal") credits_total_height += string_height(_item.texto) * 1.5 + 40;
+                    else if (_item.tipo == "titulo") credits_total_height += string_height(_item.texto) * 1.2 + 20;
+                    else if (_item.tipo == "nome") credits_total_height += string_height(_item.texto) + 40;
+                    else if (_item.tipo == "agradecimento") credits_total_height += string_height(_item.texto) * 1.5 + 40;
+                    else if (_item.tipo == "espaco") credits_total_height += 40;
                 }
                 
-                // Converte os segundos restantes para Frames (ex: 30s * 60fps = 1800 frames)
-                var _tempo_restante_frames = _tempo_restante_seg * game_get_speed(gamespeed_fps);
+                // Mudança aqui: O ponto de parada agora é quando o texto sai totalmente da tela por cima
+                var _ponto_saida = -credits_total_height - 100;
+                var _distancia_total = (gui_height + 50) - _ponto_saida;
                 
-                // Distância dividida pelo Tempo dá a nossa Velocidade perfeita!
-                credits_speed = _dist_total / _tempo_restante_frames;
-                speed_calculated = true; 
+                var _tempo_restante_seg = 10;
+                if (music_asset != noone && music_id != noone && audio_is_playing(music_id)) {
+                    _tempo_restante_seg = audio_sound_length(music_asset) - audio_sound_get_track_position(music_id);
+                    _tempo_restante_seg -= 1.0; // Deixa 1 segundo de margem
+                    if (_tempo_restante_seg <= 0.1) _tempo_restante_seg = 0.1; 
+                }
+                
+                var _tempo_frames = _tempo_restante_seg * game_get_speed(gamespeed_fps);
+                credits_speed = _distancia_total / _tempo_frames;
+                speed_calculated = true;
             }
             
-            // 2. Move o texto baseado na nova velocidade inteligente
             credits_y -= credits_speed; 
             
-            // 3. Muda de sala quando tudo acabar
-            if (credits_text != "") {
-                var _text_h = string_height(credits_text) * 2; 
-                
-                // Verifica se o texto sumiu
-                if (credits_y < -_text_h - 100) {
-                    if (target_room != noone) {
-                        audio_stop_all();
-                        room_goto(target_room);
-                    }
+            // Inicia o Fade Out quando o "Obrigado por jogar" estiver quase sumindo no topo
+            // (Ajustamos para começar o fade 200 pixels antes do fim total)
+            if (credits_y <= -credits_total_height + 200) {
+                fade_alpha = 0;               
+                state = "fade_out_credits";   
+            }
+            break;
+            
+        // ---> 5. FADE OUT FINAL (COM MOVIMENTO!) <---
+        case "fade_out_credits":
+            // MANTÉM O MOVIMENTO: O texto continua subindo enquanto escurece!
+            credits_y -= credits_speed; 
+            
+            fade_alpha += 0.01; // Escurece um pouco mais rápido para acompanhar o fim da música
+            
+            if (fade_alpha >= 1) {
+                if (target_room != noone) {
+                    audio_stop_all(); 
+                    room_goto(target_room); 
                 }
             }
             break;
